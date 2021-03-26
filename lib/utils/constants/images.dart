@@ -1,0 +1,1 @@
+const kFirstImageTutorial = 'images/first_tutorial_page.png';
