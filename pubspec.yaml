@@ -27,6 +27,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_bloc: ^7.0.0
   get: ^3.25.6
+  flutter_secure_storage: ^4.1.0
 
 dev_dependencies:
   flutter_test:
