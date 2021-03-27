@@ -9,27 +9,34 @@ class TutorialPageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: PageView(
-        scrollDirection: Axis.horizontal,
-        controller: _controller.pageController.value,
-        children: [
-          TutorialScreen(
-            tutorial: tutorialList[0],
-            back: _controller.goBack,
-            next: () => _controller.goToNextTutorial(context: context),
-          ),
-          TutorialScreen(
-            tutorial: tutorialList[1],
-            back: _controller.goBack,
-            next: () => _controller.goToNextTutorial(context: context),
-          ),
-          TutorialScreen(
-            tutorial: tutorialList[2],
-            back: _controller.goBack,
-            next: () => _controller.goToNextTutorial(context: context),
-          ),
-        ],
+    return WillPopScope(
+      onWillPop: () => Future.sync(
+        () => _controller.goBack(context: context),
+      ),
+      child: Scaffold(
+        body: PageView(
+          scrollDirection: Axis.horizontal,
+          controller: _controller.pageController.value,
+          children: [
+            TutorialScreen(
+              tutorial: tutorialList[0],
+              back: _controller.goBack,
+              next: () => _controller.goToNextTutorial(context: context),
+              skip: () => _controller.skipTutorial(context: context),
+            ),
+            TutorialScreen(
+              tutorial: tutorialList[1],
+              back: _controller.goBack,
+              next: () => _controller.goToNextTutorial(context: context),
+              skip: () => _controller.skipTutorial(context: context),
+            ),
+            TutorialScreen(
+              tutorial: tutorialList[2],
+              back: _controller.goBack,
+              next: () => _controller.goToNextTutorial(context: context),
+            ),
+          ],
+        ),
       ),
     );
   }

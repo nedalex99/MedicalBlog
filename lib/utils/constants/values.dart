@@ -7,18 +7,18 @@ List<TutorialData> tutorialList = [
     image: kFirstImageTutorial,
     title: kFirstTutorialTitle,
     description: kFirstTutorialDescription,
-    position: 0
+    position: 0,
   ),
   TutorialData(
-      image: kFirstImageTutorial,
-      title: kFirstTutorialTitle,
-      description: kFirstTutorialDescription,
-      position: 1
+    image: kSecondImageTutorial,
+    title: kSecondTutorialTitle,
+    description: kSecondTutorialDescription,
+    position: 1,
   ),
   TutorialData(
-      image: kFirstImageTutorial,
-      title: kFirstTutorialTitle,
-      description: kFirstTutorialDescription,
-      position: 2
+    image: kThirdImageTutorial,
+    title: kThirdTutorialTitle,
+    description: kFirstTutorialDescription,
+    position: 2,
   ),
 ];

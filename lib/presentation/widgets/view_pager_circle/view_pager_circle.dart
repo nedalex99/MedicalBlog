@@ -13,8 +13,8 @@ class ViewPagerCircle extends StatelessWidget {
         left: Get.width * 0.02,
         right: Get.width * 0.02,
       ),
-      width: 9,
-      height: 9,
+      width: 15.0,
+      height: 15.0,
       decoration: BoxDecoration(
         color: color,
         shape: BoxShape.circle,

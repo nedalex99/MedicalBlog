@@ -1,13 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:medical_blog/utils/constants/routes.dart';
+import 'package:medical_blog/utils/constants/strings.dart';
+import 'package:medical_blog/utils/user_preferences.dart';
 
 class TutorialPageViewController extends GetxController {
   Rx<PageController> pageController = PageController(initialPage: 0).obs;
 
-  bool goBack() {
+  PreferencesUtils _preferencesUtils = Get.find();
+
+  bool goBack({@required BuildContext context}) {
     if (pageController.value.page.toInt() == 0) {
-      Get.back();
+      Navigator.pop(context);
       return true;
     } else {
       pageController.value.previousPage(
@@ -22,6 +26,7 @@ class TutorialPageViewController extends GetxController {
     if (pageController.value.page == 2) {
       pageController.value.dispose();
       pageController.close();
+      _preferencesUtils.setTutorialFlag(kTutorialFlagKey, true);
       Navigator.pushNamedAndRemoveUntil(
         context,
         loginRoute,
@@ -35,5 +40,16 @@ class TutorialPageViewController extends GetxController {
         curve: Curves.linear,
       );
     }
+  }
+
+  void skipTutorial({@required BuildContext context}) {
+    pageController.value.dispose();
+    pageController.close();
+    _preferencesUtils.setTutorialFlag(kTutorialFlagKey, true);
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      loginRoute,
+      (Route<dynamic> route) => false,
+    );
   }
 }
