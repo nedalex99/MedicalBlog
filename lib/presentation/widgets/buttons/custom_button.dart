@@ -6,13 +6,15 @@ class CustomButton extends StatelessWidget {
   final Color backgroundColor;
   final TextStyle buttonTextStyle;
   final bool isEnabled;
+  final double radius;
 
   CustomButton({
-    this.onButtonTap,
-    this.buttonText,
+    @required this.onButtonTap,
+    @required this.buttonText,
     this.backgroundColor,
     this.buttonTextStyle,
     this.isEnabled,
+    this.radius = 6.0,
   });
 
   @override
@@ -26,7 +28,7 @@ class CustomButton extends StatelessWidget {
         color: backgroundColor,
         textColor: Colors.white,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(50),
+          borderRadius: BorderRadius.circular(radius),
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(
