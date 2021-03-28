@@ -32,26 +32,22 @@ class _SplashScreenState extends State<SplashScreen> {
 
   startTime() {
     return Timer(Duration(seconds: 2), () async {
-      // String tutorialFlag =
-      //     await _preferencesUtils.getTutorialFlag(kTutorialFlagKey, 'false');
+      String tutorialFlag =
+          await _preferencesUtils.getTutorialFlag(kTutorialFlagKey, 'false');
 
-      Navigator.pushNamed(context, tutorialRoute);
-
-      //Get.to(() => TutorialPageView());
-
-      // if (tutorialFlag == 'false' || tutorialFlag == null) {
-      //   Navigator.pushNamedAndRemoveUntil(
-      //     context,
-      //     tutorialRoute,
-      //     (Route<dynamic> route) => false,
-      //   );
-      // } else {
-      //   Navigator.pushNamedAndRemoveUntil(
-      //     context,
-      //     loginRoute,
-      //     (Route<dynamic> route) => false,
-      //   );
-      // }
+      if (tutorialFlag == 'false' || tutorialFlag == null) {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          tutorialRoute,
+          (Route<dynamic> route) => false,
+        );
+      } else {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          loginRoute,
+          (Route<dynamic> route) => false,
+        );
+      }
     });
   }
 }
