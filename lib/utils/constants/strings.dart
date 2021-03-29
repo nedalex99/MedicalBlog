@@ -12,3 +12,14 @@ const kThirdTutorialDescription = 'To be done more';
 
 /// Preferences strings
 const kTutorialFlagKey = "TUTORIAL_FLAG";
+
+/// Error messages
+const kInvalidEmail = "The e-mail is not valid.";
+const kTooLong = "You have overcome the maxim amount of characters.";
+const kFirstCharWhiteSpace = "First character cannot be whitespace.";
+const kTooShortFirstName = "First name is too short.";
+const kTooShortLastName = "Last name is too short.";
+const kTooShortName = "is too short";
+const kInvalidString = "is not valid.";
+const kPasswordMinOneDigit =
+    "The password should contain at least 8 characters and at least 1 letter.";

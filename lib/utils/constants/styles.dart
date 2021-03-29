@@ -21,6 +21,16 @@ const kFocusedNoErrorHintTextStyle = TextStyle(
   fontSize: 14.0,
   color: kBlueSideColor,
 );
+const kFocusedWithErrorTextStyle = TextStyle(
+  fontStyle: FontStyle.normal,
+  fontSize: 14.0,
+  color: kRedErrorColor,
+);
+const kNoFocusWithErrorTextStyle = TextStyle(
+  fontStyle: FontStyle.normal,
+  fontSize: 14.0,
+  color: kRedErrorColor,
+);
 const kErrorHintTextStyle = TextStyle(
   fontStyle: FontStyle.normal,
   fontSize: 14.0,
