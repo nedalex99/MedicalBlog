@@ -19,16 +19,15 @@ class FirestoreService {
       String firstName,
       String lastName,
       String country}) {
-    Map<String, UserData> user = {
-      'user': UserData(
-          email: email,
-          firstName: firstName,
-          lastName: lastName,
-          country: country)
-    };
+    UserData user = UserData(
+      email: email,
+      firstName: firstName,
+      lastName: lastName,
+      country: country,
+    );
 
-    return _firestoreInstance.collection('abc').add(user).then((value) => {
-      print(value),
-    });
+    Map<String, dynamic> userJson = user.toJson();
+
+    return _firestoreInstance.collection('users').doc(uid).set(userJson);
   }
 }
