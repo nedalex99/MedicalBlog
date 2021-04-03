@@ -7,6 +7,9 @@ import 'package:medical_blog/presentation/widgets/input_fields/input_text_field_
 import 'package:medical_blog/utils/constants/colors.dart';
 import 'package:medical_blog/utils/constants/routes.dart';
 
+import '../../../utils/constants/routes.dart';
+import '../../../utils/constants/routes.dart';
+
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -107,7 +110,7 @@ class LoginScreen extends StatelessWidget {
                     child: CustomButton(
                       buttonText: 'Register',
                       onButtonTap: () {
-                        Navigator.of(context).pushNamed(registerRoute);
+                        Get.toNamed(kRegisterRoute);
                       },
                       isEnabled: true,
                       backgroundColor: kBlueButtonColor,

@@ -4,6 +4,8 @@ import 'package:medical_blog/utils/constants/routes.dart';
 import 'package:medical_blog/utils/constants/strings.dart';
 import 'package:medical_blog/utils/user_preferences.dart';
 
+import '../../../utils/constants/routes.dart';
+
 class TutorialPageViewController extends GetxController {
   Rx<PageController> pageController = PageController(initialPage: 0).obs;
 
@@ -27,11 +29,7 @@ class TutorialPageViewController extends GetxController {
       pageController.value.dispose();
       pageController.close();
       _preferencesUtils.setTutorialFlag(kTutorialFlagKey, true);
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        loginRoute,
-        (Route<dynamic> route) => false,
-      );
+      Get.offAllNamed(kLoginRoute);
     } else {
       pageController.value.nextPage(
         duration: Duration(
@@ -46,10 +44,6 @@ class TutorialPageViewController extends GetxController {
     pageController.value.dispose();
     pageController.close();
     _preferencesUtils.setTutorialFlag(kTutorialFlagKey, true);
-    Navigator.pushNamedAndRemoveUntil(
-      context,
-      loginRoute,
-      (Route<dynamic> route) => false,
-    );
+    Get.offAllNamed(kLoginRoute);
   }
 }

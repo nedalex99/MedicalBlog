@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:medical_blog/utils/constants/colors.dart';
 
+import 'colors.dart';
+
 const kTutorialTitleTextStyle = TextStyle(
   fontSize: 24.0,
   fontWeight: FontWeight.bold,
@@ -35,4 +37,9 @@ const kErrorHintTextStyle = TextStyle(
   fontStyle: FontStyle.normal,
   fontSize: 14.0,
   color: kRedErrorColor,
+);
+const kLoadingTextStyle = TextStyle(
+    fontStyle: FontStyle.normal,
+    fontSize: 13,
+    color: kTextBlack1C,
 );

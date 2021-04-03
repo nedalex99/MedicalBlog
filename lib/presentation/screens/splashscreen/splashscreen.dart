@@ -7,6 +7,9 @@ import 'package:get/get.dart';
 import 'package:medical_blog/utils/constants/strings.dart';
 import 'package:medical_blog/utils/user_preferences.dart';
 
+import '../../../utils/constants/routes.dart';
+import '../../../utils/constants/routes.dart';
+
 class SplashScreen extends StatefulWidget {
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -36,17 +39,9 @@ class _SplashScreenState extends State<SplashScreen> {
           await _preferencesUtils.getTutorialFlag(kTutorialFlagKey, 'false');
 
       if (tutorialFlag == 'false' || tutorialFlag == null) {
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          tutorialRoute,
-          (Route<dynamic> route) => false,
-        );
+        Get.offAllNamed(kTutorialRoute);
       } else {
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          loginRoute,
-          (Route<dynamic> route) => false,
-        );
+        Get.offAllNamed(kLoginRoute);
       }
     });
   }

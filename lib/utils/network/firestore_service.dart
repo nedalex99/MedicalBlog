@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:medical_blog/logic/model/user_data.dart';
 
 class FirestoreService {
@@ -10,22 +11,24 @@ class FirestoreService {
     return _firestoreService;
   }
 
-  // FirebaseFirestore _firestoreInstance = FirebaseFirestore.instance;
-  //
-  // Future<void> createUser(
-  //     {String uid,
-  //     String email,
-  //     String firstName,
-  //     String lastName,
-  //     String country}) {
-  //   Map<String, UserData> user = {
-  //     'user': UserData(
-  //         email: email,
-  //         firstName: firstName,
-  //         lastName: lastName,
-  //         country: country)
-  //   };
-  //
-  //   return _firestoreInstance.collection('users').doc(uid).set(user);
-  // }
+  FirebaseFirestore _firestoreInstance = FirebaseFirestore.instance;
+
+  Future<void> createUser(
+      {String uid,
+      String email,
+      String firstName,
+      String lastName,
+      String country}) {
+    Map<String, UserData> user = {
+      'user': UserData(
+          email: email,
+          firstName: firstName,
+          lastName: lastName,
+          country: country)
+    };
+
+    return _firestoreInstance.collection('abc').add(user).then((value) => {
+      print(value),
+    });
+  }
 }

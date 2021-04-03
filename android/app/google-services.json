@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "735038827035",
+    "project_id": "medical-blog",
+    "storage_bucket": "medical-blog.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:735038827035:android:c3131207954b2447b826be",
+        "android_client_info": {
+          "package_name": "com.finalproject.medical_blog"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "735038827035-bp5ph43k67jod3uspnhcf55nlf5jfhn5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfDwomKKfh9vOISbVewuSZM1BiIcSFQwQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "735038827035-bp5ph43k67jod3uspnhcf55nlf5jfhn5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "735038827035-arjnjoelda2angcqi16epin04hte8jep.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.finalproject.medicalBlog"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
