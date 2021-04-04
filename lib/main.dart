@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:medical_blog/presentation/screens/dashboard_screen/dashboard_screen.dart';
+import 'package:medical_blog/presentation/screens/posts_screen/posts_screen.dart';
+import 'package:medical_blog/presentation/screens/profile_screen/profile_screen.dart';
+import 'package:medical_blog/presentation/screens/saved_screen/saved_screen.dart';
 import 'package:medical_blog/utils/constants/routes.dart';
 import 'package:medical_blog/utils/constants/themes.dart';
 import 'package:medical_blog/utils/network/auth_service.dart';
@@ -44,6 +48,26 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: kRegisterRoute,
           page: () => RegisterScreen(),
+        ),
+        GetPage(
+          name: kDashboardRoute,
+          page: () => DashboardScreen(),
+          transition: Transition.noTransition,
+        ),
+        GetPage(
+          name: kPostsRoute,
+          page: () => PostsScreen(),
+          transition: Transition.noTransition,
+        ),
+        GetPage(
+          name: kSavedRoute,
+          page: () => SavedScreen(),
+          transition: Transition.noTransition,
+        ),
+        GetPage(
+          name: kProfileRoute,
+          page: () => ProfileScreen(),
+          transition: Transition.noTransition,
         ),
       ],
     );

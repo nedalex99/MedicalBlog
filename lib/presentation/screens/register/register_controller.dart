@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:medical_blog/presentation/widgets/dialogs/loading_dialog.dart';
 import 'package:medical_blog/utils/network/auth_service.dart';
@@ -36,15 +35,25 @@ class RegisterController extends GetxController {
 
   void registerUser() {
     Get.dialog(LoadingDialog());
-    _firestoreSerivce.createUser(uid: '123', email: email, firstName: firstName, lastName: lastName, country: country).then((value) => {
-      Get.back(),
-    });
-    // _authService
-    //     .createUserWithEmailAndPassword(email: email, password: password)
-    //     .then((value) => {
-    //           if (value.user != null)
-    //             {
-    //             }
-    //         });
+
+    _authService
+        .createUserWithEmailAndPassword(email: email, password: password)
+        .then((valueUser) => {
+              if (valueUser.user != null)
+                {
+                  valueUser.user.sendEmailVerification().then((value) => {
+                        _firestoreSerivce
+                            .createUser(
+                                uid: valueUser.user.uid,
+                                email: email,
+                                firstName: firstName,
+                                lastName: lastName,
+                                country: country)
+                            .then((value) => {
+                                  Get.back(),
+                                }),
+                      }),
+                }
+            });
   }
 }

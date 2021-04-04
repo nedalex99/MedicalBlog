@@ -1,10 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:medical_blog/presentation/screens/register/register_controller.dart';
 import 'package:medical_blog/presentation/widgets/buttons/custom_button.dart';
-import 'package:medical_blog/presentation/widgets/input_fields/input_text_field.dart';
-import 'package:medical_blog/presentation/widgets/input_fields/input_text_field_controller.dart';
+import 'package:medical_blog/presentation/widgets/input_fields/input_field_date_picker/input_field_date_picker.dart';
+import 'package:medical_blog/presentation/widgets/input_fields/input_field_date_picker/input_field_date_picker_controller.dart';
+import 'file:///C:/Users/alexa/AndroidStudioProjects/MedicalBlog/lib/presentation/widgets/input_fields/input_text_field/input_text_field.dart';
+import 'file:///C:/Users/alexa/AndroidStudioProjects/MedicalBlog/lib/presentation/widgets/input_fields/input_text_field/input_text_field_controller.dart';
 import 'package:medical_blog/utils/constants/colors.dart';
 import 'package:get/get.dart';
+import 'package:medical_blog/utils/util_functions.dart';
 import 'package:medical_blog/utils/validators.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -114,10 +118,10 @@ class RegisterScreen extends StatelessWidget {
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.025,
                   ),
-                  InputTextField(
+                  InputFieldDatePicker(
                     typeOfText: TextInputType.name,
                     hint: 'Date of birth',
-                    controller: Get.put(InputTextFieldController(),
+                    controller: Get.put(InputFieldDatePickerController(),
                         tag: "date_of_birth_register_register"),
                   ),
                 ],
@@ -131,12 +135,15 @@ class RegisterScreen extends StatelessWidget {
                   padding: EdgeInsets.only(
                     bottom: MediaQuery.of(context).size.height * 0.05,
                   ),
-                  child: CustomButton(
-                    onButtonTap: () {
-                      _registerController.registerUser();
-                    },
-                    buttonText: 'Register',
-                    backgroundColor: kInactiveBlueButtonColor,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      top: (MediaQuery.of(context).size.height * 0.025),
+                    ),
+                    child: CustomButton(
+                      onButtonTap: () {},
+                      buttonText: 'Register',
+                      backgroundColor: kInactiveBlueButtonColor,
+                    ),
                   ),
                 ),
               ),

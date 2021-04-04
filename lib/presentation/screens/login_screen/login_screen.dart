@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:medical_blog/presentation/screens/login_screen/login_controller.dart';
 import 'package:medical_blog/presentation/widgets/buttons/custom_button.dart';
 import 'package:medical_blog/presentation/widgets/checkbox/custom_checkbox.dart';
-import 'package:medical_blog/presentation/widgets/input_fields/input_text_field.dart';
+import 'file:///C:/Users/alexa/AndroidStudioProjects/MedicalBlog/lib/presentation/widgets/input_fields/input_text_field/input_text_field.dart';
 import 'package:get/get.dart';
-import 'package:medical_blog/presentation/widgets/input_fields/input_text_field_controller.dart';
+import 'file:///C:/Users/alexa/AndroidStudioProjects/MedicalBlog/lib/presentation/widgets/input_fields/input_text_field/input_text_field_controller.dart';
 import 'package:medical_blog/utils/constants/colors.dart';
 import 'package:medical_blog/utils/constants/routes.dart';
 
 import '../../../utils/constants/routes.dart';
-import '../../../utils/constants/routes.dart';
+import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
+  final LoginController _loginController = Get.put(LoginController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,6 +52,7 @@ class LoginScreen extends StatelessWidget {
                   InputTextFieldController(),
                   tag: 'Email',
                 ),
+                inputTextChecked: _loginController.emailCallback,
               ),
               SizedBox(
                 height: 24.0,
@@ -60,6 +64,7 @@ class LoginScreen extends StatelessWidget {
                   InputTextFieldController(),
                   tag: 'Password',
                 ),
+                inputTextChecked: _loginController.passwordCallback,
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.02,
@@ -97,7 +102,9 @@ class LoginScreen extends StatelessWidget {
                 height: MediaQuery.of(context).size.height * 0.03,
               ),
               CustomButton(
-                onButtonTap: () {},
+                onButtonTap: () {
+                  _loginController.loginUser();
+                },
                 buttonText: 'Login',
                 backgroundColor: kInactiveBlueButtonColor,
               ),

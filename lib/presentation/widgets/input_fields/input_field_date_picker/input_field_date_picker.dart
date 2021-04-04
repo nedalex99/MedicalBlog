@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:medical_blog/presentation/widgets/input_fields/input_text_field_controller.dart';
+import 'package:medical_blog/presentation/widgets/input_fields/input_field_date_picker/input_field_date_picker_controller.dart';
+import 'file:///C:/Users/alexa/AndroidStudioProjects/MedicalBlog/lib/presentation/widgets/input_fields/input_text_field/input_text_field_controller.dart';
 import 'package:medical_blog/utils/constants/colors.dart';
 
 typedef CheckCallback(String value);
 
-class InputTextField extends StatelessWidget {
+class InputFieldDatePicker extends StatelessWidget {
   final TextInputType typeOfText;
   final String hint;
-  final InputTextFieldController controller;
+  final InputFieldDatePickerController controller;
   final CheckCallback inputTextChecked;
   final Function validator;
+  final Function isDatePicker;
 
-  InputTextField({
-    @required this.typeOfText,
-    @required this.hint,
-    @required this.controller,
-    this.inputTextChecked,
-    this.validator,
-  });
+  InputFieldDatePicker(
+      {@required this.typeOfText,
+      @required this.hint,
+      @required this.controller,
+      this.inputTextChecked,
+      this.validator,
+      this.isDatePicker});
 
   @override
   Widget build(BuildContext context) {
@@ -34,20 +36,10 @@ class InputTextField extends StatelessWidget {
         child: TextField(
           controller: controller.textController.value,
           textAlign: TextAlign.start,
+          readOnly: true,
           textAlignVertical: TextAlignVertical.center,
           keyboardType: typeOfText,
-          obscureText: typeOfText == TextInputType.visiblePassword
-              ? controller.isHidden.value
-              : false,
-          onEditingComplete: () => FocusScope.of(context).unfocus(),
-          onChanged: (value) {
-            inputTextChecked(controller.textController.value.text);
-            if (!controller.errorText.value.isNullOrBlank) {
-              controller.errorText.value =
-                  validator(controller.textController.value.text, hint);
-              controller.handleOnFocus(true);
-            }
-          },
+          onTap: () => controller.getDate(context),
           decoration: InputDecoration(
             filled: true,
             fillColor: Colors.white,
@@ -93,31 +85,13 @@ class InputTextField extends StatelessWidget {
                 ),
               ),
             ),
-            suffixIcon: typeOfText == TextInputType.visiblePassword
-                ? GestureDetector(
-                    onTap: () {
-                      controller.isHidden.value = !controller.isHidden.value;
-                    },
-                    child: controller.isHidden.value
-                        ? Icon(
-                            Icons.remove_red_eye,
-                            color: Colors.black,
-                            size: 20.0,
-                          )
-                        : Icon(
-                            Icons.visibility_off,
-                            color: Colors.black,
-                            size: 20,
-                          ),
-                  )
-                : null,
             contentPadding: const EdgeInsets.only(
               left: 12.0,
               bottom: 12.0,
             ),
             labelText: hint,
-            labelStyle: controller.hintTextStyle.value,
-            errorText: controller.errorText.value,
+            //labelStyle: controller.hintTextStyle.value,
+            //errorText: controller.errorText.value,
             errorMaxLines: 2,
           ),
         ),

@@ -24,3 +24,6 @@ const kInvalidString = "is not valid.";
 const kPasswordMinOneDigit =
     "The password should contain at least 8 characters and at least 1 letter.";
 const kPleaseWaitText = "Please wait";
+
+/// Firebase error codes
+const kUserNotFound = 'user-not-found';
