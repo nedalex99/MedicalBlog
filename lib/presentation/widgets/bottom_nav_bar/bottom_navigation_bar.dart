@@ -1,6 +1,10 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:medical_blog/presentation/screens/dashboard_screen/dashboard_screen.dart';
+import 'package:medical_blog/presentation/screens/posts_screen/posts_screen.dart';
+import 'package:medical_blog/presentation/screens/profile_screen/profile_screen.dart';
+import 'package:medical_blog/presentation/screens/saved_screen/saved_screen.dart';
 import 'package:medical_blog/presentation/widgets/bottom_nav_bar/bottom_nav_bar_controller.dart';
 import 'package:medical_blog/utils/constants/routes.dart';
 
@@ -41,16 +45,28 @@ class BottomNavBar extends StatelessWidget {
     if (index != selectedIndex) {
       switch (index) {
         case 0:
-          Get.offAllNamed(kDashboardRoute);
+          Get.off(
+            () => DashboardScreen(),
+            transition: Transition.noTransition,
+          );
           break;
         case 1:
-          Get.toNamed(kPostsRoute);
+          Get.off(
+            () => PostsScreen(),
+            transition: Transition.noTransition,
+          );
           break;
         case 2:
-          Get.toNamed(kSavedRoute);
+          Get.off(
+            () => SavedScreen(),
+            transition: Transition.noTransition,
+          );
           break;
         case 3:
-          Get.toNamed(kProfileRoute);
+          Get.off(
+            () => ProfileScreen(),
+            transition: Transition.noTransition,
+          );
           break;
         default:
           break;

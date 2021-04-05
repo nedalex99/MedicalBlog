@@ -45,3 +45,13 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 /lib/presentation/screens/tutorial/tutorial_screen.dart
+ios/build/XCBuildData/1715ed3152535567c87da07e0f14a32c-desc.xcbuild
+ios/build/XCBuildData/1715ed3152535567c87da07e0f14a32c-manifest.xcbuild
+ios/build/XCBuildData/8ce62a2fefb7c403fa63c628b04f8966-desc.xcbuild
+ios/build/XCBuildData/8ce62a2fefb7c403fa63c628b04f8966-manifest.xcbuild
+ios/build/XCBuildData/a776c205c2a888f1669716be9bcfa277-desc.xcbuild
+ios/build/XCBuildData/a776c205c2a888f1669716be9bcfa277-manifest.xcbuild
+ios/build/XCBuildData/build.db
+ios/build/XCBuildData/BuildDescriptionCacheIndex-8383fddff4739463758de5bfde8ee12c
+ios/build/XCBuildData/dffe61ecd9f4c96aba63856b0657e5e6-desc.xcbuild
+ios/build/XCBuildData/dffe61ecd9f4c96aba63856b0657e5e6-manifest.xcbuild

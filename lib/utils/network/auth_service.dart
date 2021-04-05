@@ -23,4 +23,8 @@ class AuthService {
     return _firebaseAuth.signInWithEmailAndPassword(
         email: email, password: password);
   }
+
+  User getUser() {
+    return _firebaseAuth.currentUser;
+  }
 }

@@ -19,4 +19,12 @@ class PreferencesUtils extends FlutterSecureStorage {
   Future<void> setTutorialFlag(String key, bool value) async {
     return _prefsInstance.write(key: key, value: value.toString());
   }
+
+  Future<String> getKeepMeAuthFlag(String key, String defValue) async {
+    return _prefsInstance.read(key: key) ?? defValue ?? false;
+  }
+
+  Future<void> setKeepMeAuthFlag(String key, bool value) async {
+    return _prefsInstance.write(key: key, value: value.toString());
+  }
 }

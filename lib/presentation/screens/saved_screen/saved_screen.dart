@@ -4,16 +4,14 @@ import 'package:medical_blog/presentation/widgets/bottom_nav_bar/bottom_navigati
 class SavedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Column(
-          children: [
-            Text('Saved'),
-          ],
-        ),
-        bottomNavigationBar: BottomNavBar(
-          selectedIndex: 2,
-        ),
+    return Scaffold(
+      body: Column(
+        children: [
+          Text('Saved'),
+        ],
+      ),
+      bottomNavigationBar: BottomNavBar(
+        selectedIndex: 2,
       ),
     );
   }

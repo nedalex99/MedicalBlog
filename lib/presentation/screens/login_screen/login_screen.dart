@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:medical_blog/presentation/screens/login_screen/login_controller.dart';
 import 'package:medical_blog/presentation/widgets/buttons/custom_button.dart';
 import 'package:medical_blog/presentation/widgets/checkbox/custom_checkbox.dart';
-import 'file:///C:/Users/alexa/AndroidStudioProjects/MedicalBlog/lib/presentation/widgets/input_fields/input_text_field/input_text_field.dart';
 import 'package:get/get.dart';
-import 'file:///C:/Users/alexa/AndroidStudioProjects/MedicalBlog/lib/presentation/widgets/input_fields/input_text_field/input_text_field_controller.dart';
+import 'package:medical_blog/presentation/widgets/input_fields/input_text_field/input_text_field.dart';
+import 'package:medical_blog/presentation/widgets/input_fields/input_text_field/input_text_field_controller.dart';
 import 'package:medical_blog/utils/constants/colors.dart';
 import 'package:medical_blog/utils/constants/routes.dart';
-
-import '../../../utils/constants/routes.dart';
-import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
   final LoginController _loginController = Get.put(LoginController());
@@ -86,9 +83,11 @@ class LoginScreen extends StatelessWidget {
               ),
               Row(
                 children: [
-                  CustomCheckbox(
-                    isSelected: false,
-                    onTap: () {},
+                  Obx(
+                  () => CustomCheckbox(
+                      isSelected: _loginController.checkboxValue.value,
+                      onTap: _loginController.updateCheckbox,
+                    ),
                   ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.02,
@@ -101,12 +100,14 @@ class LoginScreen extends StatelessWidget {
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.03,
               ),
-              CustomButton(
-                onButtonTap: () {
-                  _loginController.loginUser();
-                },
-                buttonText: 'Login',
-                backgroundColor: kInactiveBlueButtonColor,
+              Obx(
+                () => CustomButton(
+                  onButtonTap: _loginController.isButtonEnabled.value
+                      ? _loginController.loginUser
+                      : null,
+                  buttonText: 'Login',
+                  backgroundColor: Color(_loginController.buttonColor.value),
+                ),
               ),
               Expanded(
                 child: Align(

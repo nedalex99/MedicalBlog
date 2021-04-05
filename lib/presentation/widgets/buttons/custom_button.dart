@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medical_blog/utils/constants/colors.dart';
 
 class CustomButton extends StatelessWidget {
   final Function onButtonTap;
@@ -26,6 +27,8 @@ class CustomButton extends StatelessWidget {
       child: FlatButton(
         onPressed: onButtonTap,
         color: backgroundColor,
+        disabledColor: kInactiveBlueButtonColor,
+        disabledTextColor: kInactiveButtonTextColor,
         textColor: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(radius),
