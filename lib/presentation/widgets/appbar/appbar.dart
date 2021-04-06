@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:medical_blog/presentation/screens/add_post_screen/add_post_controller.dart';
+import 'package:medical_blog/utils/constants/colors.dart';
 
 class Appbar extends StatelessWidget {
   final String title;
+  final AddPostController addPostController;
 
-  Appbar({@required this.title});
+  Appbar({
+    @required this.title,
+    this.addPostController,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +30,30 @@ class Appbar extends StatelessWidget {
           onPressed: () => Get.back(),
         ),
       ),
+      actions: [
+        addPostController != null
+            ? Padding(
+                padding: const EdgeInsets.all(
+                  20.0,
+                ),
+                child: Obx(
+                  () => InkWell(
+                    onTap: addPostController.addTextColor.value ==
+                            kActiveAddPostTextHex
+                        ? addPostController.addPost
+                        : null,
+                    child: Text(
+                      'Add',
+                      style: TextStyle(
+                        color: Color(addPostController.addTextColor.value),
+                        fontSize: 16.0,
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            : Container(),
+      ],
     );
   }
 }

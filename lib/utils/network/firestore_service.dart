@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:medical_blog/logic/model/post.dart';
 import 'package:medical_blog/logic/model/user_data.dart';
+import 'package:medical_blog/utils/session_temp.dart';
 
 class FirestoreService {
   static Future<FirestoreService> get _instance async =>
@@ -29,5 +31,20 @@ class FirestoreService {
     Map<String, dynamic> userJson = user.toJson();
 
     return _firestoreInstance.collection('users').doc(uid).set(userJson);
+  }
+
+  Future<void> addPost({String title, String description}) {
+    Post post = Post(
+      title: title,
+      description: description,
+    );
+
+    Map<String, dynamic> postJson = post.toJson();
+
+    return _firestoreInstance
+        .collection('posts')
+        .doc(userUID)
+        .collection('posts')
+        .add(postJson);
   }
 }

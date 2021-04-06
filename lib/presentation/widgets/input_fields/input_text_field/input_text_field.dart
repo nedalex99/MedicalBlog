@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:medical_blog/presentation/widgets/input_fields/input_field_date_picker/input_field_date_picker.dart';
 import 'package:medical_blog/presentation/widgets/input_fields/input_text_field/input_text_field_controller.dart';
 import 'package:medical_blog/utils/constants/colors.dart';
-
-typedef CheckCallback(String value);
 
 class InputTextField extends StatelessWidget {
   final TextInputType typeOfText;

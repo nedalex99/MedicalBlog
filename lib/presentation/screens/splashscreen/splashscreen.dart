@@ -5,6 +5,7 @@ import 'package:medical_blog/utils/constants/routes.dart';
 import 'package:get/get.dart';
 import 'package:medical_blog/utils/constants/strings.dart';
 import 'package:medical_blog/utils/network/auth_service.dart';
+import 'package:medical_blog/utils/session_temp.dart';
 import 'package:medical_blog/utils/user_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -41,6 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Get.offAllNamed(kTutorialRoute);
     } else if (keepMeAuthFlag != null && keepMeAuthFlag == 'true') {
       if (_authService.getUser() != null) {
+        userUID = _authService.getUser().uid;
         Get.offAllNamed(kDashboardRoute);
       } else {
         Get.offAllNamed(kLoginRoute);

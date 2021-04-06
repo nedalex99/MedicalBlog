@@ -5,6 +5,7 @@ import 'package:medical_blog/utils/constants/colors.dart';
 import 'package:medical_blog/utils/constants/routes.dart';
 import 'package:medical_blog/utils/constants/strings.dart';
 import 'package:medical_blog/utils/network/auth_service.dart';
+import 'package:medical_blog/utils/session_temp.dart';
 import 'package:medical_blog/utils/user_preferences.dart';
 
 class LoginController extends GetxController {
@@ -51,6 +52,7 @@ class LoginController extends GetxController {
             (value) async => {
               if (value.user != null)
                 {
+                  userUID = value.user.uid,
                   if (checkboxValue.value)
                     {
                       await _preferencesUtils.setKeepMeAuthFlag(

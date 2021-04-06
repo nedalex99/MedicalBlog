@@ -11,3 +11,6 @@ const kTextBlack1C = Color(0xFF1c1c1c);
 
 const kInactiveBlueButtonColorHex = 0x800E5685;
 const kBlueButtonColorHex = 0xFF0E5685;
+
+const kInactiveAddPostTextHex = 0xFFA3A3A3;
+const kActiveAddPostTextHex = 0xFF1C1C1C;
