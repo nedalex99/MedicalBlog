@@ -8,6 +8,7 @@ const kBlueSideColor = Color(0xFF1B157B);
 const kRedErrorColor = Color(0xFF8f220B);
 const kHintColor = Color(0xFFa0a0a0);
 const kTextBlack1C = Color(0xFF1c1c1c);
+const kTagBackgroundColor = Color(0xFFE6EDF3);
 
 const kInactiveBlueButtonColorHex = 0x800E5685;
 const kBlueButtonColorHex = 0xFF0E5685;

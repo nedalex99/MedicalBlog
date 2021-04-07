@@ -33,10 +33,12 @@ class FirestoreService {
     return _firestoreInstance.collection('users').doc(uid).set(userJson);
   }
 
-  Future<void> addPost({String title, String description}) {
+  Future<void> addPost({String title, String description, List<String> tags}) {
     Post post = Post(
       title: title,
       description: description,
+      dateTime: DateTime.now(),
+      tags: tags,
     );
 
     Map<String, dynamic> postJson = post.toJson();
