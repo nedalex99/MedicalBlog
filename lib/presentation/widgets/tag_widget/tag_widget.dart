@@ -5,45 +5,58 @@ import 'package:get/get.dart';
 
 class TagWidget extends StatelessWidget {
   final String tagName;
+  final bool isIconVisible;
 
   TagWidget({
     @required this.tagName,
+    this.isIconVisible = true,
   });
-
-  final AddPostController _addPostController = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 8.0,
-        vertical: 4.0,
+    return Padding(
+      padding: const EdgeInsets.only(
+        right: 12.0,
       ),
-      decoration: BoxDecoration(
-        color: kTagBackgroundColor,
-        borderRadius: BorderRadius.all(
-          Radius.circular(
-            6.0,
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 8.0,
+          vertical: 4.0,
+        ),
+        decoration: BoxDecoration(
+          color: kTagBackgroundColor,
+          borderRadius: BorderRadius.all(
+            Radius.circular(
+              6.0,
+            ),
           ),
         ),
-      ),
-      child: Row(
-        children: [
-          Row(
-            children: [
-              Text(
-                tagName,
-                style: TextStyle(
-                  fontSize: 15.0,
+        child: Row(
+          children: [
+            Row(
+              children: [
+                Text(
+                  tagName,
+                  style: TextStyle(
+                    fontSize: 15.0,
+                  ),
                 ),
-              ),
-              GestureDetector(
-                onTap: () => _addPostController.deleteTag(tagName: tagName),
-                child: Icon(Icons.close),
-              ),
-            ],
-          ),
-        ],
+                !isIconVisible
+                    ? Container()
+                    : GestureDetector(
+                        onTap: () {
+                          final AddPostController _addPostController =
+                              Get.find();
+                          _addPostController.deleteTag(tagName: tagName);
+                        },
+                        child: Icon(
+                          Icons.close,
+                        ),
+                      ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

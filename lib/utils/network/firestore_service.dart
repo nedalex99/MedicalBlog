@@ -49,4 +49,8 @@ class FirestoreService {
         .collection('posts')
         .add(postJson);
   }
+
+  Future<QuerySnapshot> getPosts() {
+    return _firestoreInstance.collection('posts').doc(userUID).collection('posts').get();
+  }
 }

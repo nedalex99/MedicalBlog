@@ -76,6 +76,7 @@ class AddPostController extends GetxController {
         .addPost(title: title, description: description, tags: tagList)
         .then((value) => {
               Get.back(),
+              Get.back(),
             });
   }
 
@@ -103,11 +104,26 @@ class AddPostController extends GetxController {
   void deleteTag({String tagName}) {
     tagWidgetList.removeWhere((element) => element.tagName == tagName);
     tagList.removeWhere((element) => element == tagName);
+
+    addToCupertinoTagList(tagName: tagName);
   }
 
   void deleteFromCupertinoTagList({int index}) {
     _cupertinoTagWidgetList.removeAt(index);
     cupertinoTagList.removeAt(index);
+  }
+
+  void addToCupertinoTagList({String tagName}) {
+    _cupertinoTagWidgetList.insert(
+      0,
+      Text(
+        tagName,
+        style: TextStyle(
+          fontSize: 26.0,
+        ),
+      ),
+    );
+    cupertinoTagList.insert(0, tagName);
   }
 
   Widget buildPicker() {
