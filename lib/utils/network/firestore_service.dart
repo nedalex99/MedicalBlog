@@ -50,7 +50,15 @@ class FirestoreService {
         .add(postJson);
   }
 
+  Future<DocumentSnapshot> getUserFirstAndLastName() {
+    return _firestoreInstance.collection('users').doc(userUID).get();
+  }
+
   Future<QuerySnapshot> getPosts() {
-    return _firestoreInstance.collection('posts').doc(userUID).collection('posts').get();
+    return _firestoreInstance
+        .collection('posts')
+        .doc(userUID)
+        .collection('posts')
+        .get();
   }
 }

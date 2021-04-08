@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:medical_blog/logic/model/post.dart';
+import 'package:medical_blog/presentation/screens/posts_screen/posts_controller.dart';
 import 'package:medical_blog/presentation/widgets/dialogs/loading_dialog.dart';
 import 'package:medical_blog/presentation/widgets/tag_widget/tag_widget.dart';
 import 'package:medical_blog/utils/constants/colors.dart';
@@ -78,6 +80,14 @@ class AddPostController extends GetxController {
               Get.back(),
               Get.back(),
             });
+    PostsController _postsController = Get.find();
+    _postsController.postsFromFirestore.insert(0,
+      Post(
+        title: title,
+        description: description,
+        tags: tagList,
+      ),
+    );
   }
 
   void showTagPicker() {

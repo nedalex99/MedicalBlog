@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:medical_blog/logic/model/post.dart';
+import 'package:medical_blog/logic/model/user_data.dart';
 import 'package:medical_blog/presentation/screens/add_post_screen/add_post_controller.dart';
 import 'package:medical_blog/presentation/screens/posts_screen/posts_controller.dart';
 import 'package:medical_blog/presentation/widgets/bottom_nav_bar/bottom_navigation_bar.dart';
@@ -23,26 +25,42 @@ class PostsScreen extends StatelessWidget {
           right: 18.0,
         ),
         child: Center(
-          child: PullToRevealTopItemList(
-            startRevealed: true,
-            itemCount: 10,
-            itemBuilder: (BuildContext context, int index) {
-              return PostCard();
-            },
-            revealableHeight: 50,
-            revealableBuilder: (BuildContext context, RevealableToggler opener,
-                RevealableToggler closer, BoxConstraints constraints) {
-              return Row(
-                children: [
-                  Flexible(
-                    child: InputTextFieldReadOnly(
-                      onTap: () => Get.toNamed(kAddPostRoute),
-                      hint: 'Tell us something new...',
-                    ),
+          child: Obx(
+            () => PullToRevealTopItemList(
+              startRevealed: true,
+              itemCount: _addPostController.postsFromFirestore.value.length,
+              itemBuilder: (BuildContext context, int index) {
+                return PostCard(
+                  post: _addPostController.postsFromFirestore[index],
+                  userData: UserData(
+                    firstName: 'abc',
+                    lastName: 'bca',
                   ),
-                ],
-              );
-            },
+                  // fullName: ,
+                  // profession: ,
+                  //   postTitle: ,
+                  // postDescription: ,
+                  // categories: [],
+                  // noOfLikes: ,
+                  // noOfDislikes: ,
+                  // noOfComments: ,
+                );
+              },
+              revealableHeight: 50,
+              revealableBuilder: (BuildContext context, RevealableToggler opener,
+                  RevealableToggler closer, BoxConstraints constraints) {
+                return Row(
+                  children: [
+                    Flexible(
+                      child: InputTextFieldReadOnly(
+                        onTap: () => Get.toNamed(kAddPostRoute),
+                        hint: 'Tell us something new...',
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
           ),
         ),
       ),

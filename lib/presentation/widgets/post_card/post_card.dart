@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:medical_blog/logic/model/post.dart';
+import 'package:medical_blog/logic/model/user_data.dart';
 import 'package:medical_blog/presentation/widgets/input_fields/input_text_field_read_only/input_text_field_read_only.dart';
 import 'package:medical_blog/presentation/widgets/tag_widget/tag_widget.dart';
 import 'package:medical_blog/utils/constants/colors.dart';
 
 class PostCard extends StatelessWidget {
+  final UserData userData;
+  final Post post;
+
+  PostCard({
+    @required this.userData,
+    @required this.post,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -17,7 +27,7 @@ class PostCard extends StatelessWidget {
         children: [
           Container(
             padding: EdgeInsets.all(
-              8.0,
+              16.0,
             ),
             decoration: BoxDecoration(
               color: Colors.white,
@@ -69,7 +79,7 @@ class PostCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
-                            'Alexandru Nedelcu',
+                            "${userData.firstName} ${userData.lastName}",
                             style: TextStyle(
                               fontSize: 16.0,
                             ),
@@ -103,7 +113,7 @@ class PostCard extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Very title',
+                    post.title,
                     style: TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.bold,
@@ -113,10 +123,14 @@ class PostCard extends StatelessWidget {
                 SizedBox(
                   height: Get.height * 0.005,
                 ),
-                Text(
-                    'Very very very very very very very very very very very very very very very very very very very very long description'),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    post.description,
+                  ),
+                ),
                 SizedBox(
-                  height: Get.height * 0.008,
+                  height: Get.height * 0.009,
                 ),
                 Divider(
                   height: 2,
@@ -124,34 +138,31 @@ class PostCard extends StatelessWidget {
                   color: kHintColor,
                 ),
                 SizedBox(
-                  height: Get.height * 0.01,
+                  height: Get.height * 0.009,
                 ),
                 Row(
-                  children: [
-                    TagWidget(
-                      tagName: 'College',
+                  children: List<TagWidget>.generate(
+                    post.tags.length,
+                    (index) => TagWidget(
+                      tagName: post.tags[index],
                       isIconVisible: false,
                     ),
-                    TagWidget(
-                      tagName: 'Medicine',
-                      isIconVisible: false,
-                    ),
-                  ],
+                  ),
                 ),
                 SizedBox(
                   height: Get.height * 0.02,
                 ),
                 Row(
                   children: [
-                    Text('4 Likes'),
+                    Text('${post.noOfLikes} Likes'),
                     SizedBox(
                       width: Get.width * 0.09,
                     ),
-                    Text('2 Dislikes'),
+                    Text('${post.noOfDislikes} Dislikes'),
                     Expanded(
                       child: Align(
                         alignment: Alignment.centerRight,
-                        child: Text('3 Comments'),
+                        child: Text('${post.noOfComments} Comments'),
                       ),
                     ),
                   ],
