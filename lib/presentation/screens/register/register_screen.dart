@@ -140,7 +140,7 @@ class RegisterScreen extends StatelessWidget {
                       top: (MediaQuery.of(context).size.height * 0.025),
                     ),
                     child: CustomButton(
-                      onButtonTap: () {},
+                      onButtonTap: _registerController.registerUser,
                       buttonText: 'Register',
                       backgroundColor: kInactiveBlueButtonColor,
                     ),

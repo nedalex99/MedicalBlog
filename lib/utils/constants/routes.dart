@@ -6,3 +6,4 @@ const kPostsRoute = "POSTS_ROUTE";
 const kSavedRoute = "SAVED_ROUTE";
 const kProfileRoute = "PROFILE_ROUTE";
 const kAddPostRoute = "ADD_POST_ROUTE";
+const kAddCommentsRoute = "ADD_COMMENTS_ROUTE";

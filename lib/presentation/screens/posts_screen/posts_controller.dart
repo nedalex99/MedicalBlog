@@ -19,6 +19,7 @@ class PostsController extends GetxController {
               lastName: element.data()['userData']['lastName'],
             );
             Post post = Post(
+              uid: element.id,
               title: element.data()['title'],
               description: element.data()['description'],
               noOfLikes: element.data()['noOfLikes'],

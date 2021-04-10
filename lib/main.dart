@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:medical_blog/presentation/screens/add_comments_screen/add_comments_screen.dart';
 import 'package:medical_blog/presentation/screens/add_post_screen/add_post_screen.dart';
 import 'package:medical_blog/presentation/screens/dashboard_screen/dashboard_screen.dart';
 import 'package:medical_blog/presentation/screens/posts_screen/posts_screen.dart';
@@ -75,6 +76,10 @@ class MyApp extends StatelessWidget {
           name: kAddPostRoute,
           page: () => AddPostScreen(),
           customTransition: SlideUpTransition(),
+        ),
+        GetPage(
+          name: kAddCommentsRoute,
+          page: () => AddCommentsScreen(),
         )
       ],
     );

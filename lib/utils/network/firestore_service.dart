@@ -41,6 +41,26 @@ class FirestoreService {
     return _firestoreInstance.collection('posts').add(postJson);
   }
 
+  Future<void> updateNoOfLikesAndDislikes({
+    String postId,
+    int noOfLikes,
+    int noOfDislikes,
+  }) {
+    return _firestoreInstance.collection('posts').doc(postId).update({
+      'noOfLikes': noOfLikes,
+      'noOfDislikes': noOfDislikes,
+    });
+  }
+
+  Future<void> updateLikedDislikePosts({
+    String postId,
+    String collectionName,
+  }) {
+    return _firestoreInstance.collection(collectionName).doc(userUID).set({
+      'postId': postId,
+    });
+  }
+
   Future<DocumentSnapshot> getUserFirstAndLastName() {
     return _firestoreInstance.collection('users').doc(userUID).get();
   }

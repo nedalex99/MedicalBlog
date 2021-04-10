@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:medical_blog/logic/model/user_data.dart';
 
 class Post {
+  String uid;
   String title;
   String description;
   List<String> tags;
@@ -13,6 +14,7 @@ class Post {
   UserData userData;
 
   Post({
+    this.uid,
     this.title,
     this.description,
     this.tags,
@@ -40,6 +42,7 @@ class Post {
     }
 
     return Post(
+      uid: parsedJson['uid'],
       title: parsedJson['title'],
       description: parsedJson['title'],
       tags: parsedJson['title'],
