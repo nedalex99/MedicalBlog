@@ -33,21 +33,12 @@ class FirestoreService {
     return _firestoreInstance.collection('users').doc(uid).set(userJson);
   }
 
-  Future<void> addPost({String title, String description, List<String> tags}) {
-    Post post = Post(
-      title: title,
-      description: description,
-      dateTime: DateTime.now(),
-      tags: tags,
-    );
-
+  Future<void> addPost({
+    Post post,
+  }) {
     Map<String, dynamic> postJson = post.toJson();
 
-    return _firestoreInstance
-        .collection('posts')
-        .doc(userUID)
-        .collection('posts')
-        .add(postJson);
+    return _firestoreInstance.collection('posts').add(postJson);
   }
 
   Future<DocumentSnapshot> getUserFirstAndLastName() {
@@ -55,10 +46,6 @@ class FirestoreService {
   }
 
   Future<QuerySnapshot> getPosts() {
-    return _firestoreInstance
-        .collection('posts')
-        .doc(userUID)
-        .collection('posts')
-        .get();
+    return _firestoreInstance.collection('posts').get();
   }
 }

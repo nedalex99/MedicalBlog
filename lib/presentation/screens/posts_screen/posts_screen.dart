@@ -32,18 +32,6 @@ class PostsScreen extends StatelessWidget {
               itemBuilder: (BuildContext context, int index) {
                 return PostCard(
                   post: _addPostController.postsFromFirestore[index],
-                  userData: UserData(
-                    firstName: 'abc',
-                    lastName: 'bca',
-                  ),
-                  // fullName: ,
-                  // profession: ,
-                  //   postTitle: ,
-                  // postDescription: ,
-                  // categories: [],
-                  // noOfLikes: ,
-                  // noOfDislikes: ,
-                  // noOfComments: ,
                 );
               },
               revealableHeight: 50,

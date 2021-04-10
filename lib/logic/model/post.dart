@@ -1,30 +1,37 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:medical_blog/logic/model/user_data.dart';
+
 class Post {
   String title;
   String description;
-  DateTime dateTime;
   List<String> tags;
   int noOfLikes;
   int noOfDislikes;
   int noOfComments;
+  Timestamp timestamp;
+  UserData userData;
 
   Post({
     this.title,
     this.description,
-    this.dateTime,
     this.tags,
     this.noOfLikes = 0,
     this.noOfDislikes = 0,
     this.noOfComments = 0,
+    this.timestamp,
+    this.userData,
   });
 
   Map<String, dynamic> toJson() => {
         'title': title,
         'description': description,
-        'dateTime': dateTime,
         'tags': tags,
         'noOfLikes': noOfLikes,
         'noOfDislikes': noOfDislikes,
         'noOfComments': noOfComments,
+        'timeStamp': timestamp,
+        'userData': userData.toJson(),
       };
 
   factory Post.fromJson(Map<dynamic, dynamic> parsedJson) {
@@ -39,6 +46,8 @@ class Post {
       noOfLikes: parsedJson['noOfLikes'],
       noOfDislikes: parsedJson['noOfDislikes'],
       noOfComments: parsedJson['noOfComments'],
+      timestamp: parsedJson['timeStamp'],
+      userData: parsedJson['userData'],
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:medical_blog/logic/model/post.dart';
@@ -5,13 +6,12 @@ import 'package:medical_blog/logic/model/user_data.dart';
 import 'package:medical_blog/presentation/widgets/input_fields/input_text_field_read_only/input_text_field_read_only.dart';
 import 'package:medical_blog/presentation/widgets/tag_widget/tag_widget.dart';
 import 'package:medical_blog/utils/constants/colors.dart';
+import 'package:medical_blog/utils/util_functions.dart';
 
 class PostCard extends StatelessWidget {
-  final UserData userData;
   final Post post;
 
   PostCard({
-    @required this.userData,
     @required this.post,
   });
 
@@ -61,7 +61,7 @@ class PostCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          '1h ago',
+                          '${handleSecondsFromTimestamp(post.timestamp.seconds)} ago',
                           style: TextStyle(
                             fontSize: 12.0,
                             color: kHintColor,
@@ -79,7 +79,7 @@ class PostCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
-                            "${userData.firstName} ${userData.lastName}",
+                            "${post.userData.firstName} ${post.userData.lastName}",
                             style: TextStyle(
                               fontSize: 16.0,
                             ),
@@ -236,5 +236,27 @@ class PostCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String handleSecondsFromTimestamp(int seconds) {
+    DateTime time = DateTime.fromMillisecondsSinceEpoch(seconds * 1000);
+    int years = DateTime.now().year - time.year;
+    int months = DateTime.now().month - time.month;
+    int days = DateTime.now().day - time.day;
+    int hours = DateTime.now().hour - time.hour;
+    int minutes = DateTime.now().minute - time.minute;
+    if (years > 0) {
+      return '$years' + 'y';
+    } else if (months > 0 && months <= 12) {
+      return '$months' + 'mo';
+    } else if (days > 0 && days <= daysInMonth(DateTime.now())) {
+      return '$days' + 'd';
+    } else if (hours > 0 && hours <= 24) {
+      return '$hours' + 'h';
+    } else if (minutes == 0) {
+      return '1m';
+    } else {
+      return '$minutes' + 'm';
+    }
   }
 }
