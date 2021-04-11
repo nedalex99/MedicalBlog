@@ -29,6 +29,12 @@ class PostsController extends GetxController {
                   .map((e) => e.toString())
                   .toList(),
               timestamp: element.data()['timeStamp'] as Timestamp,
+              likedBy: (element.data()['likedBy'] as List)
+                  .map((e) => e.toString())
+                  .toList(),
+              dislikedBy: (element.data()['dislikedBy'] as List)
+                  .map((e) => e.toString())
+                  .toList(),
               userData: userData,
             );
             postsFromFirestore.add(post);

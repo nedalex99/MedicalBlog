@@ -11,6 +11,8 @@ class Post {
   int noOfDislikes;
   int noOfComments;
   Timestamp timestamp;
+  List<String> likedBy;
+  List<String> dislikedBy;
   UserData userData;
 
   Post({
@@ -22,6 +24,8 @@ class Post {
     this.noOfDislikes = 0,
     this.noOfComments = 0,
     this.timestamp,
+    this.likedBy = const [],
+    this.dislikedBy = const [],
     this.userData,
   });
 
@@ -33,6 +37,8 @@ class Post {
         'noOfDislikes': noOfDislikes,
         'noOfComments': noOfComments,
         'timeStamp': timestamp,
+        'likedBy': likedBy,
+        'dislikedBy': dislikedBy,
         'userData': userData.toJson(),
       };
 
@@ -45,11 +51,13 @@ class Post {
       uid: parsedJson['uid'],
       title: parsedJson['title'],
       description: parsedJson['title'],
-      tags: parsedJson['title'],
+      tags: parsedJson['tags'],
       noOfLikes: parsedJson['noOfLikes'],
       noOfDislikes: parsedJson['noOfDislikes'],
       noOfComments: parsedJson['noOfComments'],
       timestamp: parsedJson['timeStamp'],
+      likedBy: parsedJson['liked'],
+      dislikedBy: parsedJson['disliked'],
       userData: parsedJson['userData'],
     );
   }

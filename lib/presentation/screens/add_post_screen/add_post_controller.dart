@@ -95,6 +95,7 @@ class AddPostController extends GetxController {
           post: post,
         )
         .then((value) => {
+              post.uid = value,
               Get.back(),
               Get.back(),
             });

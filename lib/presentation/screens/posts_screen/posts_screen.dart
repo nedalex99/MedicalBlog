@@ -6,6 +6,7 @@ import 'package:medical_blog/presentation/widgets/input_fields/input_text_field_
 import 'package:medical_blog/presentation/widgets/post_card/post_card.dart';
 import 'package:medical_blog/presentation/widgets/post_card/post_card_controller.dart';
 import 'package:medical_blog/utils/constants/routes.dart';
+import 'package:medical_blog/utils/session_temp.dart';
 import 'package:pull_to_reveal/pull_to_reveal.dart';
 
 class PostsScreen extends StatelessWidget {
@@ -33,11 +34,21 @@ class PostsScreen extends StatelessWidget {
                   postCardController: Get.put(
                     PostCardController(
                       postId: postsController.postsFromFirestore[index].uid,
-                      noOfLikes: postsController.postsFromFirestore[index].noOfLikes.obs,
-                      noOfDislikes: postsController.postsFromFirestore[index].noOfDislikes.obs,
-                      noOfComments: postsController.postsFromFirestore[index].noOfComments.obs,
-                      isLiked: false.obs,
-                      isDisliked: false.obs,
+                      noOfLikes: postsController
+                          .postsFromFirestore[index].noOfLikes.obs,
+                      noOfDislikes: postsController
+                          .postsFromFirestore[index].noOfDislikes.obs,
+                      noOfComments: postsController
+                          .postsFromFirestore[index].noOfComments.obs,
+                      isLiked: postsController.postsFromFirestore[index].likedBy
+                              .contains(userUID)
+                          ? true.obs
+                          : false.obs,
+                      isDisliked: postsController
+                              .postsFromFirestore[index].dislikedBy
+                              .contains(userUID)
+                          ? true.obs
+                          : false.obs,
                     ),
                     tag: '${postsController.postsFromFirestore[index].uid}',
                   ),

@@ -33,12 +33,15 @@ class FirestoreService {
     return _firestoreInstance.collection('users').doc(uid).set(userJson);
   }
 
-  Future<void> addPost({
+  Future<String> addPost({
     Post post,
-  }) {
+  }) async {
     Map<String, dynamic> postJson = post.toJson();
-
-    return _firestoreInstance.collection('posts').add(postJson);
+    String postId;
+    await _firestoreInstance.collection('posts').add(postJson).then((value) => {
+          postId = value.id,
+        });
+    return postId;
   }
 
   Future<void> updateNoOfLikesAndDislikes({
@@ -52,12 +55,22 @@ class FirestoreService {
     });
   }
 
-  Future<void> updateLikedDislikePosts({
+  Future<void> addLikedOrDislikedByUserPost({String postId, String fieldName}) {
+    return _firestoreInstance.collection('posts').doc(postId).update({
+      fieldName: FieldValue.arrayUnion(
+        [userUID],
+      ),
+    });
+  }
+
+  Future<void> removeLikedOrDislikedByUserPost({
     String postId,
-    String collectionName,
+    String fieldName,
   }) {
-    return _firestoreInstance.collection(collectionName).doc(userUID).set({
-      'postId': postId,
+    return _firestoreInstance.collection('posts').doc(postId).update({
+      fieldName: FieldValue.arrayRemove(
+        [userUID],
+      ),
     });
   }
 

@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:medical_blog/logic/model/post.dart';
@@ -7,7 +6,6 @@ import 'package:medical_blog/presentation/widgets/input_fields/input_text_field_
 import 'package:medical_blog/presentation/widgets/post_card/post_card_controller.dart';
 import 'package:medical_blog/presentation/widgets/tag_widget/tag_widget.dart';
 import 'package:medical_blog/utils/constants/colors.dart';
-import 'package:medical_blog/utils/constants/routes.dart';
 import 'package:medical_blog/utils/util_functions.dart';
 
 class PostCard extends StatelessWidget {
@@ -201,7 +199,9 @@ class PostCard extends StatelessWidget {
                         children: [
                           Obx(
                             () => Icon(
-                              postCardController.likeIcon.value,
+                              postCardController.isLiked.value
+                                  ? Icons.thumb_up_alt
+                                  : Icons.thumb_up_alt_outlined,
                             ),
                           ),
                           SizedBox(
@@ -221,7 +221,11 @@ class PostCard extends StatelessWidget {
                       child: Row(
                         children: [
                           Obx(
-                            () => Icon(postCardController.dislikeIcon.value),
+                            () => Icon(
+                              postCardController.isDisliked.value
+                                  ? Icons.thumb_down_alt
+                                  : Icons.thumb_down_alt_outlined,
+                            ),
                           ),
                           SizedBox(
                             width: Get.width * 0.015,
