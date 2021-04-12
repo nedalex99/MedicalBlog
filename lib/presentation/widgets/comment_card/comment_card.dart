@@ -1,22 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:medical_blog/logic/model/post.dart';
-import 'package:medical_blog/presentation/screens/add_comments_screen/add_comments_screen.dart';
-import 'package:medical_blog/presentation/widgets/input_fields/input_text_field_read_only/input_text_field_read_only.dart';
-import 'package:medical_blog/presentation/widgets/post_card/post_card_controller.dart';
-import 'package:medical_blog/presentation/widgets/tag_widget/tag_widget.dart';
+import 'package:medical_blog/logic/model/comment.dart';
+import 'package:medical_blog/presentation/widgets/comment_card/comment_card_controller.dart';
 import 'package:medical_blog/utils/constants/colors.dart';
 import 'package:medical_blog/utils/util_functions.dart';
 
-class PostCard extends StatelessWidget {
-  final Post post;
-  final PostCardController postCardController;
-  final bool isInAddComments;
+class CommentCard extends StatelessWidget {
+  final Comment comment;
+  final CommentCardController commentCardController;
 
-  PostCard({
-    @required this.post,
-    this.postCardController,
-    this.isInAddComments = false,
+  CommentCard({
+    @required this.comment,
+    @required this.commentCardController,
   });
 
   @override
@@ -65,7 +60,7 @@ class PostCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          '${handleSecondsFromTimestamp(post.timestamp.seconds)} ago',
+                          '${handleSecondsFromTimestamp(comment.timestamp.seconds)} ago',
                           style: TextStyle(
                             fontSize: 12.0,
                             color: kHintColor,
@@ -83,7 +78,7 @@ class PostCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
-                            "${post.userData.firstName} ${post.userData.lastName}",
+                            "${comment.userData.firstName} ${comment.userData.lastName}",
                             style: TextStyle(
                               fontSize: 16.0,
                             ),
@@ -111,26 +106,10 @@ class PostCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: Get.height * 0.013,
-                ),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    post.title,
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: Get.height * 0.005,
-                ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    post.description,
+                    comment.commentText,
                   ),
                 ),
                 SizedBox(
@@ -140,46 +119,6 @@ class PostCard extends StatelessWidget {
                   height: 2,
                   thickness: 2,
                   color: kHintColor,
-                ),
-                SizedBox(
-                  height: Get.height * 0.009,
-                ),
-                Row(
-                  children: List<TagWidget>.generate(
-                    post.tags.length,
-                    (index) => TagWidget(
-                      tagName: post.tags[index],
-                      isIconVisible: false,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: Get.height * 0.02,
-                ),
-                Row(
-                  children: [
-                    Obx(
-                      () => Text('${postCardController.noOfLikes.value} Likes'),
-                    ),
-                    SizedBox(
-                      width: Get.width * 0.09,
-                    ),
-                    Obx(
-                      () => Text(
-                        '${postCardController.noOfDislikes.value} Dislikes',
-                      ),
-                    ),
-                    Expanded(
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: Obx(
-                          () => Text(
-                            '${postCardController.noOfComments.value} Comments',
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
                 ),
                 SizedBox(
                   height: Get.height * 0.008,
@@ -196,12 +135,12 @@ class PostCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     GestureDetector(
-                      onTap: postCardController.onLikeTap,
+                      onTap: commentCardController.onLikeTap,
                       child: Row(
                         children: [
                           Obx(
                             () => Icon(
-                              postCardController.isLiked.value
+                              commentCardController.isLiked.value
                                   ? Icons.thumb_up_alt
                                   : Icons.thumb_up_alt_outlined,
                             ),
@@ -219,12 +158,12 @@ class PostCard extends StatelessWidget {
                       ),
                     ),
                     GestureDetector(
-                      onTap: postCardController.onDislikeTap,
+                      onTap: commentCardController.onDislikeTap,
                       child: Row(
                         children: [
                           Obx(
                             () => Icon(
-                              postCardController.isDisliked.value
+                              commentCardController.isDisliked.value
                                   ? Icons.thumb_down_alt
                                   : Icons.thumb_down_alt_outlined,
                             ),
@@ -254,15 +193,6 @@ class PostCard extends StatelessWidget {
                 SizedBox(
                   height: Get.height * 0.008,
                 ),
-                !isInAddComments ? InputTextFieldReadOnly(
-                  hint: 'Leave a comment...',
-                  onTap: () => Get.to(
-                    () => AddCommentsScreen(
-                      post: post,
-                      postCardController: postCardController,
-                    ),
-                  ),
-                ) : Container(),
               ],
             ),
           ),

@@ -10,8 +10,6 @@ class PostCardController extends GetxController {
   RxInt noOfComments = 0.obs;
   RxBool isLiked = false.obs;
   RxBool isDisliked = false.obs;
-  List<String> likedList = [];
-  List<String> dislikedList = [];
 
   FirestoreService _firestoreService = Get.find();
 

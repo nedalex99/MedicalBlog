@@ -26,3 +26,25 @@ int daysInMonth(DateTime date) {
       firstDayThisMonth.month + 1, firstDayThisMonth.day);
   return firstDayNextMonth.difference(firstDayThisMonth).inDays;
 }
+
+String handleSecondsFromTimestamp(int seconds) {
+  DateTime time = DateTime.fromMillisecondsSinceEpoch(seconds * 1000);
+  int years = DateTime.now().year - time.year;
+  int months = DateTime.now().month - time.month;
+  int days = DateTime.now().day - time.day;
+  int hours = DateTime.now().hour - time.hour;
+  int minutes = DateTime.now().minute - time.minute;
+  if (years > 0) {
+    return '$years' + 'y';
+  } else if (months > 0 && months <= 12) {
+    return '$months' + 'mo';
+  } else if (days > 0 && days <= daysInMonth(DateTime.now())) {
+    return '$days' + 'd';
+  } else if (hours > 0 && hours <= 24) {
+    return '$hours' + 'h';
+  } else if (minutes == 0) {
+    return '1m';
+  } else {
+    return '$minutes' + 'm';
+  }
+}
