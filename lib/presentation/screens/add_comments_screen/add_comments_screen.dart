@@ -1,8 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:medical_blog/logic/model/comment.dart';
 import 'package:medical_blog/logic/model/post.dart';
-import 'package:medical_blog/logic/model/user_data.dart';
 import 'package:medical_blog/presentation/screens/add_comments_screen/add_comments_controller.dart';
 import 'package:medical_blog/presentation/widgets/comment_card/comment_card.dart';
 import 'package:medical_blog/presentation/widgets/comment_card/comment_card_controller.dart';
@@ -12,6 +9,7 @@ import 'package:medical_blog/presentation/widgets/post_card/post_card.dart';
 import 'package:medical_blog/presentation/widgets/post_card/post_card_controller.dart';
 
 import 'package:get/get.dart';
+import 'package:medical_blog/utils/session_temp.dart';
 
 class AddCommentsScreen extends StatelessWidget {
   final AddCommentsController _addCommentsController =
@@ -29,8 +27,39 @@ class AddCommentsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback(
+        (_) => _addCommentsController.getComments(postId: post.uid));
     return Scaffold(
-      body: Padding(
+      body: Scaffold(
+        bottomNavigationBar: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              width: Get.width * 0.9,
+              child: InputTextField(
+                typeOfText: TextInputType.text,
+                hint: 'Leave a comment...',
+                controller: Get.put(InputTextFieldController(),
+                    tag: 'Leave a comment...'),
+                inputTextChecked: _addCommentsController.commentTextCallback,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                right: 8.0,
+              ),
+              child: GestureDetector(
+                onTap: () => _addCommentsController.addCommentToPost(
+                  postId: post.uid,
+                ),
+                child: Icon(
+                  Icons.send,
+                ),
+              ),
+            ),
+          ],
+        ),
+        body: Padding(
           padding: const EdgeInsets.only(
             top: 50.0,
             left: 18.0,
@@ -80,56 +109,53 @@ class AddCommentsScreen extends StatelessWidget {
                         )
                       ],
                     ),
-                    CommentCard(
-                      comment: Comment(
-                        commentText: 'Abc',
-                        userData: UserData(firstName: 'abc', lastName: 'bbc'),
-                        commentId: '123',
-                        noOfLikes: 0,
-                        noOfDislikes: 0,
-                        timestamp: Timestamp.now(),
-                      ),
-                      commentCardController: Get.put(
-                        CommentCardController(
-                            noOfLikes: 0.obs,
-                            noOfDislikes: 0.obs,
-                            commentId: '123',
-                            isDisliked: false.obs,
-                            isLiked: false.obs),
-                        tag: 'abc',
-                      ),
+                    SizedBox(
+                      height: 16.0,
                     ),
                   ],
                 ),
               ),
-              SliverFillRemaining(
-                hasScrollBody: true,
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    child: ListView(
-                      reverse: true,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            bottom: 20.0,
+              Obx(
+                () => SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      return CommentCard(
+                        comment:
+                            _addCommentsController.commentsFromFirestore[index],
+                        postId: post.uid,
+                        commentCardController: Get.put(
+                          CommentCardController(
+                            commentId: _addCommentsController
+                                .commentsFromFirestore[index].commentId,
+                            noOfLikes: _addCommentsController
+                                .commentsFromFirestore[index].noOfLikes.obs,
+                            noOfDislikes: _addCommentsController
+                                .commentsFromFirestore[index].noOfDislikes.obs,
+                            isLiked: _addCommentsController
+                                    .commentsFromFirestore[index].likedBy
+                                    .contains(userUID)
+                                ? true.obs
+                                : false.obs,
+                            isDisliked: _addCommentsController
+                                    .commentsFromFirestore[index].dislikedBy
+                                    .contains(userUID)
+                                ? true.obs
+                                : false.obs,
                           ),
-                          child: InputTextField(
-                            typeOfText: TextInputType.text,
-                            hint: 'Leave a comment...',
-                            controller: Get.put(InputTextFieldController(),
-                                tag: 'Leave a comment...'),
-                            inputTextChecked:
-                                _addCommentsController.commentTextCallback,
-                          ),
+                          tag: _addCommentsController
+                              .commentsFromFirestore[index].commentText,
                         ),
-                      ],
-                    ),
+                      );
+                    },
+                    childCount:
+                        _addCommentsController.commentsFromFirestore.length,
                   ),
                 ),
               ),
             ],
-          )),
+          ),
+        ),
+      ),
     );
   }
 }

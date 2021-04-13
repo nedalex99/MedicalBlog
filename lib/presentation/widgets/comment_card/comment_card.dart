@@ -7,10 +7,12 @@ import 'package:medical_blog/utils/util_functions.dart';
 
 class CommentCard extends StatelessWidget {
   final Comment comment;
+  final String postId;
   final CommentCardController commentCardController;
 
   CommentCard({
     @required this.comment,
+    @required this.postId,
     @required this.commentCardController,
   });
 
@@ -83,9 +85,6 @@ class CommentCard extends StatelessWidget {
                               fontSize: 16.0,
                             ),
                           ),
-                          // SizedBox(
-                          //   height: Get.height * 0.005,
-                          // ),
                           Text(
                             'Student',
                             style: TextStyle(
@@ -121,21 +120,14 @@ class CommentCard extends StatelessWidget {
                   color: kHintColor,
                 ),
                 SizedBox(
-                  height: Get.height * 0.008,
-                ),
-                Divider(
-                  height: 2,
-                  thickness: 2,
-                  color: kHintColor,
-                ),
-                SizedBox(
                   height: Get.height * 0.01,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     GestureDetector(
-                      onTap: commentCardController.onLikeTap,
+                      onTap: () =>
+                          commentCardController.onLikeTap(postId: postId),
                       child: Row(
                         children: [
                           Obx(
@@ -148,17 +140,20 @@ class CommentCard extends StatelessWidget {
                           SizedBox(
                             width: Get.width * 0.015,
                           ),
-                          Text(
-                            'Like',
-                            style: TextStyle(
-                              fontSize: 18.0,
+                          Obx(
+                            () => Text(
+                              commentCardController.noOfLikes.value.toString(),
+                              style: TextStyle(
+                                fontSize: 18.0,
+                              ),
                             ),
                           ),
                         ],
                       ),
                     ),
                     GestureDetector(
-                      onTap: commentCardController.onDislikeTap,
+                      onTap: () =>
+                          commentCardController.onDislikeTap(postId: postId),
                       child: Row(
                         children: [
                           Obx(
@@ -171,10 +166,13 @@ class CommentCard extends StatelessWidget {
                           SizedBox(
                             width: Get.width * 0.015,
                           ),
-                          Text(
-                            'Dislike',
-                            style: TextStyle(
-                              fontSize: 18.0,
+                          Obx(
+                            () => Text(
+                              commentCardController.noOfDislikes.value
+                                  .toString(),
+                              style: TextStyle(
+                                fontSize: 18.0,
+                              ),
                             ),
                           ),
                         ],

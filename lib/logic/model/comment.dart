@@ -7,6 +7,8 @@ class Comment {
   Timestamp timestamp;
   int noOfLikes;
   int noOfDislikes;
+  List<String> likedBy;
+  List<String> dislikedBy;
   UserData userData;
 
   Comment({
@@ -15,16 +17,19 @@ class Comment {
     this.timestamp,
     this.noOfLikes = 0,
     this.noOfDislikes = 0,
+    this.likedBy = const [],
+    this.dislikedBy = const [],
     this.userData,
   });
 
   Map<String, dynamic> toJson() => {
-        'id': commentId,
         'commentText': commentText,
         'timestamp': timestamp,
         'noOfLikes': noOfLikes,
         'noOfDislikes': noOfDislikes,
-        'userData': userData,
+        'likedBy': likedBy,
+        'dislikedBy': dislikedBy,
+        'userData': userData.toJson(),
       };
 
   factory Comment.fromJson(Map<dynamic, dynamic> parsedJson) {
@@ -32,13 +37,16 @@ class Comment {
       return Comment();
     }
 
+    UserData userData = UserData.fromJson(parsedJson['userData']);
+
     return Comment(
-      commentId: parsedJson['id'],
       commentText: parsedJson['commentText'],
       timestamp: parsedJson['timestamp'],
       noOfLikes: parsedJson['noOfLikes'],
       noOfDislikes: parsedJson['noOfDislikes'],
-      userData: parsedJson['userData'],
+      likedBy: (parsedJson['likedBy'] as List).map((e) => e.toString()).toList(),
+      dislikedBy: (parsedJson['dislikedBy'] as List).map((e) => e.toString()).toList(),
+      userData: userData,
     );
   }
 }

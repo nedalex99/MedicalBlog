@@ -12,4 +12,17 @@ class UserData {
         'lastName': lastName,
         'country': country
       };
+
+  factory UserData.fromJson(Map<dynamic, dynamic> parsedJson) {
+    if (parsedJson == null || parsedJson.isEmpty) {
+      return UserData();
+    }
+
+    return UserData(
+      email: parsedJson['email'],
+      firstName: parsedJson['firstName'],
+      lastName: parsedJson['lastName'],
+      country: parsedJson['country]'],
+    );
+  }
 }

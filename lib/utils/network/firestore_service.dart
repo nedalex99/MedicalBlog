@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:medical_blog/logic/model/comment.dart';
 import 'package:medical_blog/logic/model/post.dart';
 import 'package:medical_blog/logic/model/user_data.dart';
 import 'package:medical_blog/utils/session_temp.dart';
@@ -72,6 +73,81 @@ class FirestoreService {
         [userUID],
       ),
     });
+  }
+
+  Future<String> addCommentToPost({
+    String postId,
+    Comment comment,
+  }) async {
+    String commentId;
+    _firestoreInstance
+        .collection('posts')
+        .doc(postId)
+        .collection('comments')
+        .add(comment.toJson())
+        .then((value) => {
+              commentId = value.id,
+            });
+    return commentId;
+  }
+
+  Future<void> updateNoOfLikesAndDislikesToComment({
+    String postId,
+    String commentId,
+    int noOfLikes,
+    int noOfDislikes,
+  }) {
+    return _firestoreInstance
+        .collection('posts')
+        .doc(postId)
+        .collection('comments')
+        .doc(commentId)
+        .update({
+      'noOfLikes': noOfLikes,
+      'noOfDislikes': noOfDislikes,
+    });
+  }
+
+  Future<void> addLikedOrDislikedByUserCommentPost({
+    String postId,
+    String commentId,
+    String fieldName,
+  }) {
+    return _firestoreInstance
+        .collection('posts')
+        .doc(postId)
+        .collection('comments')
+        .doc(commentId)
+        .update({
+      fieldName: FieldValue.arrayUnion(
+        [userUID],
+      ),
+    });
+  }
+
+  Future<void> removeLikedOrDislikedByUserCommentPost({
+    String postId,
+    String commentId,
+    String fieldName,
+  }) {
+    return _firestoreInstance
+        .collection('posts')
+        .doc(postId)
+        .collection('comments')
+        .doc(commentId)
+        .update({
+      fieldName: FieldValue.arrayRemove(
+        [userUID],
+      ),
+    });
+  }
+
+  Future<QuerySnapshot> getComments({String postId}) {
+    return _firestoreInstance
+        .collection('posts')
+        .doc(postId)
+        .collection('comments')
+        .get();
   }
 
   Future<DocumentSnapshot> getUserFirstAndLastName() {

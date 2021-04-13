@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:medical_blog/logic/model/post.dart';
 import 'package:medical_blog/logic/model/user_data.dart';
-import 'package:medical_blog/utils/network/auth_service.dart';
 import 'package:medical_blog/utils/network/firestore_service.dart';
 
 class PostsController extends GetxController {
