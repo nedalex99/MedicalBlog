@@ -3,11 +3,11 @@ import 'package:get/get.dart';
 import 'package:medical_blog/presentation/screens/add_post_screen/add_post_controller.dart';
 import 'package:medical_blog/utils/constants/colors.dart';
 
-class Appbar extends StatelessWidget {
+class CustomAppBar extends StatelessWidget {
   final String title;
   final AddPostController addPostController;
 
-  Appbar({
+  CustomAppBar({
     @required this.title,
     this.addPostController,
   });

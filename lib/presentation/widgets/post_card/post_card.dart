@@ -42,7 +42,7 @@ class PostCard extends StatelessWidget {
                 BoxShadow(
                   color: Color(0xFFe6e6e6),
                   spreadRadius: 2,
-                  blurRadius: 2,
+                  blurRadius: 10,
                   offset: Offset(0, 0),
                 ),
               ],

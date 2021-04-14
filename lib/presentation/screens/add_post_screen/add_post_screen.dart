@@ -16,7 +16,7 @@ class AddPostScreen extends StatelessWidget {
         preferredSize: const Size.fromHeight(
           80,
         ),
-        child: Appbar(
+        child: CustomAppBar(
           title: 'Create post',
           addPostController: _addPostController,
         ),

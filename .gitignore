@@ -55,3 +55,8 @@ ios/build/XCBuildData/build.db
 ios/build/XCBuildData/BuildDescriptionCacheIndex-8383fddff4739463758de5bfde8ee12c
 ios/build/XCBuildData/dffe61ecd9f4c96aba63856b0657e5e6-desc.xcbuild
 ios/build/XCBuildData/dffe61ecd9f4c96aba63856b0657e5e6-manifest.xcbuild
+ios/build/XCBuildData/9113a87fc8297244f4c4165ed4a827c9-desc.xcbuild
+ios/build/XCBuildData/9113a87fc8297244f4c4165ed4a827c9-manifest.xcbuild
+ios/build/XCBuildData/9a9b7196cef514ab8990d928e0dfd9b6-desc.xcbuild
+ios/build/XCBuildData/9a9b7196cef514ab8990d928e0dfd9b6-manifest.xcbuild
+lib/presentation/screens/add_comments_screen/add_comments_controller.dart

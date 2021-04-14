@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:medical_blog/logic/model/comment.dart';
 import 'package:medical_blog/logic/model/user_data.dart';
@@ -8,6 +9,8 @@ import 'package:medical_blog/utils/network/firestore_service.dart';
 class AddCommentsController extends GetxController {
   String commentText;
   RxList<Comment> commentsFromFirestore = List<Comment>().obs;
+  RxString dropDownValue = "Oldest first".obs;
+  ScrollController scrollController = ScrollController();
   FirestoreService _firestoreService = Get.find();
 
   void commentTextCallback(String value) {
@@ -49,6 +52,34 @@ class AddCommentsController extends GetxController {
               comment.commentId = value,
               Get.back(),
             });
-    commentsFromFirestore.insert(0, comment);
+    commentsFromFirestore.add(comment);
+    scrollController.jumpTo(
+      scrollController.position.maxScrollExtent,
+    );
+    FocusScope.of(Get.context).unfocus();
+  }
+
+  void setNewDropDownValue({String value}) {
+    if (dropDownValue.value != value) {
+      switch (value) {
+        case 'Oldest first':
+          commentsFromFirestore.sort(
+              (a, b) => a.timestamp.seconds.compareTo(b.timestamp.seconds));
+          break;
+        case 'Newest first':
+          commentsFromFirestore.sort(
+              (a, b) => b.timestamp.seconds.compareTo(a.timestamp.seconds));
+          break;
+        case 'Most likes first':
+          commentsFromFirestore
+              .sort((a, b) => b.noOfLikes.compareTo(a.noOfLikes));
+          break;
+        case 'Most dislikes first':
+          commentsFromFirestore
+              .sort((a, b) => b.noOfDislikes.compareTo(a.noOfDislikes));
+          break;
+      }
+    }
+    dropDownValue.value = value;
   }
 }
