@@ -104,8 +104,11 @@ class PostCard extends StatelessWidget {
                     Expanded(
                       child: Align(
                         alignment: Alignment.bottomRight,
-                        child: Icon(
-                          Icons.more_vert_rounded,
+                        child: IconButton(
+                          onPressed: postCardController.showModal,
+                          icon: Icon(
+                            Icons.more_vert_rounded,
+                          ),
                         ),
                       ),
                     ),
@@ -254,15 +257,17 @@ class PostCard extends StatelessWidget {
                 SizedBox(
                   height: Get.height * 0.008,
                 ),
-                !isInAddComments ? InputTextFieldReadOnly(
-                  hint: 'Leave a comment...',
-                  onTap: () => Get.to(
-                    () => AddCommentsScreen(
-                      post: post,
-                      postCardController: postCardController,
-                    ),
-                  ),
-                ) : Container(),
+                !isInAddComments
+                    ? InputTextFieldReadOnly(
+                        hint: 'Leave a comment...',
+                        onTap: () => Get.to(
+                          () => AddCommentsScreen(
+                            post: post,
+                            postCardController: postCardController,
+                          ),
+                        ),
+                      )
+                    : Container(),
               ],
             ),
           ),

@@ -33,6 +33,7 @@ class PostsScreen extends StatelessWidget {
                   post: postsController.postsFromFirestore[index],
                   postCardController: Get.put(
                     PostCardController(
+                      post: postsController.postsFromFirestore[index],
                       postId: postsController.postsFromFirestore[index].uid,
                       noOfLikes: postsController
                           .postsFromFirestore[index].noOfLikes.obs,
@@ -46,6 +47,10 @@ class PostsScreen extends StatelessWidget {
                           : false.obs,
                       isDisliked: postsController
                               .postsFromFirestore[index].dislikedBy
+                              .contains(userUID)
+                          ? true.obs
+                          : false.obs,
+                      isSaved: postsController.postsFromFirestore[index].savedBy
                               .contains(userUID)
                           ? true.obs
                           : false.obs,

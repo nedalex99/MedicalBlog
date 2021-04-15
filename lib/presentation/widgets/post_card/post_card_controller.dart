@@ -1,25 +1,30 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:medical_blog/logic/model/post.dart';
 import 'package:medical_blog/presentation/widgets/dialogs/loading_dialog.dart';
 import 'package:medical_blog/utils/network/firestore_service.dart';
 
 class PostCardController extends GetxController {
   final String postId;
-
+  final Post post;
   RxInt noOfLikes = 0.obs;
   RxInt noOfDislikes = 0.obs;
   RxInt noOfComments = 0.obs;
   RxBool isLiked = false.obs;
   RxBool isDisliked = false.obs;
+  RxBool isSaved = false.obs;
 
   FirestoreService _firestoreService = Get.find();
 
   PostCardController({
+    this.post,
     this.postId,
     this.noOfLikes,
     this.noOfDislikes,
     this.noOfComments,
     this.isLiked,
     this.isDisliked,
+    this.isSaved,
   });
 
   void onLikeTap() {
@@ -99,5 +104,108 @@ class PostCardController extends GetxController {
       fieldName: collectionName,
       postId: postId,
     );
+  }
+
+  void showModal() {
+    showModalBottomSheet(
+      context: Get.context,
+      builder: (context) {
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: Icon(
+                  isSaved.value ? Icons.bookmark : Icons.bookmark_border,
+                ),
+                title: Text(
+                  isSaved.value ? 'Unsave this post' : 'Save this post',
+                ),
+                onTap: saveThisPost,
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.close,
+                ),
+                title: Text(
+                  'Hide this post',
+                ),
+                onTap: hideThisPost,
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.notification_important,
+                ),
+                title: Text(
+                  'Turn on notifications for this post',
+                ),
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.share,
+                ),
+                title: Text(
+                  'Share this post',
+                ),
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.report,
+                ),
+                title: Text(
+                  'Report this post',
+                ),
+                onTap: reportThisPost,
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void saveThisPost() {
+    Get.dialog(LoadingDialog());
+    if (isSaved.value) {
+      _firestoreService.removeSavedPostByUser(postId: postId).then((value) => {
+            _firestoreService
+                .removeFromSavedCollection(postId: postId)
+                .then((value) => {
+                      isSaved.value = false,
+                      Get.back(),
+                      Get.back(),
+                    }),
+          });
+    } else {
+      _firestoreService.addSavedPostByUser(postId: postId).then(
+            (value) => {
+              _firestoreService
+                  .addToSavedCollection(post: post)
+                  .then((value) => {
+                        isSaved.value = true,
+                        Get.back(),
+                        Get.back(),
+                      }),
+            },
+          );
+    }
+  }
+
+  void hideThisPost() {}
+
+  void reportThisPost() {
+  //   Get.back();
+  //   showModalBottomSheet(
+  //       context: Get.context,
+  //       builder: (context) {
+  //         return Column(
+  //           children: [
+  //             ListTile(
+  //               title: Text('abc'),
+  //             ),
+  //           ],
+  //         );
+  //       });
   }
 }

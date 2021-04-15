@@ -122,7 +122,10 @@ class AddCommentsScreen extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text('3 Responses'),
+                                Obx(
+                                  () => Text(
+                                      '${_addCommentsController.commentsFromFirestore.length} Responses'),
+                                ),
                                 Row(
                                   children: [
                                     Obx(

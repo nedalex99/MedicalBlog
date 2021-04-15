@@ -13,6 +13,7 @@ class Post {
   Timestamp timestamp;
   List<String> likedBy;
   List<String> dislikedBy;
+  List<String> savedBy;
   UserData userData;
 
   Post({
@@ -26,6 +27,7 @@ class Post {
     this.timestamp,
     this.likedBy = const [],
     this.dislikedBy = const [],
+    this.savedBy = const [],
     this.userData,
   });
 
@@ -39,6 +41,7 @@ class Post {
         'timeStamp': timestamp,
         'likedBy': likedBy,
         'dislikedBy': dislikedBy,
+        'savedBy': savedBy,
         'userData': userData.toJson(),
       };
 
@@ -58,6 +61,7 @@ class Post {
       timestamp: parsedJson['timeStamp'],
       likedBy: parsedJson['liked'],
       dislikedBy: parsedJson['disliked'],
+      savedBy: parsedJson['savedBy'],
       userData: parsedJson['userData'],
     );
   }

@@ -80,6 +80,9 @@ class FirestoreService {
     Comment comment,
   }) async {
     String commentId;
+    _firestoreInstance.collection('posts').doc(postId).update({
+      'noOfComments': FieldValue.increment(1),
+    });
     _firestoreInstance
         .collection('posts')
         .doc(postId)
@@ -148,6 +151,32 @@ class FirestoreService {
         .doc(postId)
         .collection('comments')
         .get();
+  }
+
+  Future<void> addSavedPostByUser({String postId}) {
+    return _firestoreInstance.collection('posts').doc(postId).update({
+      'savedBy': FieldValue.arrayUnion(
+        [userUID],
+      ),
+    });
+  }
+
+  Future<void> removeSavedPostByUser({String postId}) {
+    return _firestoreInstance.collection('posts').doc(postId).update({
+      'savedBy': FieldValue.arrayRemove(
+        [userUID],
+      ),
+    });
+  }
+
+  Future<void> addToSavedCollection({Post post}) {
+    return _firestoreInstance.collection('saved').doc(post.uid).set(
+          post.toJson(),
+        );
+  }
+
+  Future<void> removeFromSavedCollection({String postId}) {
+    return _firestoreInstance.collection('saved').doc(postId).delete();
   }
 
   Future<DocumentSnapshot> getUserFirstAndLastName() {
