@@ -9,6 +9,12 @@ class PostsController extends GetxController {
 
   RxList<Post> postsFromFirestore = List<Post>().obs;
 
+  @override
+  void onInit() {
+    getPosts();
+    super.onInit();
+  }
+
   Future<void> getPosts() async {
     await _firestoreService.getPosts().then((value) => {
           value.docs.forEach((element) {

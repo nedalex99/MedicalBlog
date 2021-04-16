@@ -45,24 +45,51 @@ class Post {
         'userData': userData.toJson(),
       };
 
-  factory Post.fromJson(Map<dynamic, dynamic> parsedJson) {
-    if (parsedJson == null || parsedJson.isEmpty) {
+  factory Post.fromQuerySnapshot(QueryDocumentSnapshot querySnapshot) {
+    if (querySnapshot == null || !querySnapshot.exists) {
       return Post();
     }
 
     return Post(
+      title: querySnapshot['title'],
+      description: querySnapshot['title'],
+      tags: querySnapshot['tags'],
+      noOfLikes: querySnapshot['noOfLikes'],
+      noOfDislikes: querySnapshot['noOfDislikes'],
+      noOfComments: querySnapshot['noOfComments'],
+      timestamp: querySnapshot['timeStamp'],
+      likedBy: querySnapshot['liked'],
+      dislikedBy: querySnapshot['disliked'],
+      savedBy: querySnapshot['savedBy'],
+      userData: querySnapshot['userData'],
+    );
+  }
+
+  factory Post.fromJson(Map<String, dynamic> parsedJson) {
+    if (parsedJson == null || parsedJson.isEmpty) {
+      return Post();
+    }
+
+    UserData userData = UserData(
+      firstName: parsedJson['userData']['firstName'],
+      lastName: parsedJson['userData']['lastName'],
+    );
+
+    return Post(
       uid: parsedJson['uid'],
       title: parsedJson['title'],
-      description: parsedJson['title'],
-      tags: parsedJson['tags'],
+      description: parsedJson['description'],
+      tags: (parsedJson['tags'] as List).map((e) => e.toString()).toList(),
       noOfLikes: parsedJson['noOfLikes'],
       noOfDislikes: parsedJson['noOfDislikes'],
       noOfComments: parsedJson['noOfComments'],
-      timestamp: parsedJson['timeStamp'],
-      likedBy: parsedJson['liked'],
-      dislikedBy: parsedJson['disliked'],
-      savedBy: parsedJson['savedBy'],
-      userData: parsedJson['userData'],
+      timestamp: parsedJson['timeStamp'] as Timestamp,
+      likedBy: (parsedJson['likedBy'] as List).map((e) => e.toString()).toList(),
+      dislikedBy:
+          (parsedJson['dislikedBy'] as List).map((e) => e.toString()).toList(),
+      savedBy:
+          (parsedJson['savedBy'] as List).map((e) => e.toString()).toList(),
+      userData: userData,
     );
   }
 }

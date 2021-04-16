@@ -14,8 +14,6 @@ class PostsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => postsController.getPosts());
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(

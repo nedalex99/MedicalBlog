@@ -179,6 +179,10 @@ class FirestoreService {
     return _firestoreInstance.collection('saved').doc(postId).delete();
   }
 
+  Stream<QuerySnapshot> getFromSavedCollection() {
+    return _firestoreInstance.collection('saved').snapshots();
+  }
+
   Future<DocumentSnapshot> getUserFirstAndLastName() {
     return _firestoreInstance.collection('users').doc(userUID).get();
   }
