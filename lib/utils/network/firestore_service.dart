@@ -170,17 +170,31 @@ class FirestoreService {
   }
 
   Future<void> addToSavedCollection({Post post}) {
-    return _firestoreInstance.collection('saved').doc(post.uid).set(
+    return _firestoreInstance
+        .collection('saved')
+        .doc(userUID)
+        .collection('posts')
+        .doc(post.uid)
+        .set(
           post.toJson(),
         );
   }
 
   Future<void> removeFromSavedCollection({String postId}) {
-    return _firestoreInstance.collection('saved').doc(postId).delete();
+    return _firestoreInstance
+        .collection('saved')
+        .doc(userUID)
+        .collection('posts')
+        .doc(postId)
+        .delete();
   }
 
-  Stream<QuerySnapshot> getFromSavedCollection() {
-    return _firestoreInstance.collection('saved').snapshots();
+  Future<QuerySnapshot> getFromSavedCollection() {
+    return _firestoreInstance
+        .collection('saved')
+        .doc(userUID)
+        .collection('posts')
+        .get();
   }
 
   Future<DocumentSnapshot> getUserFirstAndLastName() {
