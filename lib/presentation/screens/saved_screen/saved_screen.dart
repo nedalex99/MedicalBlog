@@ -99,6 +99,7 @@ class SavedScreen extends StatelessWidget {
                   (BuildContext context, int index) {
                     return PostCard(
                       post: _savedScreenController.posts[index],
+                      isInSavedScreen: true,
                       postCardController: Get.put(
                           PostCardController(
                             post: _savedScreenController.posts[index],
@@ -119,8 +120,6 @@ class SavedScreen extends StatelessWidget {
                                 ? true.obs
                                 : false.obs,
                             isSaved: true.obs,
-                            removeFromSavedPosts: () => _savedScreenController
-                                .removePostFromSaved(index),
                           ),
                           tag: _savedScreenController.posts[index].uid),
                     );

@@ -98,4 +98,8 @@ class SavedScreenController extends GetxController {
   void removePostFromSaved(int index) {
     posts.removeAt(index);
   }
+
+  void removeWithPostId(String postId) {
+    posts.removeWhere((element) => element.uid == postId);
+  }
 }

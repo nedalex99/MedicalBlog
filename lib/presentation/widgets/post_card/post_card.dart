@@ -12,11 +12,13 @@ class PostCard extends StatelessWidget {
   final Post post;
   final PostCardController postCardController;
   final bool isInAddComments;
+  final bool isInSavedScreen;
 
   PostCard({
     @required this.post,
     this.postCardController,
     this.isInAddComments = false,
+    this.isInSavedScreen = false,
   });
 
   @override
@@ -105,7 +107,9 @@ class PostCard extends StatelessWidget {
                       child: Align(
                         alignment: Alignment.bottomRight,
                         child: IconButton(
-                          onPressed: postCardController.showModal,
+                          onPressed: () => postCardController.showModal(
+                            isInSavedScreen: isInSavedScreen,
+                          ),
                           icon: Icon(
                             Icons.more_vert_rounded,
                           ),
@@ -258,12 +262,16 @@ class PostCard extends StatelessWidget {
                   height: Get.height * 0.008,
                 ),
                 !isInAddComments
-                    ? InputTextFieldReadOnly(
-                        hint: 'Leave a comment...',
-                        onTap: () => Get.to(
-                          () => AddCommentsScreen(
-                            post: post,
-                            postCardController: postCardController,
+                    ? SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.85,
+                        height: 50.0,
+                        child: InputTextFieldReadOnly(
+                          hint: 'Leave a comment...',
+                          onTap: () => Get.to(
+                            () => AddCommentsScreen(
+                              post: post,
+                              postCardController: postCardController,
+                            ),
                           ),
                         ),
                       )

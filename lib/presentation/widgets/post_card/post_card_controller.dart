@@ -15,7 +15,6 @@ class PostCardController extends GetxController {
   RxBool isLiked = false.obs;
   RxBool isDisliked = false.obs;
   RxBool isSaved = false.obs;
-  Function removeFromSavedPosts;
 
   FirestoreService _firestoreService = Get.find();
 
@@ -28,7 +27,6 @@ class PostCardController extends GetxController {
     this.isLiked,
     this.isDisliked,
     this.isSaved,
-    this.removeFromSavedPosts,
   });
 
   void onLikeTap() {
@@ -110,7 +108,7 @@ class PostCardController extends GetxController {
     );
   }
 
-  void showModal() {
+  void showModal({bool isInSavedScreen}) {
     showModalBottomSheet(
       context: Get.context,
       builder: (context) {
@@ -120,7 +118,7 @@ class PostCardController extends GetxController {
           controller: Get.put(
             PostCardOptionsModalController(
               isSaved: isSaved,
-              removeSavedBy: removeFromSavedPosts,
+              isInSavedScreen: isInSavedScreen,
             ),
             tag: postId,
           ),
