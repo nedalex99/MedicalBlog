@@ -3,6 +3,9 @@ import 'package:medical_blog/presentation/screens/saved_screen/saved_screen_cont
 import 'package:medical_blog/presentation/widgets/bottom_nav_bar/bottom_navigation_bar.dart';
 import 'package:get/get.dart';
 import 'package:medical_blog/presentation/widgets/post_card/post_card.dart';
+import 'package:medical_blog/presentation/widgets/post_card/post_card_controller.dart';
+import 'package:medical_blog/utils/session_temp.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 class SavedScreen extends StatelessWidget {
   final SavedScreenController _savedScreenController =
@@ -10,26 +13,123 @@ class SavedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-    //   _savedScreenController.getPosts();
-    // });
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(
-          top: 50.0,
+          top: 75.0,
           left: 18.0,
           right: 18.0,
         ),
-        child: Obx(
-          () => ListView.builder(
-            itemBuilder: (context, index) => PostCard(
-              post: _savedScreenController.posts[index],
-              postCardController: Get.find(
-                tag: _savedScreenController.posts[index].uid,
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 32.0),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          'Choose:',
+                          style: TextStyle(
+                            fontSize: 22.0,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 12,
+                        ),
+                        Container(
+                          child: ToggleSwitch(
+                            minWidth: 90,
+                            initialLabelIndex: 0,
+                            cornerRadius: 20.0,
+                            activeFgColor: Colors.white,
+                            inactiveBgColor: Colors.grey,
+                            inactiveFgColor: Colors.white,
+                            labels: ['News', 'Posts'],
+                          ),
+                        ),
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: IconButton(
+                              icon: Icon(
+                                Icons.filter_list_outlined,
+                              ),
+                              onPressed: _savedScreenController.showFilterModal,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Obx(
+                        () => DropdownButton(
+                          items: <String>[
+                            'Oldest first',
+                            'Newest first',
+                            'Most likes first',
+                            'Most dislikes first',
+                          ]
+                              .map(
+                                (String e) => DropdownMenuItem(
+                                  child: Text(e),
+                                  value: e,
+                                ),
+                              )
+                              .toList(),
+                          value: _savedScreenController.dropdownValue.value,
+                          onChanged: (newValue) {
+                            _savedScreenController.setNewDropdownValue(
+                              value: newValue,
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-            itemCount: _savedScreenController.posts.length,
-          ),
+            Obx(
+              () => SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                    return PostCard(
+                      post: _savedScreenController.posts[index],
+                      postCardController: Get.put(
+                          PostCardController(
+                            post: _savedScreenController.posts[index],
+                            postId: _savedScreenController.posts[index].uid,
+                            noOfLikes: _savedScreenController
+                                .posts[index].noOfLikes.obs,
+                            noOfDislikes: _savedScreenController
+                                .posts[index].noOfDislikes.obs,
+                            noOfComments: _savedScreenController
+                                .posts[index].noOfComments.obs,
+                            isLiked: _savedScreenController.posts[index].likedBy
+                                    .contains(userUID)
+                                ? true.obs
+                                : false.obs,
+                            isDisliked: _savedScreenController
+                                    .posts[index].dislikedBy
+                                    .contains(userUID)
+                                ? true.obs
+                                : false.obs,
+                            isSaved: true.obs,
+                            removeFromSavedPosts: () => _savedScreenController
+                                .removePostFromSaved(index),
+                          ),
+                          tag: _savedScreenController.posts[index].uid),
+                    );
+                  },
+                  childCount: _savedScreenController.posts.length,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
       bottomNavigationBar: BottomNavBar(
