@@ -10,7 +10,7 @@ class Post {
   int noOfLikes;
   int noOfDislikes;
   int noOfComments;
-  Timestamp timestamp;
+  int timestamp;
   List<String> likedBy;
   List<String> dislikedBy;
   List<String> savedBy;
@@ -83,7 +83,7 @@ class Post {
       noOfLikes: parsedJson['noOfLikes'],
       noOfDislikes: parsedJson['noOfDislikes'],
       noOfComments: parsedJson['noOfComments'],
-      timestamp: parsedJson['timeStamp'] as Timestamp,
+      timestamp: parsedJson['timeStamp'] as int,
       likedBy: (parsedJson['likedBy'] as List).map((e) => e.toString()).toList(),
       dislikedBy:
           (parsedJson['dislikedBy'] as List).map((e) => e.toString()).toList(),

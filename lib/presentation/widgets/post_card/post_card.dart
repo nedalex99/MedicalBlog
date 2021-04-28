@@ -67,7 +67,7 @@ class PostCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          '${handleSecondsFromTimestamp(post.timestamp.seconds)} ago',
+                          '${handleMillisecondsFromTimestamp(post.timestamp)} ago',
                           style: TextStyle(
                             fontSize: 12.0,
                             color: kHintColor,

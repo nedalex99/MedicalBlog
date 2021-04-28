@@ -1,19 +1,35 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:medical_blog/presentation/widgets/input_fields/input_field_date_picker/input_field_date_picker.dart';
 import 'package:medical_blog/utils/constants/styles.dart';
 import 'package:medical_blog/utils/util_functions.dart';
+import 'package:intl/intl.dart';
 
 class InputFieldDatePickerController extends GetxController {
   Rx<TextStyle> hintTextStyle = kNoFocusNoErrorHintTextStyle.obs;
   Rx<TextEditingController> textController = TextEditingController().obs;
   RxString errorText = ''.obs..value = null;
+  DateTime dateTime = DateFormat("yyyy-MM-dd").parse(DateTime.now().toString());
+  final CheckCallback inputTextChecked;
+
+  InputFieldDatePickerController({
+    this.inputTextChecked,
+  });
 
   void getDate(BuildContext context) {
     showSheet(
       context: context,
       child: buildDatePicker(),
-      onClicked: () => Get.back(),
+      onClicked: saveDate,
     );
+  }
+
+  void saveDate() {
+    String date = dateTime.toString();
+    var formattedDate = DateFormat("yyyy-MM-dd").parse(date);
+    textController.value.text = formattedDate.toString();
+    inputTextChecked(textController.value.text);
+    Get.back();
   }
 
   Widget buildDatePicker() => SizedBox(
@@ -21,7 +37,9 @@ class InputFieldDatePickerController extends GetxController {
         child: CupertinoDatePicker(
           initialDateTime: DateTime.now(),
           mode: CupertinoDatePickerMode.date,
-          onDateTimeChanged: (dateTime) {},
+          onDateTimeChanged: (dateTime) {
+            this.dateTime = dateTime;
+          },
         ),
       );
 

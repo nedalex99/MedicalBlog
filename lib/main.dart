@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:medical_blog/presentation/screens/add_comments_screen/add_comments_screen.dart';
 import 'package:medical_blog/presentation/screens/add_post_screen/add_post_screen.dart';
 import 'package:medical_blog/presentation/screens/dashboard_screen/dashboard_screen.dart';
+import 'package:medical_blog/presentation/screens/filters_screen/filters_screen.dart';
 import 'package:medical_blog/presentation/screens/posts_screen/posts_screen.dart';
 import 'package:medical_blog/presentation/screens/profile_screen/profile_screen.dart';
 import 'package:medical_blog/presentation/screens/saved_screen/saved_screen.dart';
@@ -80,7 +81,11 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: kAddCommentsRoute,
           page: () => AddCommentsScreen(),
-        )
+        ),
+        GetPage(
+          name: kFiltersScreenRoute,
+          page: () => FiltersScreen(),
+        ),
       ],
     );
   }

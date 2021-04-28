@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:medical_blog/presentation/screens/filters_screen/filters_screen.dart';
+import 'package:medical_blog/presentation/screens/filters_screen/filters_screen_controller.dart';
 import 'package:medical_blog/presentation/screens/saved_screen/saved_screen_controller.dart';
 import 'package:medical_blog/presentation/widgets/bottom_nav_bar/bottom_navigation_bar.dart';
 import 'package:get/get.dart';
 import 'package:medical_blog/presentation/widgets/post_card/post_card.dart';
 import 'package:medical_blog/presentation/widgets/post_card/post_card_controller.dart';
+import 'package:medical_blog/utils/constants/routes.dart';
 import 'package:medical_blog/utils/session_temp.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
@@ -57,7 +60,15 @@ class SavedScreen extends StatelessWidget {
                               icon: Icon(
                                 Icons.filter_list_outlined,
                               ),
-                              onPressed: _savedScreenController.showFilterModal,
+                              onPressed: () => Get.to(() => FiltersScreen(
+                                    filtersScreenController: Get.put(
+                                      FiltersScreenController(
+                                        applyFiltersCallback:
+                                            _savedScreenController
+                                                .getPostsWithFilters,
+                                      ),
+                                    ),
+                                  )),
                             ),
                           ),
                         ),

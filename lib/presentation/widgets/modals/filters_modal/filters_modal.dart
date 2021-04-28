@@ -5,6 +5,9 @@ import 'package:medical_blog/presentation/widgets/input_fields/input_field_date_
 import 'package:medical_blog/presentation/widgets/input_fields/input_field_date_picker/input_field_date_picker_controller.dart';
 import 'package:medical_blog/presentation/widgets/input_fields/input_text_field/input_text_field.dart';
 import 'package:medical_blog/presentation/widgets/input_fields/input_text_field/input_text_field_controller.dart';
+import 'package:medical_blog/presentation/widgets/input_fields/input_text_field_picker.dart';
+import 'package:medical_blog/presentation/widgets/input_fields/input_text_field_picker_controller.dart';
+import 'package:medical_blog/presentation/widgets/input_fields/input_text_field_read_only/input_text_field_read_only.dart';
 import 'package:medical_blog/presentation/widgets/modals/filters_modal/filters_modal_controller.dart';
 import 'package:medical_blog/utils/constants/colors.dart';
 
@@ -31,20 +34,24 @@ class FiltersModal extends StatelessWidget {
           SizedBox(
             height: 16.0,
           ),
-          InputTextField(
+          InputFieldDatePicker(
             typeOfText: TextInputType.text,
-            hint: 'End Date',
-            controller: Get.put(InputTextFieldController(), tag: 'End Date'),
-            inputTextChecked: _filtersModalController.startDateCallback,
+            hint: "End Date",
+            controller: Get.put(
+              InputFieldDatePickerController(),
+              tag: 'End Date',
+            ),
+            inputTextChecked: _filtersModalController.endDateCallback,
           ),
           SizedBox(
             height: 16.0,
           ),
-          InputTextField(
-            typeOfText: TextInputType.text,
+          InputTextFieldPicker(
             hint: 'Category',
-            controller: Get.put(InputTextFieldController(), tag: 'Category'),
-            inputTextChecked: _filtersModalController.startDateCallback,
+            controller: Get.put(
+              InputTextFieldPickerController(),
+              tag: "Category",
+            ),
           ),
           SizedBox(
             height: 16.0,

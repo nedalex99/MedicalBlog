@@ -33,7 +33,7 @@ class PostsController extends GetxController {
               tags: (element.data()['tags'] as List)
                   .map((e) => e.toString())
                   .toList(),
-              timestamp: element.data()['timeStamp'] as Timestamp,
+              timestamp: element.data()['timeStamp'] as int,
               likedBy: (element.data()['likedBy'] as List)
                   .map((e) => e.toString())
                   .toList(),

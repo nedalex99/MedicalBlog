@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:medical_blog/logic/model/Filter.dart';
 import 'package:medical_blog/logic/model/comment.dart';
 import 'package:medical_blog/logic/model/post.dart';
 import 'package:medical_blog/logic/model/user_data.dart';
@@ -32,6 +33,10 @@ class FirestoreService {
     Map<String, dynamic> userJson = user.toJson();
 
     return _firestoreInstance.collection('users').doc(uid).set(userJson);
+  }
+
+  Future<QuerySnapshot> getAllNews() {
+    return _firestoreInstance.collection('news-all').limit(15).get();
   }
 
   Future<String> addPost({
@@ -195,6 +200,76 @@ class FirestoreService {
         .doc(userUID)
         .collection('posts')
         .get();
+  }
+
+  Future<QuerySnapshot> getSavedPostsWithFilters({Filter filter}) {
+    if (filter.startDate != 0 && filter.endDate != 0 && filter.category != "") {
+      return _firestoreInstance
+          .collection('saved')
+          .doc(userUID)
+          .collection('posts')
+          .where('timeStamp', isGreaterThanOrEqualTo: filter.startDate)
+          .where('timeStamp', isLessThanOrEqualTo: filter.endDate)
+          .where('tags', arrayContains: filter.category)
+          .get();
+    } else if (filter.startDate == 0 &&
+        filter.endDate != 0 &&
+        filter.category != "") {
+      return _firestoreInstance
+          .collection('saved')
+          .doc(userUID)
+          .collection('posts')
+          .where('timeStamp', isLessThanOrEqualTo: filter.endDate)
+          .where('tags', arrayContains: filter.category)
+          .get();
+    } else if (filter.startDate != 0 &&
+        filter.endDate == 0 &&
+        filter.category != "") {
+      return _firestoreInstance
+          .collection('saved')
+          .doc(userUID)
+          .collection('posts')
+          .where('timeStamp', isGreaterThanOrEqualTo: filter.startDate)
+          .where('tags', arrayContains: filter.category)
+          .get();
+    } else if (filter.startDate != 0 &&
+        filter.endDate != 0 &&
+        filter.category == "") {
+      return _firestoreInstance
+          .collection('saved')
+          .doc(userUID)
+          .collection('posts')
+          .where('timeStamp', isGreaterThanOrEqualTo: filter.startDate)
+          .where('timeStamp', isLessThanOrEqualTo: filter.endDate)
+          .get();
+    } else if (filter.startDate != 0 &&
+        filter.endDate == 0 &&
+        filter.category == "") {
+      return _firestoreInstance
+          .collection('saved')
+          .doc(userUID)
+          .collection('posts')
+          .where('timeStamp', isGreaterThanOrEqualTo: filter.startDate)
+          .get();
+    } else if (filter.startDate == 0 &&
+        filter.endDate != 0 &&
+        filter.category == "") {
+      return _firestoreInstance
+          .collection('saved')
+          .doc(userUID)
+          .collection('posts')
+          .where('timeStamp', isLessThanOrEqualTo: filter.endDate)
+          .get();
+    } else if (filter.startDate == 0 &&
+        filter.endDate == 0 &&
+        filter.category != "") {
+      return _firestoreInstance
+          .collection('saved')
+          .doc(userUID)
+          .collection('posts')
+          .where('tags', arrayContains: filter.category)
+          .get();
+    }
   }
 
   Future<DocumentSnapshot> getUserFirstAndLastName() {

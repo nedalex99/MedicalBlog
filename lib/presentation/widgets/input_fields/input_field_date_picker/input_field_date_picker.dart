@@ -38,6 +38,9 @@ class InputFieldDatePicker extends StatelessWidget {
           readOnly: true,
           textAlignVertical: TextAlignVertical.center,
           keyboardType: typeOfText,
+          onChanged: (value) {
+            inputTextChecked(controller.textController.value.text);
+          },
           onTap: () => controller.getDate(context),
           decoration: InputDecoration(
             filled: true,
