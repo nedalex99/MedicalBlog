@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:medical_blog/presentation/screens/posts_screen/posts_controller.dart';
 import 'package:medical_blog/presentation/widgets/bottom_nav_bar/bottom_navigation_bar.dart';
@@ -23,7 +24,80 @@ class PostsScreen extends StatelessWidget {
         ),
         child: Center(
           child: Obx(
-            () => PullToRevealTopItemList(
+            () => PullToRevealTopItemList.builder(
+              revealableBuilder: (BuildContext context,
+                  RevealableToggler opener,
+                  RevealableToggler closer,
+                  BoxConstraints constraints) {
+                return Row(
+                  children: [
+                    Flexible(
+                      child: InputTextFieldReadOnly(
+                        onTap: () => Get.toNamed(kAddPostRoute),
+                        hint: 'Tell us something new...',
+                      ),
+                    ),
+                  ],
+                );
+              },
+              startRevealed: true,
+              revealableHeight: 50.0,
+              builder:
+                  ((BuildContext context, ScrollController scrollController) {
+                return ListView.builder(
+                  controller: postsController.scrollController.value,
+                  itemCount: postsController.postsFromFirestore.length + 1,
+                  itemBuilder: (context, index) {
+                    if (index == postsController.postsFromFirestore.length) {
+                      return CupertinoActivityIndicator();
+                    }
+                    return PostCard(
+                      post: postsController.postsFromFirestore[index],
+                      postCardController: Get.put(
+                        PostCardController(
+                          post: postsController.postsFromFirestore[index],
+                          postId: postsController.postsFromFirestore[index].uid,
+                          noOfLikes: postsController
+                              .postsFromFirestore[index].noOfLikes.obs,
+                          noOfDislikes: postsController
+                              .postsFromFirestore[index].noOfDislikes.obs,
+                          noOfComments: postsController
+                              .postsFromFirestore[index].noOfComments.obs,
+                          isLiked: postsController
+                                  .postsFromFirestore[index].likedBy
+                                  .contains(userUID)
+                              ? true.obs
+                              : false.obs,
+                          isDisliked: postsController
+                                  .postsFromFirestore[index].dislikedBy
+                                  .contains(userUID)
+                              ? true.obs
+                              : false.obs,
+                          isSaved: postsController
+                                  .postsFromFirestore[index].savedBy
+                                  .contains(userUID)
+                              ? true.obs
+                              : false.obs,
+                        ),
+                        tag: '${postsController.postsFromFirestore[index].uid}',
+                      ),
+                    );
+                  },
+                );
+              }),
+            ),
+          ),
+        ),
+      ),
+      bottomNavigationBar: BottomNavBar(
+        selectedIndex: 1,
+      ),
+    );
+  }
+}
+
+/*
+() => PullToRevealTopItemList(
               startRevealed: true,
               itemCount: postsController.postsFromFirestore.value.length,
               itemBuilder: (BuildContext context, int index) {
@@ -74,12 +148,4 @@ class PostsScreen extends StatelessWidget {
                 );
               },
             ),
-          ),
-        ),
-      ),
-      bottomNavigationBar: BottomNavBar(
-        selectedIndex: 1,
-      ),
-    );
-  }
-}
+ */

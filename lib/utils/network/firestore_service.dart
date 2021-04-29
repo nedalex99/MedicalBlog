@@ -39,6 +39,14 @@ class FirestoreService {
     return _firestoreInstance.collection('news-all').limit(15).get();
   }
 
+  Future<QuerySnapshot> getMoreNews(DocumentSnapshot documentSnapshot) {
+    return _firestoreInstance
+        .collection('news-all')
+        .startAfterDocument(documentSnapshot)
+        .limit(15)
+        .get();
+  }
+
   Future<String> addPost({
     Post post,
   }) async {
@@ -277,6 +285,14 @@ class FirestoreService {
   }
 
   Future<QuerySnapshot> getPosts() {
-    return _firestoreInstance.collection('posts').get();
+    return _firestoreInstance.collection('posts').limit(15).get();
+  }
+
+  Future<QuerySnapshot> getMorePosts(DocumentSnapshot documentSnapshot) {
+    return _firestoreInstance
+        .collection('posts')
+        .startAfterDocument(documentSnapshot)
+        .limit(15)
+        .get();
   }
 }

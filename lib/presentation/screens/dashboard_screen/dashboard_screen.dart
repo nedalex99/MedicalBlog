@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:medical_blog/presentation/screens/dashboard_screen/dashboard_controller.dart';
 import 'package:medical_blog/presentation/widgets/bottom_nav_bar/bottom_navigation_bar.dart';
@@ -12,10 +13,27 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(_authService.getUser().uid),
+      body: CustomScrollView(
+        controller: _dashboardController.scrollController.value,
+        slivers: [
+          Obx(
+            () => SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  if (index == _dashboardController.newsList.length) {
+                    return CupertinoActivityIndicator();
+                  }
+                  return Padding(
+                    padding: const EdgeInsets.all(32.0),
+                    child: Text(
+                      _dashboardController.newsList[index].title,
+                    ),
+                  );
+                },
+                childCount: _dashboardController.newsList.value.length + 1,
+              ),
+            ),
+          ),
         ],
       ),
       bottomNavigationBar: BottomNavBar(
