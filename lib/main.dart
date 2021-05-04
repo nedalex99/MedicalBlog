@@ -12,6 +12,7 @@ import 'package:medical_blog/utils/constants/routes.dart';
 import 'package:medical_blog/utils/constants/themes.dart';
 import 'package:medical_blog/utils/network/auth_service.dart';
 import 'package:medical_blog/utils/network/firestore_service.dart';
+import 'package:medical_blog/utils/network/get_news_request.dart';
 import 'package:medical_blog/utils/user_preferences.dart';
 
 import 'presentation/screens/login_screen/login_screen.dart';
@@ -28,6 +29,7 @@ Future<void> main() async {
   await Get.putAsync(() => SecureStorageServices().init());
   await Get.putAsync(() => FirebaseAuthService().init());
   await Get.putAsync(() => FirebaseFirestoreService().init());
+  await Get.putAsync(() => GetNewsService().init());
 
   runApp(MyApp());
 }
@@ -106,5 +108,11 @@ class FirebaseAuthService extends GetxService {
 class FirebaseFirestoreService extends GetxService {
   Future<FirestoreService> init() async {
     return FirestoreService.init();
+  }
+}
+
+class GetNewsService extends GetxService {
+  Future<GetNewsRequest> init() async {
+    return GetNewsRequest.init();
   }
 }

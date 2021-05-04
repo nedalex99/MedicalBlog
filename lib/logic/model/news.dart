@@ -20,4 +20,5 @@ class News {
     this.url,
     this.urlToImage,
   });
+
 }

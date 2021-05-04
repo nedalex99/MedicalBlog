@@ -28,3 +28,6 @@ const kPleaseWaitText = "Please wait";
 
 /// Firebase error codes
 const kUserNotFound = 'user-not-found';
+
+/// Api key
+const api_key = '5ef7d79a42f14f68816733282f4d9663';

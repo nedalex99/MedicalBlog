@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:medical_blog/logic/model/news.dart';
 import 'package:medical_blog/utils/network/firestore_service.dart';
+import 'package:medical_blog/utils/network/get_news_request.dart';
 
 class DashboardController extends GetxController {
   FirestoreService _firestoreService = Get.find();
@@ -10,9 +11,17 @@ class DashboardController extends GetxController {
   Rx<ScrollController> scrollController = ScrollController().obs;
   DocumentSnapshot documentSnapshot;
 
+  GetNewsRequest _getNewsRequest = Get.find();
+
   @override
   Future<void> onInit() async {
     await getAllNews();
+    final _countries = ['gb', 'us', 'ie', 'ca', 'nz', 'ph', 'za'];
+    await _getNewsRequest.getNews("us").then((value) => {
+          value.forEach((element) {
+            print(element.title);
+          }),
+        });
     scrollController.value.addListener(() {
       if (scrollController.value.position.pixels ==
           scrollController.value.position.maxScrollExtent) {
