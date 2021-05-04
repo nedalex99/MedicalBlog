@@ -16,7 +16,7 @@ class DashboardController extends GetxController {
     scrollController.value.addListener(() {
       if (scrollController.value.position.pixels ==
           scrollController.value.position.maxScrollExtent) {
-        getMoreData(documentSnapshot);
+        getMoreData();
       }
     });
     super.onInit();
@@ -28,20 +28,35 @@ class DashboardController extends GetxController {
             print(element.data());
             documentSnapshot = element;
             News news = News(
-              title: element.data()['name'],
+              author: element.data()['author'],
+              content: element.data()['content'],
+              description: element.data()['description'],
+              name: element.data()['name'],
+              title: element.data()['title'],
+              publishedAt: element.data()['publishedAt'],
+              url: element.data()['url'],
+              urlToImage: element.data()['urlToImage'],
             );
             newsList.add(news);
           }),
         });
+    print(newsList.length);
   }
 
-  void getMoreData(DocumentSnapshot documentSnapshot) async {
+  Future<void> getMoreData() async {
     print("In get more data");
     await _firestoreService.getMoreNews(documentSnapshot).then((value) => {
           value.docs.forEach((element) {
             this.documentSnapshot = element;
             News news = News(
-              title: element.data()['name'],
+              author: element.data()['author'],
+              content: element.data()['content'],
+              description: element.data()['description'],
+              name: element.data()['name'],
+              title: element.data()['title'],
+              publishedAt: element.data()['publishedAt'],
+              url: element.data()['url'],
+              urlToImage: element.data()['urlToImage'],
             );
             newsList.add(news);
           }),

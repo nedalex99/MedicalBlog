@@ -23,28 +23,26 @@ class PostsScreen extends StatelessWidget {
           right: 18.0,
         ),
         child: Center(
-          child: Obx(
-            () => PullToRevealTopItemList.builder(
-              revealableBuilder: (BuildContext context,
-                  RevealableToggler opener,
-                  RevealableToggler closer,
-                  BoxConstraints constraints) {
-                return Row(
-                  children: [
-                    Flexible(
-                      child: InputTextFieldReadOnly(
-                        onTap: () => Get.toNamed(kAddPostRoute),
-                        hint: 'Tell us something new...',
-                      ),
+          child: PullToRevealTopItemList.builder(
+            revealableBuilder: (BuildContext context, RevealableToggler opener,
+                RevealableToggler closer, BoxConstraints constraints) {
+              return Row(
+                children: [
+                  Flexible(
+                    child: InputTextFieldReadOnly(
+                      onTap: () => Get.toNamed(kAddPostRoute),
+                      hint: 'Tell us something new...',
                     ),
-                  ],
-                );
-              },
-              startRevealed: true,
-              revealableHeight: 50.0,
-              builder:
-                  ((BuildContext context, ScrollController scrollController) {
-                return ListView.builder(
+                  ),
+                ],
+              );
+            },
+            startRevealed: true,
+            revealableHeight: 50.0,
+            builder:
+                ((BuildContext context, ScrollController scrollController) {
+              return Obx(
+                () => ListView.builder(
                   controller: postsController.scrollController.value,
                   itemCount: postsController.postsFromFirestore.length + 1,
                   itemBuilder: (context, index) {
@@ -83,9 +81,9 @@ class PostsScreen extends StatelessWidget {
                       ),
                     );
                   },
-                );
-              }),
-            ),
+                ),
+              );
+            }),
           ),
         ),
       ),
