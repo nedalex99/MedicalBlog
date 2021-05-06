@@ -121,8 +121,13 @@ class RegisterScreen extends StatelessWidget {
                   InputFieldDatePicker(
                     typeOfText: TextInputType.name,
                     hint: 'Date of birth',
-                    controller: Get.put(InputFieldDatePickerController(),
+                    controller: Get.put(
+                        InputFieldDatePickerController(
+                          inputTextChecked:
+                              _registerController.dateOfBirthCallback,
+                        ),
                         tag: "date_of_birth_register_register"),
+                    inputTextChecked: _registerController.dateOfBirthCallback,
                   ),
                 ],
               ),
@@ -139,10 +144,12 @@ class RegisterScreen extends StatelessWidget {
                     padding: EdgeInsets.only(
                       top: (MediaQuery.of(context).size.height * 0.025),
                     ),
-                    child: CustomButton(
-                      onButtonTap: _registerController.registerUser,
-                      buttonText: 'Register',
-                      backgroundColor: kInactiveBlueButtonColor,
+                    child: Obx(
+                      () => CustomButton(
+                        onButtonTap: _registerController.registerUser,
+                        buttonText: 'Register',
+                        backgroundColor: _registerController.buttonColor.value,
+                      ),
                     ),
                   ),
                 ),
