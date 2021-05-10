@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:medical_blog/presentation/widgets/input_fields/input_text_field_picker_controller.dart';
+import 'package:medical_blog/presentation/widgets/input_fields/input_text_field_picker/input_text_field_picker_controller.dart';
 
 class InputTextFieldPicker extends StatelessWidget {
   final String hint;

@@ -5,7 +5,7 @@ class News {
   String content;
   String description;
   String publishedAt;
-  String name;
+  String sourceName;
   String title;
   String url;
   String urlToImage;
@@ -15,10 +15,21 @@ class News {
     this.content,
     this.description,
     this.publishedAt,
-    this.name,
+    this.sourceName,
     this.title,
     this.url,
     this.urlToImage,
   });
+
+  Map<String, dynamic> toJson() => {
+    'author': author,
+    'content': content,
+    'description': description,
+    'publishedAt': publishedAt,
+    'sourceName': sourceName,
+    'title': title,
+    'url': url,
+    'urlToImage': urlToImage,
+  };
 
 }

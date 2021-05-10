@@ -24,7 +24,7 @@ class GetNewsRequest {
         return (json['articles'] as List)
             .map(
               (e) => News(
-                name: e['source']['name'],
+                sourceName: e['source']['name'],
                 author: e['author'],
                 title: e['title'],
                 description: e['description'],

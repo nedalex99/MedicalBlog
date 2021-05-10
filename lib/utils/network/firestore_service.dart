@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:medical_blog/logic/model/Filter.dart';
 import 'package:medical_blog/logic/model/comment.dart';
+import 'package:medical_blog/logic/model/news.dart';
 import 'package:medical_blog/logic/model/post.dart';
 import 'package:medical_blog/logic/model/user_data.dart';
 import 'package:medical_blog/utils/session_temp.dart';
@@ -35,6 +36,18 @@ class FirestoreService {
     return _firestoreInstance.collection('users').doc(uid).set(userJson);
   }
 
+  Future<void> addNewsToFirestore({News news}) {
+    return _firestoreInstance.collection('news-all').add(news.toJson());
+  }
+
+  Future<void> addNewsToSaved({News news}) {
+    return _firestoreInstance
+        .collection('saved')
+        .doc(userUID)
+        .collection('news')
+        .add(news.toJson());
+  }
+
   Future<QuerySnapshot> getAllNews() {
     return _firestoreInstance.collection('news-all').limit(15).get();
   }
@@ -45,6 +58,10 @@ class FirestoreService {
         .startAfterDocument(documentSnapshot)
         .limit(15)
         .get();
+  }
+
+  Future<QuerySnapshot> getTodayNews() {
+    return _firestoreInstance.collection('news-all').limit(3).get();
   }
 
   Future<String> addPost({

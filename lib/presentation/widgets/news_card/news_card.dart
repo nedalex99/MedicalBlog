@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:medical_blog/logic/model/news.dart';
+import 'package:medical_blog/presentation/widgets/news_card/news_card_controller.dart';
 
 class NewsCard extends StatelessWidget {
+  final NewsCardController newsCardController;
   final News news;
 
   NewsCard({
     this.news,
+    this.newsCardController,
   });
 
   @override
@@ -95,7 +97,7 @@ class NewsCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          news.author != null ? news.author : 'Unknown',
+                          news.sourceName != null ? news.sourceName : 'Unknown',
                           style: TextStyle(
                             fontSize: 16.0,
                             fontWeight: FontWeight.w700,
@@ -119,7 +121,8 @@ class NewsCard extends StatelessWidget {
                         children: [
                           IconButton(
                             icon: Icon(Icons.bookmark_border_outlined),
-                            onPressed: () {},
+                            onPressed: () =>
+                                newsCardController.addNewsToSaved(news: news),
                           ),
                           IconButton(
                             icon: Icon(Icons.share),

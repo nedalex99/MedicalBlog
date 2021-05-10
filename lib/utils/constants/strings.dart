@@ -13,6 +13,7 @@ const kThirdTutorialDescription = 'To be done more';
 /// Preferences strings
 const kTutorialFlagKey = "TUTORIAL_FLAG";
 const kKeepMeAuthFlag = "KEEP_ME_AUTH_FLAG";
+const kNewsAddedTodayFlag = "NEWS_ADDED_TODAY_FLAG";
 
 /// Error messages
 const kInvalidEmail = "The e-mail is not valid.";
