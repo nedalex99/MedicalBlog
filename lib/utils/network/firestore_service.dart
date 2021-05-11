@@ -61,7 +61,29 @@ class FirestoreService {
   }
 
   Future<QuerySnapshot> getTodayNews() {
-    return _firestoreInstance.collection('news-all').limit(3).get();
+    DateTime now = DateTime.now();
+    String millisMidnight = now
+        .subtract(Duration(
+          hours: now.hour,
+          minutes: now.minute,
+          seconds: now.second,
+          milliseconds: now.millisecond,
+          microseconds: now.microsecond,
+        ))
+        .millisecondsSinceEpoch
+        .toString();
+    return _firestoreInstance
+        .collection('news-all')
+        .limit(3)
+        .where('publishedAt', isEqualTo: millisMidnight)
+        .get();
+  }
+
+  Future<QuerySnapshot> getNewsByTitle({String title}) {
+    return _firestoreInstance
+        .collection('news-all')
+        .where('caseSearch', arrayContains: title)
+        .get();
   }
 
   Future<String> addPost({

@@ -5,7 +5,6 @@ import 'package:medical_blog/presentation/widgets/bottom_nav_bar/bottom_navigati
 import 'package:medical_blog/presentation/widgets/input_fields/input_text_field_search.dart';
 import 'package:medical_blog/presentation/widgets/news_card/news_card.dart';
 import 'package:medical_blog/presentation/widgets/news_card/news_card_controller.dart';
-import 'package:medical_blog/utils/network/auth_service.dart';
 import 'package:get/get.dart';
 
 class DashboardScreen extends StatelessWidget {
@@ -37,7 +36,10 @@ class DashboardScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    child: InputTextFieldSearch(),
+                    child: InputTextFieldSearch(
+                      inputTextChecked: _dashboardController.titleCallback,
+                      getNewsByTitle: _dashboardController.getNewsByTitle,
+                    ),
                   ),
                 ),
                 Padding(
@@ -69,17 +71,94 @@ class DashboardScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                // Obx(
-                //   () => ListView.builder(
-                //     scrollDirection: Axis.horizontal,
-                //     itemBuilder: (BuildContext context, int index) {
-                //       return NewsCard(
-                //         news: _dashboardController.todayNewsList[index],
-                //       );
-                //     },
-                //     itemCount: _dashboardController.todayNewsList.length,
-                //   ),
-                // ),
+              ],
+            ),
+          ),
+          Obx(
+            () => SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(18.0),
+                    child: NewsCard(
+                      news: _dashboardController.todayNewsList[index],
+                    ),
+                  );
+                },
+                childCount: _dashboardController.todayNewsList.length,
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: Row(
+                    children: [
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Trending',
+                          style: TextStyle(
+                            fontSize: 24.0,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                            'see more >',
+                            style: TextStyle(
+                              fontSize: 14.0,
+                              color: Colors.blue,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Obx(
+            () => SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(18.0),
+                    child: NewsCard(
+                      news: _dashboardController.trendingNewsList[index],
+                    ),
+                  );
+                },
+                childCount: _dashboardController.trendingNewsList.length,
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: Row(
+                    children: [
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Latest',
+                          style: TextStyle(
+                            fontSize: 24.0,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

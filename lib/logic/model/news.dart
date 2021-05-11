@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:medical_blog/utils/util_functions.dart';
 
 class News {
   String author;
@@ -30,6 +31,6 @@ class News {
     'title': title,
     'url': url,
     'urlToImage': urlToImage,
+    'caseSearch': getWordsToSearch(text: title),
   };
-
 }

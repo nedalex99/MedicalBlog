@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:medical_blog/logic/model/news.dart';
 import 'package:medical_blog/utils/constants/strings.dart';
 import 'package:http/http.dart' as http;
+import 'package:medical_blog/utils/util_functions.dart';
 
 class GetNewsRequest {
   static Future<GetNewsRequest> get _instance async =>
@@ -30,7 +31,7 @@ class GetNewsRequest {
                 description: e['description'],
                 url: e['url'],
                 urlToImage: e['urlToImage'],
-                publishedAt: e['publishedAt'],
+                publishedAt: parseDate(e['publishedAt']),
                 content: e['content'],
               ),
             )

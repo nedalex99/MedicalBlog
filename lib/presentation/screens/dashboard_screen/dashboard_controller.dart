@@ -14,15 +14,21 @@ class DashboardController extends GetxController {
   RxList<News> trendingNewsList = List<News>().obs;
   Rx<ScrollController> scrollController = ScrollController().obs;
   DocumentSnapshot documentSnapshot;
+  RxString title = "".obs;
 
   GetNewsRequest _getNewsRequest = Get.find();
   PreferencesUtils _prefs = Get.find();
+
+  void titleCallback(String value) {
+    title.value = value;
+  }
 
   @override
   Future<void> onInit() async {
     await addNewsToFirestore();
     await getAllNews();
     await getTodayNews();
+    await getTrendingNews();
     scrollController.value.addListener(() {
       if (scrollController.value.position.pixels ==
           scrollController.value.position.maxScrollExtent) {
@@ -102,6 +108,43 @@ class DashboardController extends GetxController {
 
   Future<void> getTodayNews() async {
     await _firestoreService.getTodayNews().then((value) => {
+          value.docs.forEach((element) {
+            News news = News(
+              author: element.data()['author'],
+              content: element.data()['content'],
+              description: element.data()['description'],
+              sourceName: element.data()['name'],
+              title: element.data()['title'],
+              publishedAt: element.data()['publishedAt'],
+              url: element.data()['url'],
+              urlToImage: element.data()['urlToImage'],
+            );
+            todayNewsList.add(news);
+          }),
+        });
+  }
+
+  Future<void> getTrendingNews() async {
+    await _firestoreService.getTodayNews().then((value) => {
+          value.docs.forEach((element) {
+            News news = News(
+              author: element.data()['author'],
+              content: element.data()['content'],
+              description: element.data()['description'],
+              sourceName: element.data()['name'],
+              title: element.data()['title'],
+              publishedAt: element.data()['publishedAt'],
+              url: element.data()['url'],
+              urlToImage: element.data()['urlToImage'],
+            );
+            trendingNewsList.add(news);
+          }),
+        });
+  }
+
+  Future<void> getNewsByTitle(String title) async {
+    todayNewsList.clear();
+    await _firestoreService.getNewsByTitle(title: title).then((value) => {
           value.docs.forEach((element) {
             News news = News(
               author: element.data()['author'],

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 void showSheet({
   @required BuildContext context,
@@ -69,4 +70,19 @@ String handleMillisecondsFromTimestamp(int seconds) {
   } else {
     return '$minutes' + 'm';
   }
+}
+
+String parseDate(String date) {
+  DateTime dateTime = DateFormat("yyyy-MM-dd").parse(date);
+  return dateTime.millisecondsSinceEpoch.toString();
+}
+
+List<String> getWordsToSearch({String text}) {
+  List<String> caseSearchList = [];
+  String caseSearch = "";
+  for (int i = 0; i < text.length; i++) {
+    caseSearch += text[i].toLowerCase();
+    caseSearchList.add(caseSearch);
+  }
+  return caseSearchList;
 }
