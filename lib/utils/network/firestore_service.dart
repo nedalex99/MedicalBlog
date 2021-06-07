@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:medical_blog/logic/model/Filter.dart';
-import 'package:medical_blog/logic/model/comment.dart';
-import 'package:medical_blog/logic/model/news.dart';
-import 'package:medical_blog/logic/model/post.dart';
-import 'package:medical_blog/logic/model/user_data.dart';
+import 'package:medical_blog/model/comment.dart';
+import 'package:medical_blog/model/filter.dart';
+import 'package:medical_blog/model/news.dart';
+import 'package:medical_blog/model/post.dart';
+import 'package:medical_blog/model/user_data.dart';
 import 'package:medical_blog/utils/session_temp.dart';
 
 class FirestoreService {
@@ -76,6 +76,14 @@ class FirestoreService {
         .collection('news-all')
         .limit(3)
         .where('publishedAt', isEqualTo: millisMidnight)
+        .get();
+  }
+
+  Future<QuerySnapshot> getTrendingNews(DocumentSnapshot documentSnapshot) {
+    return _firestoreInstance
+        .collection('news-all')
+        .limit(3)
+        .startAfterDocument(documentSnapshot)
         .get();
   }
 
@@ -324,14 +332,19 @@ class FirestoreService {
   }
 
   Future<QuerySnapshot> getPosts() {
-    return _firestoreInstance.collection('posts').limit(15).get();
+    return _firestoreInstance
+        .collection('posts')
+        .limit(15)
+        .orderBy("timeStamp", descending: true)
+        .get();
   }
 
   Future<QuerySnapshot> getMorePosts(DocumentSnapshot documentSnapshot) {
     return _firestoreInstance
         .collection('posts')
-        .startAfterDocument(documentSnapshot)
         .limit(15)
+        .orderBy("timeStamp", descending: true)
+        .startAfterDocument(documentSnapshot)
         .get();
   }
 }

@@ -39,6 +39,10 @@ class InputTextFieldReadOnly extends StatelessWidget {
             Radius.circular(6.0),
           ),
         ),
+        contentPadding: const EdgeInsets.only(
+          left: 12.0,
+          bottom: 12.0,
+        ),
       ),
     );
   }

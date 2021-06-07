@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:medical_blog/logic/model/tutorial_data.dart';
+import 'package:medical_blog/model/tutorial_data.dart';
 import 'package:medical_blog/presentation/widgets/buttons/custom_button.dart';
 import 'package:medical_blog/presentation/widgets/buttons/next_tutorial_button.dart';
 import 'package:medical_blog/presentation/widgets/view_pager_circle/view_pager_circle.dart';

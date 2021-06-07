@@ -12,16 +12,23 @@ class AuthService {
 
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  Future<UserCredential> createUserWithEmailAndPassword(
-      {String email, String password}) {
+  Future<UserCredential> createUserWithEmailAndPassword({
+    String email,
+    String password,
+  }) {
     return _firebaseAuth.createUserWithEmailAndPassword(
-        email: email, password: password);
+      email: email,
+      password: password,
+    );
   }
 
-  Future<UserCredential> signInWithEmailAndPassword(
-      {String email, String password}) {
+  Future<UserCredential> signInWithEmailAndPassword({String email,
+    String password,
+  }) {
     return _firebaseAuth.signInWithEmailAndPassword(
-        email: email, password: password);
+      email: email,
+      password: password,
+    );
   }
 
   User getUser() {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:medical_blog/logic/model/post.dart';
+import 'package:medical_blog/model/post.dart';
 import 'package:medical_blog/presentation/screens/add_comments_screen/add_comments_screen.dart';
 import 'package:medical_blog/presentation/widgets/input_fields/input_text_field_read_only/input_text_field_read_only.dart';
 import 'package:medical_blog/presentation/widgets/post_card/post_card_controller.dart';
@@ -90,11 +90,8 @@ class PostCard extends StatelessWidget {
                               fontSize: 16.0,
                             ),
                           ),
-                          // SizedBox(
-                          //   height: Get.height * 0.005,
-                          // ),
                           Text(
-                            'Student',
+                            "Pediatrist",
                             style: TextStyle(
                               fontSize: 14.0,
                               color: kHintColor,

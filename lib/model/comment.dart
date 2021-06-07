@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:medical_blog/logic/model/user_data.dart';
+import 'package:medical_blog/model/user_data.dart';
 
 class Comment {
   String commentId;

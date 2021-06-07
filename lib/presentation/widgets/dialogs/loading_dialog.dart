@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:medical_blog/presentation/custom/custom_lib_dialog.dart';
+import 'file:///C:/Users/alexa/AndroidStudioProjects/MedicalBlog/lib/presentation/widgets/dialogs/custom_lib_dialog.dart';
 import 'package:medical_blog/presentation/widgets/animations/loading_animation.dart';
 
 class LoadingDialog extends StatelessWidget {

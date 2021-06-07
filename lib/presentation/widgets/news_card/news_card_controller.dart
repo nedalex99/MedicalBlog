@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:medical_blog/logic/model/news.dart';
+import 'package:medical_blog/model/news.dart';
 import 'package:medical_blog/presentation/widgets/dialogs/loading_dialog.dart';
 import 'package:medical_blog/utils/network/firestore_service.dart';
 

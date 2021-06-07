@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:medical_blog/logic/model/post.dart';
+import 'package:medical_blog/model/post.dart';
 import 'package:medical_blog/presentation/widgets/modals/post_card_options_modal/post_card_options_modal_controller.dart';
 
 class PostCardOptionsModal extends StatelessWidget {
@@ -34,22 +34,6 @@ class PostCardOptionsModal extends StatelessWidget {
               'Hide this post',
             ),
             onTap: () {},
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.notification_important,
-            ),
-            title: Text(
-              'Turn on notifications for this post',
-            ),
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.share,
-            ),
-            title: Text(
-              'Share this post',
-            ),
           ),
           ListTile(
             leading: Icon(

@@ -7,8 +7,8 @@ const kSecondTutorialTitle = 'People s experience';
 const kSecondTutorialDescription =
     'Find out about medical people’s experiences. Share your own activity from your field';
 
-const kThirdTutorialTitle = 'To be done';
-const kThirdTutorialDescription = 'To be done more';
+const kThirdTutorialTitle = 'Community';
+const kThirdTutorialDescription = 'Get involved in the community. Provide information and answers to other people`s questions.';
 
 /// Preferences strings
 const kTutorialFlagKey = "TUTORIAL_FLAG";

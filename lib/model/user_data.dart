@@ -3,8 +3,15 @@ class UserData {
   String firstName;
   String lastName;
   String country;
+  String profession;
 
-  UserData({this.email, this.firstName, this.lastName, this.country});
+  UserData({
+    this.email,
+    this.firstName,
+    this.lastName,
+    this.country,
+    this.profession,
+  });
 
   Map<String, dynamic> toJson() => {
         'email': email,
@@ -23,6 +30,7 @@ class UserData {
       firstName: parsedJson['firstName'],
       lastName: parsedJson['lastName'],
       country: parsedJson['country]'],
+      profession: parsedJson['profession'],
     );
   }
 }

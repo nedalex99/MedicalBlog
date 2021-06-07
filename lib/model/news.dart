@@ -22,6 +22,23 @@ class News {
     this.urlToImage,
   });
 
+  factory News.fromJson(DocumentSnapshot documentSnapshot) {
+    if (documentSnapshot.data() == null || documentSnapshot.data().isEmpty) {
+      return News();
+    }
+
+    return News(
+      author: documentSnapshot.data()['author'],
+      content: documentSnapshot.data()['content'],
+      description: documentSnapshot.data()['description'],
+      sourceName: documentSnapshot.data()['name'],
+      title: documentSnapshot.data()['title'],
+      publishedAt: documentSnapshot.data()['publishedAt'],
+      url: documentSnapshot.data()['url'],
+      urlToImage: documentSnapshot.data()['urlToImage'],
+    );
+  }
+
   Map<String, dynamic> toJson() => {
     'author': author,
     'content': content,

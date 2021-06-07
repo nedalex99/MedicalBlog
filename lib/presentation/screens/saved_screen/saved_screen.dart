@@ -6,7 +6,6 @@ import 'package:medical_blog/presentation/widgets/bottom_nav_bar/bottom_navigati
 import 'package:get/get.dart';
 import 'package:medical_blog/presentation/widgets/post_card/post_card.dart';
 import 'package:medical_blog/presentation/widgets/post_card/post_card_controller.dart';
-import 'package:medical_blog/utils/constants/routes.dart';
 import 'package:medical_blog/utils/session_temp.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 

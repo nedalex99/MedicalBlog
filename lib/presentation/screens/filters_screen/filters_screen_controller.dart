@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
-import 'package:get/get_rx/src/rx_typedefs/rx_typedefs.dart';
-import 'package:medical_blog/logic/model/Filter.dart';
 import 'package:intl/intl.dart';
+import 'package:medical_blog/model/filter.dart';
 
 typedef ApplyFiltersCallback(Filter filter);
 

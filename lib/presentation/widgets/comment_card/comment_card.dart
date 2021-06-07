@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:medical_blog/logic/model/comment.dart';
+import 'package:medical_blog/model/comment.dart';
 import 'package:medical_blog/presentation/widgets/comment_card/comment_card_controller.dart';
 import 'package:medical_blog/utils/constants/colors.dart';
 import 'package:medical_blog/utils/util_functions.dart';

@@ -38,7 +38,7 @@ class PostsScreen extends StatelessWidget {
               );
             },
             startRevealed: true,
-            revealableHeight: 50.0,
+            revealableHeight: 100.0,
             builder:
                 ((BuildContext context, ScrollController scrollController) {
               return Obx(

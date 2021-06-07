@@ -1,9 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:medical_blog/logic/model/Filter.dart';
-import 'package:medical_blog/logic/model/post.dart';
-import 'package:medical_blog/logic/model/user_data.dart';
+import 'package:medical_blog/model/filter.dart';
+import 'package:medical_blog/model/post.dart';
+import 'package:medical_blog/model/user_data.dart';
 import 'package:medical_blog/presentation/widgets/modals/filters_modal/filters_modal.dart';
 import 'package:medical_blog/utils/network/firestore_service.dart';
 

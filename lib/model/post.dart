@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:medical_blog/logic/model/user_data.dart';
+import 'package:medical_blog/model/user_data.dart';
 
 class Post {
   String uid;
@@ -65,30 +64,31 @@ class Post {
     );
   }
 
-  factory Post.fromJson(Map<String, dynamic> parsedJson) {
-    if (parsedJson == null || parsedJson.isEmpty) {
+  factory Post.fromJson(DocumentSnapshot documentSnapshot) {
+    if (documentSnapshot.data() == null || documentSnapshot.data().isEmpty) {
       return Post();
     }
 
     UserData userData = UserData(
-      firstName: parsedJson['userData']['firstName'],
-      lastName: parsedJson['userData']['lastName'],
+      firstName: documentSnapshot.data()['userData']['firstName'],
+      lastName: documentSnapshot.data()['userData']['lastName'],
+      profession: documentSnapshot.data()['userData']['profession'],
     );
 
     return Post(
-      uid: parsedJson['uid'],
-      title: parsedJson['title'],
-      description: parsedJson['description'],
-      tags: (parsedJson['tags'] as List).map((e) => e.toString()).toList(),
-      noOfLikes: parsedJson['noOfLikes'],
-      noOfDislikes: parsedJson['noOfDislikes'],
-      noOfComments: parsedJson['noOfComments'],
-      timestamp: parsedJson['timeStamp'] as int,
-      likedBy: (parsedJson['likedBy'] as List).map((e) => e.toString()).toList(),
+      uid: documentSnapshot.id,
+      title: documentSnapshot.data()['title'],
+      description: documentSnapshot.data()['description'],
+      tags: (documentSnapshot.data()['tags'] as List).map((e) => e.toString()).toList(),
+      noOfLikes: documentSnapshot.data()['noOfLikes'],
+      noOfDislikes: documentSnapshot.data()['noOfDislikes'],
+      noOfComments: documentSnapshot.data()['noOfComments'],
+      timestamp: documentSnapshot.data()['timeStamp'] as int,
+      likedBy: (documentSnapshot.data()['likedBy'] as List).map((e) => e.toString()).toList(),
       dislikedBy:
-          (parsedJson['dislikedBy'] as List).map((e) => e.toString()).toList(),
+          (documentSnapshot.data()['dislikedBy'] as List).map((e) => e.toString()).toList(),
       savedBy:
-          (parsedJson['savedBy'] as List).map((e) => e.toString()).toList(),
+          (documentSnapshot.data()['savedBy'] as List).map((e) => e.toString()).toList(),
       userData: userData,
     );
   }

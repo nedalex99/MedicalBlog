@@ -64,7 +64,7 @@ class AddPostScreen extends StatelessWidget {
                         height: Get.height * 0.001,
                       ),
                       Text(
-                        'Student',
+                        'Pediatrics',
                         style: TextStyle(
                           fontSize: 16.0,
                           color: kHintColor,
@@ -88,8 +88,10 @@ class AddPostScreen extends StatelessWidget {
               ),
               InputField(
                 hint: 'Description',
-                textFieldController:
-                    Get.put(TextFieldController(), tag: 'description'),
+                textFieldController: Get.put(
+                  TextFieldController(),
+                  tag: 'description',
+                ),
                 inputTextChecked: _addPostController.descriptionCallback,
               ),
               SizedBox(

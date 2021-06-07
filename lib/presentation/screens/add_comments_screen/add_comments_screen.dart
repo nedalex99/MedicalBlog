@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:medical_blog/logic/model/post.dart';
+import 'package:medical_blog/model/post.dart';
 import 'package:medical_blog/presentation/screens/add_comments_screen/add_comments_controller.dart';
 import 'package:medical_blog/presentation/widgets/appbar/appbar.dart';
 import 'package:medical_blog/presentation/widgets/comment_card/comment_card.dart';

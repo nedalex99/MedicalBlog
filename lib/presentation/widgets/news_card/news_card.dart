@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:medical_blog/logic/model/news.dart';
+import 'package:medical_blog/model/news.dart';
 import 'package:medical_blog/presentation/widgets/news_card/news_card_controller.dart';
+import 'package:intl/intl.dart';
 
 class NewsCard extends StatelessWidget {
   final NewsCardController newsCardController;
@@ -107,7 +108,15 @@ class NewsCard extends StatelessWidget {
                           height: 2.0,
                         ),
                         Text(
-                          DateTime.fromMillisecondsSinceEpoch(int.tryParse(news.publishedAt)).toString(),
+                          DateFormat("yyyy-MM-dd")
+                              .format(
+                                DateTime.fromMillisecondsSinceEpoch(
+                                  int.tryParse(
+                                    news.publishedAt,
+                                  ),
+                                ),
+                              )
+                              .toString(),
                           style: TextStyle(
                             fontSize: 16.0,
                             fontWeight: FontWeight.w300,
