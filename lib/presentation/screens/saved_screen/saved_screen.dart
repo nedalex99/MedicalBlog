@@ -4,6 +4,8 @@ import 'package:medical_blog/presentation/screens/filters_screen/filters_screen_
 import 'package:medical_blog/presentation/screens/saved_screen/saved_screen_controller.dart';
 import 'package:medical_blog/presentation/widgets/bottom_nav_bar/bottom_navigation_bar.dart';
 import 'package:get/get.dart';
+import 'package:medical_blog/presentation/widgets/news_card/news_card.dart';
+import 'package:medical_blog/presentation/widgets/news_card/news_card_controller.dart';
 import 'package:medical_blog/presentation/widgets/post_card/post_card.dart';
 import 'package:medical_blog/presentation/widgets/post_card/post_card_controller.dart';
 import 'package:medical_blog/utils/session_temp.dart';
@@ -49,7 +51,8 @@ class SavedScreen extends StatelessWidget {
                             activeFgColor: Colors.white,
                             inactiveBgColor: Colors.grey,
                             inactiveFgColor: Colors.white,
-                            labels: ['News', 'Posts'],
+                            labels: ['Posts', 'News'],
+                            onToggle: _savedScreenController.onToggle,
                           ),
                         ),
                         Expanded(
@@ -107,34 +110,59 @@ class SavedScreen extends StatelessWidget {
               () => SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
-                    return PostCard(
-                      post: _savedScreenController.posts[index],
-                      isInSavedScreen: true,
-                      postCardController: Get.put(
-                          PostCardController(
-                            post: _savedScreenController.posts[index],
-                            postId: _savedScreenController.posts[index].uid,
-                            noOfLikes: _savedScreenController
-                                .posts[index].noOfLikes.obs,
-                            noOfDislikes: _savedScreenController
-                                .posts[index].noOfDislikes.obs,
-                            noOfComments: _savedScreenController
-                                .posts[index].noOfComments.obs,
-                            isLiked: _savedScreenController.posts[index].likedBy
-                                    .contains(userUID)
-                                ? true.obs
-                                : false.obs,
-                            isDisliked: _savedScreenController
-                                    .posts[index].dislikedBy
-                                    .contains(userUID)
-                                ? true.obs
-                                : false.obs,
-                            isSaved: true.obs,
+                    if (_savedScreenController.toggleIndex.value == 1) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 18.0,
+                        ),
+                        child: NewsCard(
+                          news: _savedScreenController.newsList[index],
+                          newsCardController: Get.put(
+                            NewsCardController(
+                              isSaved:
+                                  _savedScreenController.newsList[index].savedBy
+                                      .contains(
+                                        userUID,
+                                      )
+                                      .obs,
+                            ),
+                            tag: _savedScreenController.newsList[index].title,
                           ),
-                          tag: _savedScreenController.posts[index].uid),
-                    );
+                        ),
+                      );
+                    } else {
+                      return PostCard(
+                        post: _savedScreenController.posts[index],
+                        isInSavedScreen: true,
+                        postCardController: Get.put(
+                            PostCardController(
+                              post: _savedScreenController.posts[index],
+                              postId: _savedScreenController.posts[index].uid,
+                              noOfLikes: _savedScreenController
+                                  .posts[index].noOfLikes.obs,
+                              noOfDislikes: _savedScreenController
+                                  .posts[index].noOfDislikes.obs,
+                              noOfComments: _savedScreenController
+                                  .posts[index].noOfComments.obs,
+                              isLiked: _savedScreenController
+                                      .posts[index].likedBy
+                                      .contains(userUID)
+                                  ? true.obs
+                                  : false.obs,
+                              isDisliked: _savedScreenController
+                                      .posts[index].dislikedBy
+                                      .contains(userUID)
+                                  ? true.obs
+                                  : false.obs,
+                              isSaved: true.obs,
+                            ),
+                            tag: _savedScreenController.posts[index].uid),
+                      );
+                    }
                   },
-                  childCount: _savedScreenController.posts.length,
+                  childCount: _savedScreenController.toggleIndex.value == 1
+                      ? _savedScreenController.newsList.length
+                      : _savedScreenController.posts.length,
                 ),
               ),
             ),

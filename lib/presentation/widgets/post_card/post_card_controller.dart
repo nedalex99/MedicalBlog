@@ -132,7 +132,7 @@ class PostCardController extends GetxController {
     if (isSaved.value) {
       _firestoreService.removeSavedPostByUser(postId: postId).then((value) => {
             _firestoreService
-                .removeFromSavedCollection(postId: postId)
+                .removePostFromSavedCollection(postId: postId)
                 .then((value) => {
                       isSaved.value = false,
                       Get.back(),

@@ -6,6 +6,7 @@ import 'package:medical_blog/presentation/widgets/input_fields/input_text_field_
 import 'package:medical_blog/presentation/widgets/news_card/news_card.dart';
 import 'package:medical_blog/presentation/widgets/news_card/news_card_controller.dart';
 import 'package:get/get.dart';
+import 'package:medical_blog/utils/session_temp.dart';
 
 class DashboardScreen extends StatelessWidget {
   final DashboardController _dashboardController =
@@ -82,6 +83,17 @@ class DashboardScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(18.0),
                     child: NewsCard(
                       news: _dashboardController.todayNewsList[index],
+                      newsCardController: Get.put(
+                        NewsCardController(
+                          isSaved:
+                              _dashboardController.todayNewsList[index].savedBy
+                                  .contains(
+                                    userUID,
+                                  )
+                                  .obs,
+                        ),
+                        tag: _dashboardController.todayNewsList[index].title,
+                      ),
                     ),
                   );
                 },
@@ -132,6 +144,16 @@ class DashboardScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(18.0),
                     child: NewsCard(
                       news: _dashboardController.trendingNewsList[index],
+                      newsCardController: Get.put(
+                        NewsCardController(
+                            isSaved: _dashboardController
+                                .trendingNewsList[index].savedBy
+                                .contains(
+                                  userUID,
+                                )
+                                .obs),
+                        tag: _dashboardController.trendingNewsList[index].title,
+                      ),
                     ),
                   );
                 },
@@ -174,7 +196,13 @@ class DashboardScreen extends StatelessWidget {
                     child: NewsCard(
                       news: _dashboardController.newsList[index],
                       newsCardController: Get.put(
-                        NewsCardController(),
+                        NewsCardController(
+                            isSaved:
+                                _dashboardController.newsList[index].savedBy
+                                    .contains(
+                                      userUID,
+                                    )
+                                    .obs),
                         tag: _dashboardController.newsList[index].title,
                       ),
                     ),

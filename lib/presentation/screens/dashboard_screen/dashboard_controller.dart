@@ -26,9 +26,6 @@ class DashboardController extends GetxController {
   @override
   Future<void> onInit() async {
     await addNewsToFirestore();
-    await getTodayNews();
-    await getTrendingNews();
-    await getMoreData();
     scrollController.value.addListener(() {
       if (scrollController.value.position.pixels ==
           scrollController.value.position.maxScrollExtent) {
@@ -56,13 +53,26 @@ class DashboardController extends GetxController {
       await _prefs.setNewsAddedTodayFlag(kNewsAddedTodayFlag, todayMillis);
       final _countries = ["gb", "us", "ie", "ca", "nz", "ph", "za"];
       _countries.forEach((element) async {
-        await _getNewsRequest.getNews(element).then((value) => {
+        await _getNewsRequest.getNews(element).then((value) async => {
               value.forEach((news) async {
-                await _firestoreService.addNewsToFirestore(news: news);
+                await _firestoreService
+                    .addNewsToFirestore(news: news)
+                    .then((value) => {
+                          news.id = value,
+                        });
               }),
+              await getNews(),
             });
       });
+    }else{
+      await getNews();
     }
+  }
+
+  Future<void> getNews() async {
+    await getTodayNews();
+    await getTrendingNews();
+    await getMoreData();
   }
 
   Future<void> getAllNews() async {

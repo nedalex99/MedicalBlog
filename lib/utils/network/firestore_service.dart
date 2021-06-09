@@ -36,10 +36,6 @@ class FirestoreService {
     return _firestoreInstance.collection('users').doc(uid).set(userJson);
   }
 
-  Future<void> addNewsToFirestore({News news}) {
-    return _firestoreInstance.collection('news-all').add(news.toJson());
-  }
-
   Future<void> addNewsToSaved({News news}) {
     return _firestoreInstance
         .collection('saved')
@@ -80,11 +76,15 @@ class FirestoreService {
   }
 
   Future<QuerySnapshot> getTrendingNews(DocumentSnapshot documentSnapshot) {
-    return _firestoreInstance
-        .collection('news-all')
-        .limit(3)
-        .startAfterDocument(documentSnapshot)
-        .get();
+    if (documentSnapshot != null) {
+      return _firestoreInstance
+          .collection('news-all')
+          .limit(3)
+          .startAfterDocument(documentSnapshot)
+          .get();
+    } else {
+      return _firestoreInstance.collection('news-all').limit(3).get();
+    }
   }
 
   Future<QuerySnapshot> getNewsByTitle({String title}) {
@@ -103,6 +103,17 @@ class FirestoreService {
           postId = value.id,
         });
     return postId;
+  }
+
+  Future<String> addNewsToFirestore({News news}) async {
+    String newsId;
+    await _firestoreInstance
+        .collection('news-all')
+        .add(news.toJson())
+        .then((value) => {
+              newsId = value.id,
+            });
+    return newsId;
   }
 
   Future<void> updateNoOfLikesAndDislikes({
@@ -213,6 +224,22 @@ class FirestoreService {
         .get();
   }
 
+  Future<void> addSavedNewsByUser({String newsId}) {
+    return _firestoreInstance.collection('news-all').doc(newsId).update({
+      'savedBy': FieldValue.arrayUnion(
+        [userUID],
+      ),
+    });
+  }
+
+  Future<void> removeSavedNewsByUser({String newsId}) {
+    return _firestoreInstance.collection('news-all').doc(newsId).update({
+      'savedBy': FieldValue.arrayRemove(
+        [userUID],
+      ),
+    });
+  }
+
   Future<void> addSavedPostByUser({String postId}) {
     return _firestoreInstance.collection('posts').doc(postId).update({
       'savedBy': FieldValue.arrayUnion(
@@ -240,7 +267,7 @@ class FirestoreService {
         );
   }
 
-  Future<void> removeFromSavedCollection({String postId}) {
+  Future<void> removePostFromSavedCollection({String postId}) {
     return _firestoreInstance
         .collection('saved')
         .doc(userUID)
@@ -249,7 +276,24 @@ class FirestoreService {
         .delete();
   }
 
-  Future<QuerySnapshot> getFromSavedCollection() {
+  Future<void> removeNewsFromSavedCollection({String newsId}) {
+    return _firestoreInstance
+        .collection('saved')
+        .doc(userUID)
+        .collection('news')
+        .doc(newsId)
+        .delete();
+  }
+
+  Future<QuerySnapshot> getNewsFromSavedCollection() {
+    return _firestoreInstance
+        .collection('saved')
+        .doc(userUID)
+        .collection('news')
+        .get();
+  }
+
+  Future<QuerySnapshot> getPostsFromSavedCollection() {
     return _firestoreInstance
         .collection('saved')
         .doc(userUID)

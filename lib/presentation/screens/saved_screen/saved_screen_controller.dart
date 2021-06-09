@@ -1,25 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:medical_blog/model/filter.dart';
+import 'package:medical_blog/model/news.dart';
 import 'package:medical_blog/model/post.dart';
 import 'package:medical_blog/model/user_data.dart';
+import 'package:medical_blog/presentation/widgets/dialogs/loading_dialog.dart';
 import 'package:medical_blog/presentation/widgets/modals/filters_modal/filters_modal.dart';
 import 'package:medical_blog/utils/network/firestore_service.dart';
 
 class SavedScreenController extends GetxController {
   FirestoreService _firestoreService = Get.find();
   RxList<Post> posts = List<Post>().obs;
-
+  RxList<News> newsList = List<News>().obs;
+  RxInt toggleIndex = 0.obs;
   RxString dropdownValue = "Oldest first".obs;
 
   @override
   Future<void> onInit() async {
-    getPosts();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      getPosts();
+    });
     super.onInit();
   }
 
+  void onToggle(int index) {
+    toggleIndex.value = index;
+    if (index == 0) {
+      getPosts();
+    } else {
+      getNews();
+    }
+  }
+
   Future<void> getPosts() async {
-    await _firestoreService.getFromSavedCollection().then((value) => {
+    Get.dialog(LoadingDialog());
+    await _firestoreService.getPostsFromSavedCollection().then((value) => {
           value.docs.forEach((element) {
             UserData userData = UserData(
               firstName: element.data()['userData']['firstName'],
@@ -49,8 +64,21 @@ class SavedScreenController extends GetxController {
             );
             posts.add(post);
           }),
+          Get.back(),
         });
     posts.sort((a, b) => b.timestamp.seconds.compareTo(a.timestamp.seconds));
+  }
+
+  Future<void> getNews() async {
+    newsList.clear();
+    Get.dialog(LoadingDialog());
+    await _firestoreService.getNewsFromSavedCollection().then((value) => {
+          value.docs.forEach((element) {
+            News news = News.fromJson(element);
+            newsList.add(news);
+          }),
+          Get.back(),
+        });
   }
 
   void showFilterModal() {

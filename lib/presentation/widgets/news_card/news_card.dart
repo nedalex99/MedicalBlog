@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:medical_blog/model/news.dart';
 import 'package:medical_blog/presentation/widgets/news_card/news_card_controller.dart';
 import 'package:intl/intl.dart';
+import 'package:get/get.dart';
 
 class NewsCard extends StatelessWidget {
   final NewsCardController newsCardController;
@@ -129,9 +130,15 @@ class NewsCard extends StatelessWidget {
                       child: Row(
                         children: [
                           IconButton(
-                            icon: Icon(Icons.bookmark_border_outlined),
+                            icon: Obx(
+                              () => Icon(
+                                newsCardController.isSaved.value
+                                    ? Icons.bookmark
+                                    : Icons.bookmark_border_outlined,
+                              ),
+                            ),
                             onPressed: () =>
-                                newsCardController.addNewsToSaved(news: news),
+                                newsCardController.onSaveIconClick(news: news),
                           ),
                           IconButton(
                             icon: Icon(Icons.share),

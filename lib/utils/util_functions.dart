@@ -74,7 +74,8 @@ String handleMillisecondsFromTimestamp(int seconds) {
 
 String parseDate(String date) {
   DateTime dateTime = DateFormat("yyyy-MM-dd").parse(date);
-  return dateTime.millisecondsSinceEpoch.toString();
+  var x = dateTime.millisecondsSinceEpoch.toString();
+  return x;
 }
 
 List<String> getWordsToSearch({String text}) {

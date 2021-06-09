@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:medical_blog/utils/util_functions.dart';
 
 class News {
+  String id;
   String author;
   String content;
   String description;
@@ -10,8 +11,10 @@ class News {
   String title;
   String url;
   String urlToImage;
+  List<String> savedBy;
 
   News({
+    this.id,
     this.author,
     this.content,
     this.description,
@@ -20,6 +23,7 @@ class News {
     this.title,
     this.url,
     this.urlToImage,
+    this.savedBy = const [],
   });
 
   factory News.fromJson(DocumentSnapshot documentSnapshot) {
@@ -28,6 +32,7 @@ class News {
     }
 
     return News(
+      id: documentSnapshot.id,
       author: documentSnapshot.data()['author'],
       content: documentSnapshot.data()['content'],
       description: documentSnapshot.data()['description'],
@@ -36,18 +41,22 @@ class News {
       publishedAt: documentSnapshot.data()['publishedAt'],
       url: documentSnapshot.data()['url'],
       urlToImage: documentSnapshot.data()['urlToImage'],
+      savedBy: (documentSnapshot.data()['savedBy'] as List)
+          .map((e) => e.toString())
+          .toList(),
     );
   }
 
   Map<String, dynamic> toJson() => {
-    'author': author,
-    'content': content,
-    'description': description,
-    'publishedAt': publishedAt,
-    'sourceName': sourceName,
-    'title': title,
-    'url': url,
-    'urlToImage': urlToImage,
-    'caseSearch': getWordsToSearch(text: title),
-  };
+        'author': author,
+        'content': content,
+        'description': description,
+        'publishedAt': publishedAt,
+        'sourceName': sourceName,
+        'title': title,
+        'url': url,
+        'urlToImage': urlToImage,
+        'caseSearch': getWordsToSearch(text: title),
+        'savedBy': savedBy,
+      };
 }

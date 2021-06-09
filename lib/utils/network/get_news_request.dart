@@ -16,7 +16,7 @@ class GetNewsRequest {
 
   Future<List<News>> getNews(String country) async {
     final String _uri =
-        "https://newsapi.org/v2/top-headlines?country=$country&apiKey=$api_key";
+        "https://newsapi.org/v2/top-headlines?country=$country&category=health&apiKey=$api_key";
     try {
       final http.Response response = await http.get(Uri.parse(_uri));
       if (response.statusCode == 200) {

@@ -44,26 +44,6 @@ class Post {
         'userData': userData.toJson(),
       };
 
-  factory Post.fromQuerySnapshot(QueryDocumentSnapshot querySnapshot) {
-    if (querySnapshot == null || !querySnapshot.exists) {
-      return Post();
-    }
-
-    return Post(
-      title: querySnapshot['title'],
-      description: querySnapshot['title'],
-      tags: querySnapshot['tags'],
-      noOfLikes: querySnapshot['noOfLikes'],
-      noOfDislikes: querySnapshot['noOfDislikes'],
-      noOfComments: querySnapshot['noOfComments'],
-      timestamp: querySnapshot['timeStamp'],
-      likedBy: querySnapshot['liked'],
-      dislikedBy: querySnapshot['disliked'],
-      savedBy: querySnapshot['savedBy'],
-      userData: querySnapshot['userData'],
-    );
-  }
-
   factory Post.fromJson(DocumentSnapshot documentSnapshot) {
     if (documentSnapshot.data() == null || documentSnapshot.data().isEmpty) {
       return Post();
