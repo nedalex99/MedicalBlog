@@ -32,20 +32,28 @@ class Comment {
         'userData': userData.toJson(),
       };
 
-  factory Comment.fromJson(Map<dynamic, dynamic> parsedJson) {
-    if (parsedJson == null || parsedJson.isEmpty) {
+  factory Comment.fromJson(DocumentSnapshot parsedJson) {
+    if (parsedJson.data() == null || parsedJson.data().isEmpty) {
       return Comment();
     }
 
-    UserData userData = UserData.fromJson(parsedJson['userData']);
+    UserData userData = UserData(
+      firstName: parsedJson.data()['userData']['firstName'],
+      lastName: parsedJson.data()['userData']['lastName'],
+      profession: parsedJson.data()['userData']['profession'],
+    );
 
     return Comment(
-      commentText: parsedJson['commentText'],
-      timestamp: parsedJson['timestamp'],
-      noOfLikes: parsedJson['noOfLikes'],
-      noOfDislikes: parsedJson['noOfDislikes'],
-      likedBy: (parsedJson['likedBy'] as List).map((e) => e.toString()).toList(),
-      dislikedBy: (parsedJson['dislikedBy'] as List).map((e) => e.toString()).toList(),
+      commentText: parsedJson.data()['commentText'],
+      timestamp: parsedJson.data()['timestamp'],
+      noOfLikes: parsedJson.data()['noOfLikes'],
+      noOfDislikes: parsedJson.data()['noOfDislikes'],
+      likedBy: (parsedJson.data()['likedBy'] as List)
+          .map((e) => e.toString())
+          .toList(),
+      dislikedBy: (parsedJson.data()['dislikedBy'] as List)
+          .map((e) => e.toString())
+          .toList(),
       userData: userData,
     );
   }

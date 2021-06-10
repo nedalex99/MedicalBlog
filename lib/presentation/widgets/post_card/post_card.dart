@@ -91,7 +91,9 @@ class PostCard extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            "Pediatrist",
+                            post.userData.profession != null
+                                ? post.userData.profession
+                                : 'Student',
                             style: TextStyle(
                               fontSize: 14.0,
                               color: kHintColor,

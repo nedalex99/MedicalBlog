@@ -86,7 +86,9 @@ class CommentCard extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            'Student',
+                            comment.userData.profession != null
+                                ? comment.userData.profession
+                                : 'Student',
                             style: TextStyle(
                               fontSize: 14.0,
                               color: kHintColor,

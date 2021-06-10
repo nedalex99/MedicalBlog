@@ -78,10 +78,7 @@ class AddPostController extends GetxController {
     Get.dialog(LoadingDialog());
     UserData userData;
     await _firestoreService.getUserFirstAndLastName().then((value) => {
-          userData = UserData(
-            firstName: value['firstName'] as String,
-            lastName: value['lastName'] as String,
-          ),
+          userData = UserData.fromJson(value),
         });
     Post post = Post(
       title: title,

@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class UserData {
   String email;
   String firstName;
@@ -17,20 +19,21 @@ class UserData {
         'email': email,
         'firstName': firstName,
         'lastName': lastName,
-        'country': country
+        'country': country,
+        'profession': profession,
       };
 
-  factory UserData.fromJson(Map<dynamic, dynamic> parsedJson) {
-    if (parsedJson == null || parsedJson.isEmpty) {
+  factory UserData.fromJson(DocumentSnapshot parsedJson) {
+    if (parsedJson.data() == null || parsedJson.data().isEmpty) {
       return UserData();
     }
 
     return UserData(
-      email: parsedJson['email'],
-      firstName: parsedJson['firstName'],
-      lastName: parsedJson['lastName'],
-      country: parsedJson['country]'],
-      profession: parsedJson['profession'],
+      email: parsedJson.data()['email'],
+      firstName: parsedJson.data()['firstName'],
+      lastName: parsedJson.data()['lastName'],
+      country: parsedJson.data()['country]'],
+      profession: parsedJson.data()['profession'],
     );
   }
 }

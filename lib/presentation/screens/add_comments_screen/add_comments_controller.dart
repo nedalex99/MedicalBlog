@@ -21,7 +21,7 @@ class AddCommentsController extends GetxController {
   Future<void> getComments({String postId}) async {
     await _firestoreService.getComments(postId: postId).then((value) => {
           value.docs.forEach((element) {
-            Comment comment = Comment.fromJson(element.data());
+            Comment comment = Comment.fromJson(element);
             comment.commentId = element.id;
             commentsFromFirestore.add(comment);
           }),
@@ -37,6 +37,7 @@ class AddCommentsController extends GetxController {
           userData = UserData(
             firstName: value['firstName'] as String,
             lastName: value['lastName'] as String,
+            profession: value['profession'] as String,
           ),
         });
     Comment comment = Comment(
