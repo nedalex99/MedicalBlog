@@ -41,7 +41,8 @@ class FirestoreService {
         .collection('saved')
         .doc(userUID)
         .collection('news')
-        .add(news.toJson());
+        .doc(news.id)
+        .set(news.toJson());
   }
 
   Future<QuerySnapshot> getAllNews() {

@@ -21,9 +21,7 @@ class InputTextFieldSearch extends StatelessWidget {
       controller: _controller.textController.value,
       onChanged: (value) {
         inputTextChecked(value);
-        if (value.length > 3) {
-          getNewsByTitle(value);
-        }
+        getNewsByTitle(value);
       },
       decoration: InputDecoration(
         filled: true,

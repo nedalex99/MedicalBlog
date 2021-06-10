@@ -43,174 +43,220 @@ class DashboardScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: Row(
-                    children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Today',
-                          style: TextStyle(
-                            fontSize: 24.0,
-                            fontWeight: FontWeight.w700,
+                Obx(
+                  () => _dashboardController.searchedNews.length == 0
+                      ? Padding(
+                          padding: const EdgeInsets.all(18.0),
+                          child: Row(
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Today',
+                                  style: TextStyle(
+                                    fontSize: 24.0,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Text(
+                                    'see more >',
+                                    style: TextStyle(
+                                      fontSize: 14.0,
+                                      color: Colors.blue,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Align(
-                          alignment: Alignment.centerRight,
-                          child: Text(
-                            'see more >',
-                            style: TextStyle(
-                              fontSize: 14.0,
-                              color: Colors.blue,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                        )
+                      : Container(),
                 ),
               ],
             ),
           ),
           Obx(
-            () => SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(18.0),
-                    child: NewsCard(
-                      news: _dashboardController.todayNewsList[index],
-                      newsCardController: Get.put(
-                        NewsCardController(
-                          isSaved:
-                              _dashboardController.todayNewsList[index].savedBy
-                                  .contains(
-                                    userUID,
-                                  )
-                                  .obs,
-                        ),
-                        tag: _dashboardController.todayNewsList[index].title,
-                      ),
-                    ),
-                  );
-                },
-                childCount: _dashboardController.todayNewsList.length,
-              ),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: Row(
-                    children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Trending',
-                          style: TextStyle(
-                            fontSize: 24.0,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Align(
-                          alignment: Alignment.centerRight,
-                          child: Text(
-                            'see more >',
-                            style: TextStyle(
-                              fontSize: 14.0,
-                              color: Colors.blue,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Obx(
-            () => SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(18.0),
-                    child: NewsCard(
-                      news: _dashboardController.trendingNewsList[index],
-                      newsCardController: Get.put(
-                        NewsCardController(
-                            isSaved: _dashboardController
-                                .trendingNewsList[index].savedBy
-                                .contains(
-                                  userUID,
-                                )
-                                .obs),
-                        tag: _dashboardController.trendingNewsList[index].title,
-                      ),
-                    ),
-                  );
-                },
-                childCount: _dashboardController.trendingNewsList.length,
-              ),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: Row(
-                    children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Latest',
-                          style: TextStyle(
-                            fontSize: 24.0,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Obx(
-            () => SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  if (index == _dashboardController.newsList.value.length) {
-                    return CupertinoActivityIndicator();
-                  }
-                  return Padding(
-                    padding: const EdgeInsets.all(18.0),
-                    child: NewsCard(
-                      news: _dashboardController.newsList[index],
-                      newsCardController: Get.put(
-                        NewsCardController(
-                            isSaved:
-                                _dashboardController.newsList[index].savedBy
+            () => _dashboardController.searchedNews.length == 0
+                ? SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(18.0),
+                          child: NewsCard(
+                            news: _dashboardController.todayNewsList[index],
+                            newsCardController: Get.put(
+                              NewsCardController(
+                                isSaved: _dashboardController
+                                    .todayNewsList[index].savedBy
                                     .contains(
                                       userUID,
                                     )
-                                    .obs),
-                        tag: _dashboardController.newsList[index].title,
-                      ),
+                                    .obs,
+                              ),
+                              tag: _dashboardController
+                                  .todayNewsList[index].title,
+                            ),
+                          ),
+                        );
+                      },
+                      childCount: _dashboardController.todayNewsList.length,
                     ),
-                  );
-                },
-                childCount: _dashboardController.newsList.value.length + 1,
-              ),
-            ),
+                  )
+                : SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(18.0),
+                          child: NewsCard(
+                            news: _dashboardController.searchedNews[index],
+                            newsCardController: Get.put(
+                              NewsCardController(
+                                isSaved: _dashboardController
+                                    .searchedNews[index].savedBy
+                                    .contains(
+                                      userUID,
+                                    )
+                                    .obs,
+                              ),
+                              tag: _dashboardController
+                                  .searchedNews[index].title,
+                            ),
+                          ),
+                        );
+                      },
+                      childCount: _dashboardController.searchedNews.length,
+                    ),
+                  ),
+          ),
+          Obx(
+            () => _dashboardController.searchedNews.length == 0
+                ? SliverToBoxAdapter(
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(18.0),
+                          child: Row(
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Trending',
+                                  style: TextStyle(
+                                    fontSize: 24.0,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Text(
+                                    'see more >',
+                                    style: TextStyle(
+                                      fontSize: 14.0,
+                                      color: Colors.blue,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                : SliverToBoxAdapter(),
+          ),
+          Obx(
+            () => _dashboardController.searchedNews.length == 0
+                ? SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(18.0),
+                          child: NewsCard(
+                            news: _dashboardController.trendingNewsList[index],
+                            newsCardController: Get.put(
+                              NewsCardController(
+                                  isSaved: _dashboardController
+                                      .trendingNewsList[index].savedBy
+                                      .contains(
+                                        userUID,
+                                      )
+                                      .obs),
+                              tag: _dashboardController
+                                  .trendingNewsList[index].title,
+                            ),
+                          ),
+                        );
+                      },
+                      childCount: _dashboardController.trendingNewsList.length,
+                    ),
+                  )
+                : SliverToBoxAdapter(),
+          ),
+          Obx(
+            () => _dashboardController.searchedNews.length == 0
+                ? SliverToBoxAdapter(
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(18.0),
+                          child: Row(
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Latest',
+                                  style: TextStyle(
+                                    fontSize: 24.0,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                : SliverToBoxAdapter(),
+          ),
+          Obx(
+            () => _dashboardController.searchedNews.length == 0
+                ? SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        if (index ==
+                            _dashboardController.newsList.value.length) {
+                          return CupertinoActivityIndicator();
+                        }
+                        return Padding(
+                          padding: const EdgeInsets.all(18.0),
+                          child: NewsCard(
+                            news: _dashboardController.newsList[index],
+                            newsCardController: Get.put(
+                              NewsCardController(
+                                  isSaved: _dashboardController
+                                      .newsList[index].savedBy
+                                      .contains(
+                                        userUID,
+                                      )
+                                      .obs),
+                              tag: _dashboardController.newsList[index].title,
+                            ),
+                          ),
+                        );
+                      },
+                      childCount:
+                          _dashboardController.newsList.value.length + 1,
+                    ),
+                  )
+                : SliverToBoxAdapter(),
           ),
         ],
       ),

@@ -12,26 +12,31 @@ class NewsCardController extends GetxController {
     this.isSaved,
   });
 
-  void onSaveIconClick({News news}) {
+  Future<void> onSaveIconClick({News news, Function deleteNewsCallback}) async {
     Get.dialog(LoadingDialog());
     if (!isSaved.value) {
-      _firestoreService.addSavedNewsByUser(newsId: news.id).then((value) => {
-            news.savedBy.add(userUID),
-            _firestoreService.addNewsToSaved(news: news).then((value) => {
-                  isSaved.value = true,
-                  Get.back,
-                  Get.back,
-                }),
-          });
+      await _firestoreService
+          .addSavedNewsByUser(newsId: news.id)
+          .then((value) async => {
+                news.savedBy.add(userUID),
+                await _firestoreService
+                    .addNewsToSaved(news: news)
+                    .then((value) => {
+                          isSaved.value = true,
+                          Get.back(),
+                        }),
+              });
     } else {
-      _firestoreService.removeSavedNewsByUser(newsId: news.id).then((value) => {
-            _firestoreService
-                .removeNewsFromSavedCollection(newsId: news.id)
-                .then((value) => {
-                      isSaved.value = false,
-                      Get.back(),
-                    }),
-          });
+      await _firestoreService
+          .removeSavedNewsByUser(newsId: news.id)
+          .then((value) async => {
+                await _firestoreService
+                    .removeNewsFromSavedCollection(newsId: news.id)
+                    .then((value) => {
+                          isSaved.value = false,
+                          Get.back(),
+                        }),
+              });
     }
   }
 }

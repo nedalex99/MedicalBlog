@@ -131,6 +131,10 @@ class SavedScreenController extends GetxController {
     posts.removeWhere((element) => element.uid == postId);
   }
 
+  void removeNewsById(String newsId) {
+    newsList.removeWhere((element) => element.id == newsId);
+  }
+
   Future<void> getPostsWithFilters(Filter filter) async {
     await _firestoreService
         .getSavedPostsWithFilters(filter: filter)

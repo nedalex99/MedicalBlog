@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:medical_blog/model/news.dart';
+import 'package:medical_blog/presentation/widgets/dialogs/loading_dialog.dart';
 import 'package:medical_blog/utils/constants/strings.dart';
 import 'package:medical_blog/utils/network/firestore_service.dart';
 import 'package:medical_blog/utils/network/get_news_request.dart';
@@ -12,6 +13,7 @@ class DashboardController extends GetxController {
   RxList<News> newsList = List<News>().obs;
   RxList<News> todayNewsList = List<News>().obs;
   RxList<News> trendingNewsList = List<News>().obs;
+  RxList<News> searchedNews = List<News>().obs;
   Rx<ScrollController> scrollController = ScrollController().obs;
   DocumentSnapshot documentSnapshot;
   RxString title = "".obs;
@@ -64,7 +66,7 @@ class DashboardController extends GetxController {
               await getNews(),
             });
       });
-    }else{
+    } else {
       await getNews();
     }
   }
@@ -76,6 +78,7 @@ class DashboardController extends GetxController {
   }
 
   Future<void> getAllNews() async {
+    newsList.clear();
     await _firestoreService.getAllNews().then((value) => {
           value.docs.forEach((element) {
             documentSnapshot = element;
@@ -97,6 +100,7 @@ class DashboardController extends GetxController {
   }
 
   Future<void> getTodayNews() async {
+    todayNewsList.clear();
     await _firestoreService.getTodayNews().then((value) => {
           value.docs.forEach((element) {
             this.documentSnapshot = element;
@@ -107,6 +111,7 @@ class DashboardController extends GetxController {
   }
 
   Future<void> getTrendingNews() async {
+    trendingNewsList.clear();
     await _firestoreService.getTrendingNews(documentSnapshot).then((value) => {
           value.docs.forEach((element) {
             this.documentSnapshot = element;
@@ -117,12 +122,12 @@ class DashboardController extends GetxController {
   }
 
   Future<void> getNewsByTitle(String title) async {
-    todayNewsList.clear();
-    await _firestoreService.getNewsByTitle(title: title).then((value) => {
-          value.docs.forEach((element) {
-            News news = News.fromJson(element);
-            todayNewsList.add(news);
-          }),
-        });
+    searchedNews.clear();
+      await _firestoreService.getNewsByTitle(title: title).then((value) => {
+            value.docs.forEach((element) {
+              News news = News.fromJson(element);
+              searchedNews.add(news);
+            }),
+          });
   }
 }
