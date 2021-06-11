@@ -392,4 +392,17 @@ class FirestoreService {
         .startAfterDocument(documentSnapshot)
         .get();
   }
+
+  Future<QuerySnapshot> getUserPosts() {
+    return _firestoreInstance
+        .collection('posts')
+        .limit(15)
+        .orderBy("timeStamp", descending: true)
+        .where("userData.id", isEqualTo: userUID)
+        .get();
+  }
+
+  Future<DocumentSnapshot> getUserData() {
+    return _firestoreInstance.collection('users').doc(userUID).get();
+  }
 }

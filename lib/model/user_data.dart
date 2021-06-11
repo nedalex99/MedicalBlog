@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserData {
+  String id;
   String email;
   String firstName;
   String lastName;
@@ -8,6 +9,7 @@ class UserData {
   String profession;
 
   UserData({
+    this.id,
     this.email,
     this.firstName,
     this.lastName,
@@ -29,6 +31,7 @@ class UserData {
     }
 
     return UserData(
+      id: parsedJson.id,
       email: parsedJson.data()['email'],
       firstName: parsedJson.data()['firstName'],
       lastName: parsedJson.data()['lastName'],

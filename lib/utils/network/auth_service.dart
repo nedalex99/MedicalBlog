@@ -31,6 +31,10 @@ class AuthService {
     );
   }
 
+  Future<void> logoutUser() async{
+    return _firebaseAuth.signOut();
+  }
+
   User getUser() {
     return _firebaseAuth.currentUser;
   }
