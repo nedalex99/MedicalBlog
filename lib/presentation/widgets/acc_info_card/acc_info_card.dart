@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:medical_blog/model/user_data.dart';
+import 'package:medical_blog/model/user_info.dart';
+import 'package:medical_blog/presentation/screens/update_account_screen/update_account_controller.dart';
+import 'package:medical_blog/presentation/screens/update_account_screen/update_account_screen.dart';
+import 'package:get/get.dart';
 
 class AccInfoCard extends StatelessWidget {
-  final UserData userData;
+  final UserInfo userData;
 
   AccInfoCard({
     this.userData,
@@ -27,15 +30,27 @@ class AccInfoCard extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
-                  Icon(Icons.person),
+                  userData.icon,
                   Text(
-                    userData.firstName,
+                    userData.name,
                   ),
                   Expanded(
                     child: Align(
                       alignment: Alignment.centerRight,
-                      child: Text(
-                        'edit',
+                      child: GestureDetector(
+                        onTap: () => Get.to(
+                          UpdateAccountScreen(
+                            userInfo: userData,
+                            controller: Get.put(
+                              UpdateAccountController(
+                                name: userData.name,
+                              ),
+                            ),
+                          ),
+                        ),
+                        child: Text(
+                          'edit',
+                        ),
                       ),
                     ),
                   ),

@@ -32,6 +32,7 @@ dependencies:
   toggle_switch: ^0.1.9
   http: ^0.13.3
   webview_flutter: ^2.0.4
+  image_picker:
   # firebase
   firebase_core: ^1.0.2
   firebase_analytics: ^7.1.1

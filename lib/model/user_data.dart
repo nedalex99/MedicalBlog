@@ -35,7 +35,7 @@ class UserData {
       email: parsedJson.data()['email'],
       firstName: parsedJson.data()['firstName'],
       lastName: parsedJson.data()['lastName'],
-      country: parsedJson.data()['country]'],
+      country: parsedJson.data()['country'],
       profession: parsedJson.data()['profession'],
     );
   }

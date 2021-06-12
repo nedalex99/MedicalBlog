@@ -29,32 +29,42 @@ class ProfileScreen extends StatelessWidget {
             child: Center(
               child: Padding(
                 padding: EdgeInsets.only(top: Get.height * 0.2),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                child: Column(
                   children: [
-                    Obx(
-                      () => Column(
-                        children: [
-                          Text(
-                            _profileScreenController.userData.value.firstName,
+                    Container(
+
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Obx(
+                          () => Column(
+                            children: [
+                              Text(
+                                _profileScreenController
+                                    .userData.value.firstName,
+                              ),
+                              Text(
+                                _profileScreenController
+                                    .userData.value.lastName,
+                              ),
+                            ],
                           ),
-                          Text(
-                            _profileScreenController.userData.value.lastName,
+                        ),
+                        SizedBox(
+                          width: Get.width * 0.05,
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            Icons.edit,
                           ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      width: Get.width * 0.05,
-                    ),
-                    IconButton(
-                      icon: Icon(
-                        Icons.edit,
-                      ),
-                      onPressed: _profileScreenController.redirectToEditAccount,
-                    ),
-                    SizedBox(
-                      height: 200,
+                          onPressed:
+                              _profileScreenController.redirectToEditAccount,
+                        ),
+                        SizedBox(
+                          height: 200,
+                        ),
+                      ],
                     ),
                   ],
                 ),

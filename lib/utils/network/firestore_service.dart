@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:medical_blog/model/comment.dart';
 import 'package:medical_blog/model/filter.dart';
 import 'package:medical_blog/model/news.dart';
@@ -404,5 +405,23 @@ class FirestoreService {
 
   Future<DocumentSnapshot> getUserData() {
     return _firestoreInstance.collection('users').doc(userUID).get();
+  }
+
+  Future<void> updateProfession({String profession}) async {
+    return _firestoreInstance.collection('users').doc(userUID).update({
+      "profession": profession,
+    });
+  }
+
+  Future<void> updateEmail({String email}) async {
+    return _firestoreInstance.collection('users').doc(userUID).update({
+      "email": email,
+    });
+  }
+
+  Future<void> updateCountry({String country}) async {
+    return _firestoreInstance.collection('users').doc(userUID).update({
+      "country": country,
+    });
   }
 }

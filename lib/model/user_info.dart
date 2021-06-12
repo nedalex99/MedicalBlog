@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class UserInfo {
   String name;
   Icon icon;
