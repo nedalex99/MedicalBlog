@@ -53,21 +53,25 @@ class AddPostScreen extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Alexandru Nedelcu',
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          color: kTextBlack1C,
+                      Obx(
+                        () => Text(
+                          "${_addPostController.userData.value.firstName} ${_addPostController.userData.value.lastName}",
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            color: kTextBlack1C,
+                          ),
                         ),
                       ),
                       SizedBox(
                         height: Get.height * 0.001,
                       ),
-                      Text(
-                        'Pediatrics',
-                        style: TextStyle(
-                          fontSize: 16.0,
-                          color: kHintColor,
+                      Obx(
+                        () => Text(
+                          "${_addPostController.userData.value.profession}",
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            color: kHintColor,
+                          ),
                         ),
                       ),
                     ],

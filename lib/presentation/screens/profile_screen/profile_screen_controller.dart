@@ -5,13 +5,16 @@ import 'package:medical_blog/model/user_data.dart';
 import 'package:medical_blog/presentation/screens/edit_account_screen/edit_account_screen.dart';
 import 'package:medical_blog/presentation/widgets/dialogs/loading_dialog.dart';
 import 'package:medical_blog/utils/constants/routes.dart';
+import 'package:medical_blog/utils/constants/strings.dart';
 import 'package:medical_blog/utils/network/auth_service.dart';
 import 'package:medical_blog/utils/network/firestore_service.dart';
 import 'package:medical_blog/utils/session_temp.dart';
+import 'package:medical_blog/utils/user_preferences.dart';
 
 class ProfileScreenController extends GetxController {
   FirestoreService _firestoreService = Get.find();
   AuthService _authService = Get.find();
+  PreferencesUtils _preferencesUtils = Get.find();
 
   RxList<Post> posts = List<Post>().obs;
   Rx<UserData> userData = UserData(
@@ -45,8 +48,15 @@ class ProfileScreenController extends GetxController {
   }
 
   Future<void> signOutUser() async {
+    String keepMeAuthFlag;
     Get.dialog(LoadingDialog());
-    await _authService.logoutUser().then((value) => {
+    await _authService.logoutUser().then((value) async => {
+          keepMeAuthFlag =
+              await _preferencesUtils.getKeepMeAuthFlag(kKeepMeAuthFlag, ""),
+          if (keepMeAuthFlag == 'true')
+            {
+              await _preferencesUtils.setKeepMeAuthFlag(kKeepMeAuthFlag, false),
+            },
           userUID = '',
           Get.back(),
           Get.offAllNamed(kLoginRoute),

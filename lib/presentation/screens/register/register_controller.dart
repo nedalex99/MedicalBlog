@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:medical_blog/presentation/screens/register_profession_screen/register_profession.dart';
 import 'package:medical_blog/presentation/widgets/dialogs/loading_dialog.dart';
 import 'package:medical_blog/utils/constants/colors.dart';
 import 'package:medical_blog/utils/network/auth_service.dart';
@@ -43,6 +44,7 @@ class RegisterController extends GetxController {
 
   void dateOfBirthCallback(String value) {
     dateOfBirth = value;
+    setButtonColor();
   }
 
   void setButtonColor() {
@@ -60,7 +62,6 @@ class RegisterController extends GetxController {
 
   void registerUser() {
     Get.dialog(LoadingDialog());
-
     _authService
         .createUserWithEmailAndPassword(email: email, password: password)
         .then((valueUser) => {
@@ -69,13 +70,20 @@ class RegisterController extends GetxController {
                   valueUser.user.sendEmailVerification().then((value) => {
                         _firestoreSerivce
                             .createUser(
-                                uid: valueUser.user.uid,
-                                email: email,
-                                firstName: firstName,
-                                lastName: lastName,
-                                country: country)
+                              uid: valueUser.user.uid,
+                              email: email,
+                              firstName: firstName,
+                              lastName: lastName,
+                              country: country,
+                              dateOfBirth: dateOfBirth,
+                            )
                             .then((value) => {
                                   Get.back(),
+                                  Get.to(
+                                    () => RegisterProfession(
+                                      userUID: valueUser.user.uid,
+                                    ),
+                                  ),
                                 }),
                       }),
                 }

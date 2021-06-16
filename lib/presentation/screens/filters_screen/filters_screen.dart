@@ -68,7 +68,6 @@ class FiltersScreen extends StatelessWidget {
                 ),
                 tag: "Category",
               ),
-              onTap: () {},
             ),
             SizedBox(
               height: 16.0,

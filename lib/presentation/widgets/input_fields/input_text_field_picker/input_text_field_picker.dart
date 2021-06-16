@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:medical_blog/presentation/widgets/input_fields/input_text_field_picker/input_text_field_picker_controller.dart';
 
 class InputTextFieldPicker extends StatelessWidget {
   final String hint;
-  final Function onTap;
   final InputTextFieldPickerController controller;
 
   InputTextFieldPicker({
     @required this.hint,
-    @required this.onTap,
     @required this.controller,
   });
 
@@ -18,7 +15,7 @@ class InputTextFieldPicker extends StatelessWidget {
     return TextField(
       textAlign: TextAlign.start,
       readOnly: true,
-      controller: controller.textController.value..text = hint,
+      controller: controller.textController.value,
       onTap: controller.showCategoryPicker,
       decoration: InputDecoration(
         filled: true,
@@ -42,6 +39,12 @@ class InputTextFieldPicker extends StatelessWidget {
             Radius.circular(6.0),
           ),
         ),
+        contentPadding: const EdgeInsets.only(
+          left: 12.0,
+          bottom: 12.0,
+        ),
+        hintText: hint,
+        labelText: hint,
       ),
     );
   }

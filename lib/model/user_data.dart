@@ -7,6 +7,7 @@ class UserData {
   String lastName;
   String country;
   String profession;
+  String dateOfBirth;
 
   UserData({
     this.id,
@@ -15,6 +16,7 @@ class UserData {
     this.lastName,
     this.country,
     this.profession,
+    this.dateOfBirth,
   });
 
   Map<String, dynamic> toJson() => {
@@ -23,6 +25,7 @@ class UserData {
         'lastName': lastName,
         'country': country,
         'profession': profession,
+        'dateOfBirth': dateOfBirth,
       };
 
   factory UserData.fromJson(DocumentSnapshot parsedJson) {

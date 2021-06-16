@@ -19,22 +19,38 @@ class FirestoreService {
 
   FirebaseFirestore _firestoreInstance = FirebaseFirestore.instance;
 
-  Future<void> createUser(
-      {String uid,
-      String email,
-      String firstName,
-      String lastName,
-      String country}) {
+  Future<void> createUser({
+    String uid,
+    String email,
+    String firstName,
+    String lastName,
+    String country,
+    String dateOfBirth,
+  }) {
     UserData user = UserData(
       email: email,
       firstName: firstName,
       lastName: lastName,
       country: country,
+
     );
 
     Map<String, dynamic> userJson = user.toJson();
 
     return _firestoreInstance.collection('users').doc(uid).set(userJson);
+  }
+
+  Future<void> updateProfessionForUser({
+    String uid,
+    String profession,
+    String specialty,
+    String yearsOfExperience,
+  }) async {
+    return _firestoreInstance.collection('users').doc(uid).update({
+      'profession': profession,
+      'specialty': specialty,
+      'yearsOfExperience': yearsOfExperience,
+    });
   }
 
   Future<void> addNewsToSaved({News news}) {

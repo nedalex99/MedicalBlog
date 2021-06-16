@@ -26,7 +26,7 @@ class InputFieldDatePickerController extends GetxController {
 
   void saveDate() {
     String date = dateTime.toString();
-    var formattedDate = DateFormat("yyyy-MM-dd").parse(date);
+    var formattedDate = DateFormat("yyyy-MM-dd").format(dateTime);
     textController.value.text = formattedDate.toString();
     inputTextChecked(textController.value.text);
     Get.back();

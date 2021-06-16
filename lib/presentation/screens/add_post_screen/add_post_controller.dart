@@ -10,6 +10,7 @@ import 'package:medical_blog/presentation/widgets/tag_widget/tag_widget.dart';
 import 'package:medical_blog/utils/constants/colors.dart';
 import 'package:medical_blog/utils/network/firestore_service.dart';
 import 'package:medical_blog/utils/util_functions.dart';
+import 'package:profanity_filter/profanity_filter.dart';
 
 class AddPostController extends GetxController {
   String title = "";
@@ -20,6 +21,12 @@ class AddPostController extends GetxController {
   RxInt addTextColor = kInactiveAddPostTextHex.obs;
   RxList<TagWidget> tagWidgetList = List<TagWidget>().obs;
   List<String> tagList = [];
+
+  Rx<UserData> userData = UserData(
+    firstName: '',
+    lastName: '',
+    profession: '',
+  ).obs;
 
   List<Widget> _cupertinoTagWidgetList = [
     Text(
@@ -56,6 +63,18 @@ class AddPostController extends GetxController {
 
   FirestoreService _firestoreService = Get.find();
 
+  @override
+  void onInit() {
+    getUserData();
+    super.onInit();
+  }
+
+  Future<void> getUserData() async {
+    await _firestoreService.getUserData().then((value) => {
+          userData.value = UserData.fromJson(value),
+        });
+  }
+
   void titleCallback(String value) {
     title = value;
     setAddTextColor();
@@ -76,6 +95,9 @@ class AddPostController extends GetxController {
 
   Future<void> addPost() async {
     Get.dialog(LoadingDialog());
+    if (ProfanityFilter().hasProfanity(description)) {
+      print(true);
+    }
     UserData userData;
     await _firestoreService.getUserFirstAndLastName().then((value) => {
           userData = UserData.fromJson(value),
@@ -102,6 +124,8 @@ class AddPostController extends GetxController {
       post,
     );
   }
+
+  void verifyContent() {}
 
   void showTagPicker() {
     showSheet(

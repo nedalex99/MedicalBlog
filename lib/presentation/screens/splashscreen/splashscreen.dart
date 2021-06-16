@@ -50,15 +50,5 @@ class _SplashScreenState extends State<SplashScreen> {
     } else {
       Get.offAllNamed(kLoginRoute);
     }
-    // return Timer(Duration(seconds: 2), () async {
-    //   String tutorialFlag =
-    //       await _preferencesUtils.getTutorialFlag(kTutorialFlagKey, 'false');
-    //
-    //   if (tutorialFlag == 'false' || tutorialFlag == null) {
-    //     Get.offAllNamed(kTutorialRoute);
-    //   } else {
-    //     Get.offAllNamed(kLoginRoute);
-    //   }
-    // });
   }
 }

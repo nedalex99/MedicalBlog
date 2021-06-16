@@ -84,7 +84,7 @@ class LoginScreen extends StatelessWidget {
               Row(
                 children: [
                   Obx(
-                  () => CustomCheckbox(
+                    () => CustomCheckbox(
                       isSelected: _loginController.checkboxValue.value,
                       onTap: _loginController.updateCheckbox,
                     ),
@@ -114,7 +114,8 @@ class LoginScreen extends StatelessWidget {
                   alignment: Alignment.bottomCenter,
                   child: Padding(
                     padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).size.height * 0.05),
+                      bottom: MediaQuery.of(context).size.height * 0.05,
+                    ),
                     child: CustomButton(
                       buttonText: 'Register',
                       onButtonTap: () {

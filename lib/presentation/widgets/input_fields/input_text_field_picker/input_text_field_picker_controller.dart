@@ -10,43 +10,13 @@ class InputTextFieldPickerController extends GetxController {
 
   InputTextFieldPickerController({
     this.inputTextChecked,
+    this.cupertinoTagList,
   });
 
   int _selectedIndex = 0;
   List<String> tagList = [];
 
-  List<Widget> _cupertinoTagWidgetList = [
-    Text(
-      'Neorology',
-      style: TextStyle(
-        fontSize: 26.0,
-      ),
-    ),
-    Text(
-      'College',
-      style: TextStyle(
-        fontSize: 26.0,
-      ),
-    ),
-    Text(
-      'Pediatry',
-      style: TextStyle(
-        fontSize: 26.0,
-      ),
-    ),
-    Text(
-      'Cardiology',
-      style: TextStyle(
-        fontSize: 26.0,
-      ),
-    ),
-  ];
-  List<String> cupertinoTagList = [
-    'Neorology',
-    'College',
-    'Pediatry',
-    'Cardiology',
-  ];
+  final List<String> cupertinoTagList;
 
   void showCategoryPicker() {
     showSheet(
@@ -71,7 +41,16 @@ class InputTextFieldPickerController extends GetxController {
           _selectedIndex = value;
         },
         itemExtent: 50,
-        children: _cupertinoTagWidgetList,
+        children: cupertinoTagList
+            .map(
+              (e) => Text(
+                e,
+                style: TextStyle(
+                  fontSize: 26.0,
+                ),
+              ),
+            )
+            .toList(),
       ),
     );
   }

@@ -142,7 +142,7 @@ class RegisterScreen extends StatelessWidget {
                   ),
                   child: Padding(
                     padding: EdgeInsets.only(
-                      top: (MediaQuery.of(context).size.height * 0.025),
+                      top: MediaQuery.of(context).size.height * 0.025,
                     ),
                     child: Obx(
                       () => CustomButton(
