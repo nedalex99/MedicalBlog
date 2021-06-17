@@ -81,8 +81,8 @@ class SavedScreen extends StatelessWidget {
                       child: Obx(
                         () => DropdownButton(
                           items: <String>[
-                            'Oldest first',
                             'Newest first',
+                            'Oldest first',
                             'Most likes first',
                             'Most dislikes first',
                           ]

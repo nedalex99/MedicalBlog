@@ -38,7 +38,7 @@ class UpdateAccountScreen extends StatelessWidget {
                 children: [
                   InputTextField(
                     typeOfText: TextInputType.text,
-                    hint: userInfo.name,
+                    hint: userInfo.hint,
                     controller: Get.put(
                       InputTextFieldController()
                         ..textController.value.text = userInfo.name,

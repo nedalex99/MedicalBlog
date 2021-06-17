@@ -38,8 +38,10 @@ class DashboardController extends GetxController {
   }
 
   Future<void> addNewsToFirestore() async {
-    String newsAddedTodayFlag =
-        await _prefs.getNewsAddedTodayFlag(kNewsAddedTodayFlag, '');
+    String newsAddedTodayFlag;
+    await _firestoreService.getDayRequest().then((value) => {
+          newsAddedTodayFlag = value.data()['todayNewsFlag'],
+        });
     DateTime now = DateTime.now();
     String todayMillis = DateTime.now()
         .subtract(Duration(
@@ -51,8 +53,9 @@ class DashboardController extends GetxController {
         ))
         .millisecondsSinceEpoch
         .toString();
+
     if (newsAddedTodayFlag == null || todayMillis != newsAddedTodayFlag) {
-      await _prefs.setNewsAddedTodayFlag(kNewsAddedTodayFlag, todayMillis);
+      await _firestoreService.setDayRequest(todayMillis);
       final _countries = ["gb", "us", "ie", "ca", "nz", "ph", "za"];
       _countries.forEach((element) async {
         await _getNewsRequest.getNews(element).then((value) async => {
@@ -89,7 +92,6 @@ class DashboardController extends GetxController {
   }
 
   Future<void> getMoreData() async {
-    print("In get more data");
     await _firestoreService.getMoreNews(documentSnapshot).then((value) => {
           value.docs.forEach((element) {
             this.documentSnapshot = element;
@@ -123,11 +125,11 @@ class DashboardController extends GetxController {
 
   Future<void> getNewsByTitle(String title) async {
     searchedNews.clear();
-      await _firestoreService.getNewsByTitle(title: title).then((value) => {
-            value.docs.forEach((element) {
-              News news = News.fromJson(element);
-              searchedNews.add(news);
-            }),
-          });
+    await _firestoreService.getNewsByTitle(title: title).then((value) => {
+          value.docs.forEach((element) {
+            News news = News.fromJson(element);
+            searchedNews.add(news);
+          }),
+        });
   }
 }

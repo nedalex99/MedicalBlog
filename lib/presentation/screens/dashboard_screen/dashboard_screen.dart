@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:medical_blog/presentation/screens/dashboard_screen/dashboard_controller.dart';
+import 'package:medical_blog/presentation/screens/see_more_screen/see_more_controller.dart';
+import 'package:medical_blog/presentation/screens/see_more_screen/see_more_screen.dart';
 import 'package:medical_blog/presentation/widgets/bottom_nav_bar/bottom_navigation_bar.dart';
 import 'package:medical_blog/presentation/widgets/input_fields/input_text_field_search.dart';
 import 'package:medical_blog/presentation/widgets/news_card/news_card.dart';
@@ -62,11 +64,23 @@ class DashboardScreen extends StatelessWidget {
                               Expanded(
                                 child: Align(
                                   alignment: Alignment.centerRight,
-                                  child: Text(
-                                    'see more >',
-                                    style: TextStyle(
-                                      fontSize: 14.0,
-                                      color: Colors.blue,
+                                  child: GestureDetector(
+                                    onTap: () => Get.to(
+                                      () => SeeMoreScreen(
+                                        title: 'Todays news',
+                                        seeMoreController: Get.put(
+                                          SeeMoreController(
+                                            title: 'today',
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    child: Text(
+                                      'see more >',
+                                      style: TextStyle(
+                                        fontSize: 14.0,
+                                        color: Colors.blue,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -154,11 +168,23 @@ class DashboardScreen extends StatelessWidget {
                               Expanded(
                                 child: Align(
                                   alignment: Alignment.centerRight,
-                                  child: Text(
-                                    'see more >',
-                                    style: TextStyle(
-                                      fontSize: 14.0,
-                                      color: Colors.blue,
+                                  child: GestureDetector(
+                                    onTap: () => Get.to(
+                                      () => SeeMoreScreen(
+                                        title: 'Trending news',
+                                        seeMoreController: Get.put(
+                                          SeeMoreController(
+                                            title: 'trending',
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    child: Text(
+                                      'see more >',
+                                      style: TextStyle(
+                                        fontSize: 14.0,
+                                        color: Colors.blue,
+                                      ),
                                     ),
                                   ),
                                 ),

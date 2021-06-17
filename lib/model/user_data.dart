@@ -7,6 +7,8 @@ class UserData {
   String lastName;
   String country;
   String profession;
+  String specialty;
+  int yearsOfExperience;
   String dateOfBirth;
 
   UserData({
@@ -16,6 +18,8 @@ class UserData {
     this.lastName,
     this.country,
     this.profession,
+    this.specialty,
+    this.yearsOfExperience,
     this.dateOfBirth,
   });
 
@@ -25,6 +29,8 @@ class UserData {
         'lastName': lastName,
         'country': country,
         'profession': profession,
+        'specialty': specialty,
+        'yearsOfExperiece': yearsOfExperience,
         'dateOfBirth': dateOfBirth,
       };
 
@@ -40,6 +46,8 @@ class UserData {
       lastName: parsedJson.data()['lastName'],
       country: parsedJson.data()['country'],
       profession: parsedJson.data()['profession'],
+      specialty: parsedJson.data()['specialty'],
+      yearsOfExperience: parsedJson.data()['yearsOfExperience'],
     );
   }
 }

@@ -31,9 +31,7 @@ class ProfileScreen extends StatelessWidget {
                 padding: EdgeInsets.only(top: Get.height * 0.2),
                 child: Column(
                   children: [
-                    Container(
-
-                    ),
+                    Container(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -66,6 +64,24 @@ class ProfileScreen extends StatelessWidget {
                         ),
                       ],
                     ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 18.0,
+                        ),
+                        child: Text(
+                          'Your posts',
+                          style: TextStyle(
+                            fontSize: 24.0,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 24.0,
+                    ),
                   ],
                 ),
               ),
@@ -75,33 +91,38 @@ class ProfileScreen extends StatelessWidget {
             () => SliverList(
               delegate: SliverChildBuilderDelegate(
                 (context, index) {
-                  return PostCard(
-                    post: _profileScreenController.posts[index],
-                    postCardController: Get.put(
-                      PostCardController(
-                        post: _profileScreenController.posts[index],
-                        postId: _profileScreenController.posts[index].uid,
-                        noOfLikes:
-                            _profileScreenController.posts[index].noOfLikes.obs,
-                        noOfDislikes: _profileScreenController
-                            .posts[index].noOfDislikes.obs,
-                        noOfComments: _profileScreenController
-                            .posts[index].noOfComments.obs,
-                        isLiked: _profileScreenController.posts[index].likedBy
-                                .contains(userUID)
-                            ? true.obs
-                            : false.obs,
-                        isDisliked: _profileScreenController
-                                .posts[index].dislikedBy
-                                .contains(userUID)
-                            ? true.obs
-                            : false.obs,
-                        isSaved: _profileScreenController.posts[index].savedBy
-                                .contains(userUID)
-                            ? true.obs
-                            : false.obs,
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 18.0,
+                    ),
+                    child: PostCard(
+                      post: _profileScreenController.posts[index],
+                      postCardController: Get.put(
+                        PostCardController(
+                          post: _profileScreenController.posts[index],
+                          postId: _profileScreenController.posts[index].uid,
+                          noOfLikes: _profileScreenController
+                              .posts[index].noOfLikes.obs,
+                          noOfDislikes: _profileScreenController
+                              .posts[index].noOfDislikes.obs,
+                          noOfComments: _profileScreenController
+                              .posts[index].noOfComments.obs,
+                          isLiked: _profileScreenController.posts[index].likedBy
+                                  .contains(userUID)
+                              ? true.obs
+                              : false.obs,
+                          isDisliked: _profileScreenController
+                                  .posts[index].dislikedBy
+                                  .contains(userUID)
+                              ? true.obs
+                              : false.obs,
+                          isSaved: _profileScreenController.posts[index].savedBy
+                                  .contains(userUID)
+                              ? true.obs
+                              : false.obs,
+                        ),
+                        tag: _profileScreenController.posts[index].uid,
                       ),
-                      tag: _profileScreenController.posts[index].uid,
                     ),
                   );
                 },

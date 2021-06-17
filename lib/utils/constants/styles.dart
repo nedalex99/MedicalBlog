@@ -39,7 +39,15 @@ const kErrorHintTextStyle = TextStyle(
   color: kRedErrorColor,
 );
 const kLoadingTextStyle = TextStyle(
-    fontStyle: FontStyle.normal,
-    fontSize: 13,
-    color: kTextBlack1C,
+  fontStyle: FontStyle.normal,
+  fontSize: 13,
+  color: kTextBlack1C,
+);
+const kDialogErrorStyle = TextStyle(
+  color: Color(0xFF1c1c1c),
+  fontSize: 14.0,
+  fontStyle: FontStyle.normal,
+  fontWeight: FontWeight.w600,
+  letterSpacing: 0.3,
+  height: 1.3,
 );

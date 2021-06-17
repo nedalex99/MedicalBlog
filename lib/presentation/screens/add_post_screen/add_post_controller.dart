@@ -6,6 +6,7 @@ import 'package:medical_blog/model/post.dart';
 import 'package:medical_blog/model/user_data.dart';
 import 'package:medical_blog/presentation/screens/posts_screen/posts_controller.dart';
 import 'package:medical_blog/presentation/widgets/dialogs/loading_dialog.dart';
+import 'package:medical_blog/presentation/widgets/dialogs/modal_info_error_dialog.dart';
 import 'package:medical_blog/presentation/widgets/tag_widget/tag_widget.dart';
 import 'package:medical_blog/utils/constants/colors.dart';
 import 'package:medical_blog/utils/network/firestore_service.dart';
@@ -94,35 +95,41 @@ class AddPostController extends GetxController {
   }
 
   Future<void> addPost() async {
-    Get.dialog(LoadingDialog());
-    if (ProfanityFilter().hasProfanity(description)) {
-      print(true);
+    if (ProfanityFilter().hasProfanity(description) ||
+        ProfanityFilter().hasProfanity(title)) {
+      Get.dialog(
+        ModalErrorDialog(
+          errorText: 'You post contains profanity words!',
+        ),
+      );
+    } else {
+      Get.dialog(LoadingDialog());
+      UserData userData;
+      await _firestoreService.getUserFirstAndLastName().then((value) => {
+            userData = UserData.fromJson(value),
+          });
+      Post post = Post(
+        title: title,
+        description: description,
+        tags: tagList,
+        timestamp: Timestamp.now().millisecondsSinceEpoch,
+        userData: userData,
+      );
+      await _firestoreService
+          .addPost(
+            post: post,
+          )
+          .then((value) => {
+                post.uid = value,
+                Get.back(),
+                Get.back(),
+              });
+      PostsController _postsController = Get.find();
+      _postsController.postsFromFirestore.insert(
+        0,
+        post,
+      );
     }
-    UserData userData;
-    await _firestoreService.getUserFirstAndLastName().then((value) => {
-          userData = UserData.fromJson(value),
-        });
-    Post post = Post(
-      title: title,
-      description: description,
-      tags: tagList,
-      timestamp: Timestamp.now().millisecondsSinceEpoch,
-      userData: userData,
-    );
-    await _firestoreService
-        .addPost(
-          post: post,
-        )
-        .then((value) => {
-              post.uid = value,
-              Get.back(),
-              Get.back(),
-            });
-    PostsController _postsController = Get.find();
-    _postsController.postsFromFirestore.insert(
-      0,
-      post,
-    );
   }
 
   void verifyContent() {}

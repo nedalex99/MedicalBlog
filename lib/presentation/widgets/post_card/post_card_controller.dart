@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:medical_blog/model/post.dart';
+import 'package:medical_blog/presentation/screens/add_comments_screen/add_comments_screen.dart';
 import 'package:medical_blog/presentation/widgets/dialogs/loading_dialog.dart';
 import 'package:medical_blog/presentation/widgets/modals/post_card_options_modal/post_card_options_modal.dart';
 import 'package:medical_blog/presentation/widgets/modals/post_card_options_modal/post_card_options_modal_controller.dart';
@@ -154,14 +155,18 @@ class PostCardController extends GetxController {
     }
   }
 
-  @override
-  void onClose() {
-    super.onClose();
+  void getToAddComments({PostCardController postCardController}) {
+    incrementNoOfEntriesForPost();
+    Get.to(
+      () => AddCommentsScreen(
+        post: post,
+        postCardController: postCardController,
+      ),
+    );
   }
 
-  @override
-  void dispose() {
-    super.dispose();
+  Future<void> incrementNoOfEntriesForPost() async {
+    await _firestoreService.incrementNoOfEntriesForPost(postId: postId);
   }
 
   void reportThisPost() {

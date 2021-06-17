@@ -32,12 +32,21 @@ class FirestoreService {
       firstName: firstName,
       lastName: lastName,
       country: country,
-
     );
 
     Map<String, dynamic> userJson = user.toJson();
 
     return _firestoreInstance.collection('users').doc(uid).set(userJson);
+  }
+
+  Future<DocumentSnapshot> getDayRequest() async {
+    return _firestoreInstance.collection('day_request').doc('1').get();
+  }
+
+  Future<void> setDayRequest(String todayMillis) async {
+    return _firestoreInstance.collection('day_request').doc('1').set({
+      "todayNewsFlag": todayMillis,
+    });
   }
 
   Future<void> updateProfessionForUser({
@@ -93,11 +102,51 @@ class FirestoreService {
         .get();
   }
 
+  Future<QuerySnapshot> getAllTodayNews(DocumentSnapshot documentSnapshot) {
+    DateTime now = DateTime.now();
+    String millisMidnight = now
+        .subtract(Duration(
+          hours: now.hour,
+          minutes: now.minute,
+          seconds: now.second,
+          milliseconds: now.millisecond,
+          microseconds: now.microsecond,
+        ))
+        .millisecondsSinceEpoch
+        .toString();
+    if (documentSnapshot != null) {
+      return _firestoreInstance
+          .collection('news-all')
+          .limit(15)
+          .where('publishedAt', isEqualTo: millisMidnight)
+          .startAfterDocument(documentSnapshot)
+          .get();
+    } else {
+      return _firestoreInstance
+          .collection('news-all')
+          .limit(15)
+          .where('publishedAt', isEqualTo: millisMidnight)
+          .get();
+    }
+  }
+
   Future<QuerySnapshot> getTrendingNews(DocumentSnapshot documentSnapshot) {
     if (documentSnapshot != null) {
       return _firestoreInstance
           .collection('news-all')
           .limit(3)
+          .startAfterDocument(documentSnapshot)
+          .get();
+    } else {
+      return _firestoreInstance.collection('news-all').limit(15).get();
+    }
+  }
+
+  Future<QuerySnapshot> getAllTrendingNews(DocumentSnapshot documentSnapshot) {
+    if (documentSnapshot != null) {
+      return _firestoreInstance
+          .collection('news-all')
+          .limit(15)
           .startAfterDocument(documentSnapshot)
           .get();
     } else {
@@ -397,7 +446,8 @@ class FirestoreService {
     return _firestoreInstance
         .collection('posts')
         .limit(15)
-        .orderBy("timeStamp", descending: true)
+        //.orderBy("timeStamp", descending: true)
+        .orderBy("noOfEntries", descending: true)
         .get();
   }
 
@@ -438,6 +488,24 @@ class FirestoreService {
   Future<void> updateCountry({String country}) async {
     return _firestoreInstance.collection('users').doc(userUID).update({
       "country": country,
+    });
+  }
+
+  Future<void> updateSpecialty({String specialty}) async {
+    return _firestoreInstance.collection('users').doc(userUID).update({
+      "specialty": specialty,
+    });
+  }
+
+  Future<void> updateYearsOfExperience({int yearsOfExperience}) async {
+    return _firestoreInstance.collection('users').doc(userUID).update({
+      "yearsOfExperience": yearsOfExperience,
+    });
+  }
+
+  Future<void> incrementNoOfEntriesForPost({String postId}) async {
+    return _firestoreInstance.collection('posts').doc(postId).update({
+      "noOfEntries": FieldValue.increment(1),
     });
   }
 }

@@ -13,7 +13,7 @@ class SavedScreenController extends GetxController {
   RxList<Post> posts = List<Post>().obs;
   RxList<News> newsList = List<News>().obs;
   RxInt toggleIndex = 0.obs;
-  RxString dropdownValue = "Oldest first".obs;
+  RxString dropdownValue = "Newest first".obs;
 
   @override
   Future<void> onInit() async {

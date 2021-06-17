@@ -23,6 +23,7 @@ class EditAccountController extends GetxController {
           userInfoList.add(
             UserInfo(
               name: userData.value.firstName + " " + userData.value.lastName,
+              hint: 'First Name',
               icon: Icon(
                 Icons.person,
               ),
@@ -31,16 +32,8 @@ class EditAccountController extends GetxController {
           ),
           userInfoList.add(
             UserInfo(
-              name: userData.value.profession,
-              icon: Icon(
-                Icons.work,
-              ),
-              function: updateProfession,
-            ),
-          ),
-          userInfoList.add(
-            UserInfo(
               name: userData.value.email,
+              hint: 'Email',
               icon: Icon(
                 Icons.mail,
               ),
@@ -50,10 +43,41 @@ class EditAccountController extends GetxController {
           userInfoList.add(
             UserInfo(
               name: userData.value.country,
+              hint: 'Country',
               icon: Icon(
                 Icons.circle,
               ),
               function: updateCountry,
+            ),
+          ),
+          userInfoList.add(
+            UserInfo(
+              name: userData.value.profession,
+              hint: 'Profession',
+              icon: Icon(
+                Icons.work,
+              ),
+              function: updateProfession,
+            ),
+          ),
+          userInfoList.add(
+            UserInfo(
+              name: userData.value.specialty,
+              hint: 'Specialty',
+              icon: Icon(
+                Icons.domain,
+              ),
+              function: updateSpecialty,
+            ),
+          ),
+          userInfoList.add(
+            UserInfo(
+              name: userData.value.yearsOfExperience.toString(),
+              hint: 'Years Of Experience',
+              icon: Icon(
+                Icons.date_range,
+              ),
+              function: updateYearsOfExperience,
             ),
           ),
         });
@@ -85,5 +109,26 @@ class EditAccountController extends GetxController {
           Get.back(),
           Get.back(),
         });
+  }
+
+  Future<void> updateSpecialty(String specialty) async {
+    Get.dialog(LoadingDialog());
+    await _firestoreService
+        .updateSpecialty(specialty: specialty)
+        .then((value) => {
+              Get.back(),
+              Get.back(),
+            });
+  }
+
+  Future<void> updateYearsOfExperience(String yearsOfExperience) async {
+    Get.dialog(LoadingDialog());
+    await _firestoreService
+        .updateYearsOfExperience(
+            yearsOfExperience: int.tryParse(yearsOfExperience))
+        .then((value) => {
+              Get.back(),
+              Get.back(),
+            });
   }
 }
