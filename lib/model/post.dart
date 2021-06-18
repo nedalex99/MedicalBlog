@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:medical_blog/model/user_data.dart';
 
@@ -14,6 +16,7 @@ class Post {
   List<String> dislikedBy;
   List<String> savedBy;
   UserData userData;
+  String image;
 
   Post({
     this.uid,
@@ -28,6 +31,7 @@ class Post {
     this.dislikedBy = const [],
     this.savedBy = const [],
     this.userData,
+    this.image,
   });
 
   Map<String, dynamic> toJson() => {
@@ -50,6 +54,7 @@ class Post {
     }
 
     UserData userData = UserData(
+      id: documentSnapshot.data()['userData']['id'],
       firstName: documentSnapshot.data()['userData']['firstName'],
       lastName: documentSnapshot.data()['userData']['lastName'],
       profession: documentSnapshot.data()['userData']['profession'],

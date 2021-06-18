@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:medical_blog/presentation/screens/profile_screen/profile_screen_controller.dart';
@@ -38,6 +40,41 @@ class ProfileScreen extends StatelessWidget {
                         Obx(
                           () => Column(
                             children: [
+                              GestureDetector(
+                                onTap: () => _profileScreenController
+                                    .showPicker(context),
+                                child: CircleAvatar(
+                                  radius: 55,
+                                  backgroundColor: Color(0xFFFDCF09),
+                                  child: _profileScreenController.img.value !=
+                                          ""
+                                      ? ClipRRect(
+                                          borderRadius: BorderRadius.circular(
+                                            50.0,
+                                          ),
+                                          child: Image.network(
+                                            _profileScreenController.img.value,
+                                            width: 100,
+                                            height: 100,
+                                            fit: BoxFit.fitHeight,
+                                          ),
+                                        )
+                                      : Container(
+                                          decoration: BoxDecoration(
+                                            color: Colors.grey[200],
+                                            borderRadius: BorderRadius.circular(
+                                              50.0,
+                                            ),
+                                          ),
+                                          width: 100,
+                                          height: 100,
+                                          child: Icon(
+                                            Icons.camera_alt,
+                                            color: Colors.grey[800],
+                                          ),
+                                        ),
+                                ),
+                              ),
                               Text(
                                 _profileScreenController
                                     .userData.value.firstName,
@@ -93,7 +130,7 @@ class ProfileScreen extends StatelessWidget {
                 (context, index) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 18.0,
+                      horizontal: 0.0,
                     ),
                     child: PostCard(
                       post: _profileScreenController.posts[index],

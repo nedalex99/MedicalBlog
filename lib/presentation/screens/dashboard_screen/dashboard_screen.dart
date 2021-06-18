@@ -48,7 +48,9 @@ class DashboardScreen extends StatelessWidget {
                 Obx(
                   () => _dashboardController.searchedNews.length == 0
                       ? Padding(
-                          padding: const EdgeInsets.all(18.0),
+                          padding: const EdgeInsets.all(
+                            18.0,
+                          ),
                           child: Row(
                             children: [
                               Align(
@@ -99,7 +101,9 @@ class DashboardScreen extends StatelessWidget {
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
                         return Padding(
-                          padding: const EdgeInsets.all(18.0),
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 18.0,
+                          ),
                           child: NewsCard(
                             news: _dashboardController.todayNewsList[index],
                             newsCardController: Get.put(
@@ -152,7 +156,9 @@ class DashboardScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.all(18.0),
+                          padding: const EdgeInsets.all(
+                            18.0,
+                          ),
                           child: Row(
                             children: [
                               Align(
@@ -203,7 +209,9 @@ class DashboardScreen extends StatelessWidget {
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
                         return Padding(
-                          padding: const EdgeInsets.all(18.0),
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 18.0,
+                          ),
                           child: NewsCard(
                             news: _dashboardController.trendingNewsList[index],
                             newsCardController: Get.put(
@@ -231,7 +239,9 @@ class DashboardScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.all(18.0),
+                          padding: const EdgeInsets.all(
+                            18.0,
+                          ),
                           child: Row(
                             children: [
                               Align(
@@ -262,7 +272,9 @@ class DashboardScreen extends StatelessWidget {
                           return CupertinoActivityIndicator();
                         }
                         return Padding(
-                          padding: const EdgeInsets.all(18.0),
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 18.0,
+                          ),
                           child: NewsCard(
                             news: _dashboardController.newsList[index],
                             newsCardController: Get.put(

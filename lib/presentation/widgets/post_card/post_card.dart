@@ -1,7 +1,7 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:medical_blog/model/post.dart';
-import 'package:medical_blog/presentation/screens/add_comments_screen/add_comments_screen.dart';
 import 'package:medical_blog/presentation/widgets/input_fields/input_text_field_read_only/input_text_field_read_only.dart';
 import 'package:medical_blog/presentation/widgets/post_card/post_card_controller.dart';
 import 'package:medical_blog/presentation/widgets/tag_widget/tag_widget.dart';
@@ -60,14 +60,24 @@ class PostCard extends StatelessWidget {
                     children: [
                       Column(
                         children: [
-                          Container(
-                            height: 40,
-                            width: 40,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(50.0),
+                          CircleAvatar(
+                            radius: 25,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(
+                                25.0,
                               ),
-                              color: Colors.grey,
+                              child: post.image != null
+                                  ? Image.network(
+                                      post.image,
+                                      width: 50,
+                                      height: 50,
+                                      fit: BoxFit.fitHeight,
+                                    )
+                                  : Container(
+                                      height: 50,
+                                      width: 50,
+                                      color: Colors.grey,
+                                    ),
                             ),
                           ),
                           Text(

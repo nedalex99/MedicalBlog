@@ -446,8 +446,8 @@ class FirestoreService {
     return _firestoreInstance
         .collection('posts')
         .limit(15)
-        //.orderBy("timeStamp", descending: true)
-        .orderBy("noOfEntries", descending: true)
+        .orderBy("timeStamp", descending: true)
+        //.orderBy("noOfEntries", descending: true)
         .get();
   }
 
