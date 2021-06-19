@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:medical_blog/model/post.dart';
+import 'package:medical_blog/presentation/screens/report_post_screen/report_post_screen.dart';
 import 'package:medical_blog/presentation/widgets/modals/post_card_options_modal/post_card_options_modal_controller.dart';
+import 'package:get/get.dart';
 
 class PostCardOptionsModal extends StatelessWidget {
   final PostCardOptionsModalController controller;
@@ -42,7 +44,11 @@ class PostCardOptionsModal extends StatelessWidget {
             title: Text(
               'Report this post',
             ),
-            onTap: () {},
+            onTap: () => Get.to(
+              () => ReportPostScreen(
+                postId: postId,
+              ),
+            ),
           ),
         ],
       ),

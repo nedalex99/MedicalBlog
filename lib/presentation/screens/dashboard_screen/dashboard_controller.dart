@@ -2,8 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:medical_blog/model/news.dart';
-import 'package:medical_blog/presentation/widgets/dialogs/loading_dialog.dart';
-import 'package:medical_blog/utils/constants/strings.dart';
 import 'package:medical_blog/utils/network/firestore_service.dart';
 import 'package:medical_blog/utils/network/get_news_request.dart';
 import 'package:medical_blog/utils/user_preferences.dart';
@@ -131,5 +129,13 @@ class DashboardController extends GetxController {
             searchedNews.add(news);
           }),
         });
+  }
+
+  void getToTop() {
+    scrollController.value.animateTo(
+      0.0,
+      duration: Duration(milliseconds: 500),
+      curve: Curves.easeOut,
+    );
   }
 }

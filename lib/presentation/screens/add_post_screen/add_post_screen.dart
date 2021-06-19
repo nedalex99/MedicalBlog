@@ -39,14 +39,27 @@ class AddPostScreen extends StatelessWidget {
                       right: 10.0,
                       bottom: 8.0,
                     ),
-                    child: Container(
-                      height: 40,
-                      width: 40,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(50.0),
+                    child: Obx(
+                      () => CircleAvatar(
+                        radius: 25,
+                        backgroundColor: kBlueButtonColor,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(
+                            25.0,
+                          ),
+                          child: _addPostController.url.value != ""
+                              ? Image.network(
+                                  _addPostController.url.value,
+                                  width: 50,
+                                  height: 50,
+                                  fit: BoxFit.fill,
+                                )
+                              : Container(
+                                  height: 50,
+                                  width: 50,
+                                  color: Colors.grey,
+                                ),
                         ),
-                        color: Colors.grey,
                       ),
                     ),
                   ),

@@ -10,6 +10,7 @@ import 'package:medical_blog/presentation/widgets/dialogs/modal_info_error_dialo
 import 'package:medical_blog/presentation/widgets/tag_widget/tag_widget.dart';
 import 'package:medical_blog/utils/constants/colors.dart';
 import 'package:medical_blog/utils/network/firestore_service.dart';
+import 'package:medical_blog/utils/session_temp.dart';
 import 'package:medical_blog/utils/util_functions.dart';
 import 'package:profanity_filter/profanity_filter.dart';
 
@@ -28,6 +29,7 @@ class AddPostController extends GetxController {
     lastName: '',
     profession: '',
   ).obs;
+  RxString url = "".obs;
 
   List<Widget> _cupertinoTagWidgetList = [
     Text(
@@ -71,8 +73,11 @@ class AddPostController extends GetxController {
   }
 
   Future<void> getUserData() async {
-    await _firestoreService.getUserData().then((value) => {
+    await _firestoreService.getUserData().then((value) async => {
           userData.value = UserData.fromJson(value),
+          await getPhoto(id: userUID).then((value) => {
+                url.value = value,
+              }),
         });
   }
 
@@ -125,6 +130,7 @@ class AddPostController extends GetxController {
                 Get.back(),
               });
       PostsController _postsController = Get.find();
+      post.image = url.value;
       _postsController.postsFromFirestore.insert(
         0,
         post,

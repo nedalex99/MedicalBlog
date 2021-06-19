@@ -10,8 +10,12 @@ import 'package:medical_blog/utils/constants/routes.dart';
 
 class BottomNavBar extends StatelessWidget {
   final int selectedIndex;
+  final Function pressCallback;
 
-  BottomNavBar({@required this.selectedIndex});
+  BottomNavBar({
+    @required this.selectedIndex,
+    this.pressCallback,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +41,9 @@ class BottomNavBar extends StatelessWidget {
       selectedIndex: selectedIndex,
       onItemSelected: (index) {
         changePage(index);
+        if (index == selectedIndex) {
+          pressCallback();
+        }
       },
     );
   }

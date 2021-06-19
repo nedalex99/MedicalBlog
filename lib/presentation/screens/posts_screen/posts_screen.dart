@@ -50,29 +50,36 @@ class PostsScreen extends StatelessWidget {
               return SingleChildScrollView(
                 child: Column(
                   children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                        child: DropdownButton(
-                          items: <String>[
-                            'Newest first',
-                            'Oldest first',
-                            'Most likes first',
-                            'Most dislikes first',
-                          ]
-                              .map(
-                                (String e) => DropdownMenuItem(
-                                  child: Text(e),
-                                  value: e,
-                                ),
-                              )
-                              .toList(),
-                          value: 'Newest first',
-                          onChanged: (newValue) {
-                            // _savedScreenController.setNewDropdownValue(
-                            //   value: newValue,
-                            // );
-                          },
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 18.0,
+                        right: 18.0,
+                        top: 18.0,
+                      ),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                          child: DropdownButton(
+                            items: <String>[
+                              'Newest first',
+                              'Oldest first',
+                              'Most likes first',
+                              'Most dislikes first',
+                            ]
+                                .map(
+                                  (String e) => DropdownMenuItem(
+                                    child: Text(e),
+                                    value: e,
+                                  ),
+                                )
+                                .toList(),
+                            value: 'Newest first',
+                            onChanged: (newValue) {
+                              // _savedScreenController.setNewDropdownValue(
+                              //   value: newValue,
+                              // );
+                            },
+                          ),
                         ),
                       ),
                     ),
@@ -80,7 +87,8 @@ class PostsScreen extends StatelessWidget {
                       () => ListView.builder(
                         shrinkWrap: true,
                         controller: postsController.scrollController.value,
-                        itemCount: postsController.postsFromFirestore.length + 1,
+                        itemCount:
+                            postsController.postsFromFirestore.length + 1,
                         itemBuilder: (context, index) {
                           if (index ==
                               postsController.postsFromFirestore.length) {
@@ -91,8 +99,8 @@ class PostsScreen extends StatelessWidget {
                             postCardController: Get.put(
                               PostCardController(
                                 post: postsController.postsFromFirestore[index],
-                                postId:
-                                    postsController.postsFromFirestore[index].uid,
+                                postId: postsController
+                                    .postsFromFirestore[index].uid,
                                 noOfLikes: postsController
                                     .postsFromFirestore[index].noOfLikes.obs,
                                 noOfDislikes: postsController
@@ -131,61 +139,8 @@ class PostsScreen extends StatelessWidget {
       ),
       bottomNavigationBar: BottomNavBar(
         selectedIndex: 1,
+        pressCallback: postsController.getToTop,
       ),
     );
   }
 }
-
-/*
-() => PullToRevealTopItemList(
-              startRevealed: true,
-              itemCount: postsController.postsFromFirestore.value.length,
-              itemBuilder: (BuildContext context, int index) {
-                return PostCard(
-                  post: postsController.postsFromFirestore[index],
-                  postCardController: Get.put(
-                    PostCardController(
-                      post: postsController.postsFromFirestore[index],
-                      postId: postsController.postsFromFirestore[index].uid,
-                      noOfLikes: postsController
-                          .postsFromFirestore[index].noOfLikes.obs,
-                      noOfDislikes: postsController
-                          .postsFromFirestore[index].noOfDislikes.obs,
-                      noOfComments: postsController
-                          .postsFromFirestore[index].noOfComments.obs,
-                      isLiked: postsController.postsFromFirestore[index].likedBy
-                              .contains(userUID)
-                          ? true.obs
-                          : false.obs,
-                      isDisliked: postsController
-                              .postsFromFirestore[index].dislikedBy
-                              .contains(userUID)
-                          ? true.obs
-                          : false.obs,
-                      isSaved: postsController.postsFromFirestore[index].savedBy
-                              .contains(userUID)
-                          ? true.obs
-                          : false.obs,
-                    ),
-                    tag: '${postsController.postsFromFirestore[index].uid}',
-                  ),
-                );
-              },
-              revealableHeight: 50,
-              revealableBuilder: (BuildContext context,
-                  RevealableToggler opener,
-                  RevealableToggler closer,
-                  BoxConstraints constraints) {
-                return Row(
-                  children: [
-                    Flexible(
-                      child: InputTextFieldReadOnly(
-                        onTap: () => Get.toNamed(kAddPostRoute),
-                        hint: 'Tell us something new...',
-                      ),
-                    ),
-                  ],
-                );
-              },
-            ),
- */

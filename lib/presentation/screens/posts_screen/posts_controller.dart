@@ -31,10 +31,10 @@ class PostsController extends GetxController {
             Post post = Post.fromJson(documentSnapshot);
             url = await getPhoto(id: post.userData.id);
             post.image = url;
-
             postsFromFirestore.add(post);
           }),
         });
+    print(postsFromFirestore.length);
   }
 
   Future<void> getMorePosts() async {
@@ -46,5 +46,13 @@ class PostsController extends GetxController {
             postsFromFirestore.add(post);
           }),
         });
+  }
+
+  void getToTop() {
+    scrollController.value.animateTo(
+      0.0,
+      duration: Duration(milliseconds: 500),
+      curve: Curves.easeOut,
+    );
   }
 }

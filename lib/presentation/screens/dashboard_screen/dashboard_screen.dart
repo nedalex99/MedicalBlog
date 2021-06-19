@@ -300,6 +300,7 @@ class DashboardScreen extends StatelessWidget {
       ),
       bottomNavigationBar: BottomNavBar(
         selectedIndex: 0,
+        pressCallback: _dashboardController.getToTop,
       ),
     );
   }

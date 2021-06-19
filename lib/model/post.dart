@@ -1,6 +1,5 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:medical_blog/model/report.dart';
 import 'package:medical_blog/model/user_data.dart';
 
 class Post {
@@ -17,6 +16,7 @@ class Post {
   List<String> savedBy;
   UserData userData;
   String image;
+  List<Report> reportList;
 
   Post({
     this.uid,
@@ -32,6 +32,7 @@ class Post {
     this.savedBy = const [],
     this.userData,
     this.image,
+    this.reportList = const [],
   });
 
   Map<String, dynamic> toJson() => {
@@ -46,10 +47,12 @@ class Post {
         'dislikedBy': dislikedBy,
         'savedBy': savedBy,
         'userData': userData.toJson(),
+        'reports': reportList,
       };
 
   factory Post.fromJson(DocumentSnapshot documentSnapshot) {
-    if (documentSnapshot.data() == null || (documentSnapshot.data() as Map).isEmpty) {
+    if (documentSnapshot.data() == null ||
+        (documentSnapshot.data() as Map).isEmpty) {
       return Post();
     }
 
@@ -64,17 +67,26 @@ class Post {
       uid: documentSnapshot.id,
       title: (documentSnapshot.data() as Map)['title'],
       description: (documentSnapshot.data() as Map)['description'],
-      tags: ((documentSnapshot.data() as Map)['tags'] as List).map((e) => e.toString()).toList(),
+      tags: ((documentSnapshot.data() as Map)['tags'] as List)
+          .map((e) => e.toString())
+          .toList(),
       noOfLikes: (documentSnapshot.data() as Map)['noOfLikes'],
       noOfDislikes: (documentSnapshot.data() as Map)['noOfDislikes'],
       noOfComments: (documentSnapshot.data() as Map)['noOfComments'],
       timestamp: (documentSnapshot.data() as Map)['timeStamp'] as int,
-      likedBy: ((documentSnapshot.data() as Map)['likedBy'] as List).map((e) => e.toString()).toList(),
-      dislikedBy:
-          ((documentSnapshot.data() as Map)['dislikedBy'] as List).map((e) => e.toString()).toList(),
-      savedBy:
-          ((documentSnapshot.data() as Map)['savedBy'] as List).map((e) => e.toString()).toList(),
+      likedBy: ((documentSnapshot.data() as Map)['likedBy'] as List)
+          .map((e) => e.toString())
+          .toList(),
+      dislikedBy: ((documentSnapshot.data() as Map)['dislikedBy'] as List)
+          .map((e) => e.toString())
+          .toList(),
+      savedBy: ((documentSnapshot.data() as Map)['savedBy'] as List)
+          .map((e) => e.toString())
+          .toList(),
       userData: userData,
+      reportList: ((documentSnapshot.data() as Map)['reports'] as List)
+          .map((e) => e)
+          .toList(),
     );
   }
 }

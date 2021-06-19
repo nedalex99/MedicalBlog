@@ -4,6 +4,7 @@ import 'package:medical_blog/model/comment.dart';
 import 'package:medical_blog/model/filter.dart';
 import 'package:medical_blog/model/news.dart';
 import 'package:medical_blog/model/post.dart';
+import 'package:medical_blog/model/report.dart';
 import 'package:medical_blog/model/user_data.dart';
 import 'package:medical_blog/utils/session_temp.dart';
 
@@ -507,5 +508,19 @@ class FirestoreService {
     return _firestoreInstance.collection('posts').doc(postId).update({
       "noOfEntries": FieldValue.increment(1),
     });
+  }
+
+  Future<void> reportPost({String postId, Report report}) async {
+    return _firestoreInstance.collection('posts').doc(postId).update({
+      "reports": FieldValue.arrayUnion(
+        [
+          report.toJson(),
+        ],
+      ),
+    });
+  }
+
+  Future<DocumentSnapshot> checkIfAlreadyReport({String postId}) async {
+    return _firestoreInstance.collection('posts').doc(postId).get();
   }
 }
