@@ -15,6 +15,7 @@ import 'package:medical_blog/utils/network/auth_service.dart';
 import 'package:medical_blog/utils/network/firestore_service.dart';
 import 'package:medical_blog/utils/session_temp.dart';
 import 'package:medical_blog/utils/user_preferences.dart';
+import 'package:medical_blog/utils/util_functions.dart';
 
 class ProfileScreenController extends GetxController {
   FirestoreService _firestoreService = Get.find();
@@ -35,15 +36,18 @@ class ProfileScreenController extends GetxController {
   void onInit() {
     getPosts();
     getUserData();
-    getPhoto();
+    getImage();
     super.onInit();
   }
 
   Future<void> getPosts() async {
+    String url;
     await _firestoreService.getUserPosts().then((value) => {
-          value.docs.forEach((element) {
+          value.docs.forEach((element) async {
             documentSnapshot = element;
             Post post = Post.fromJson(documentSnapshot);
+            url = await getPhoto(id: post.userData.id);
+            post.image = url;
             posts.add(post);
           }),
         });
@@ -55,7 +59,7 @@ class ProfileScreenController extends GetxController {
         });
   }
 
-  Future<void> getPhoto() async {
+  Future<void> getImage() async {
     await FirebaseStorage.instance
         .ref(userUID)
         .child("images/$userUID")

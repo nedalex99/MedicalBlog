@@ -7,6 +7,7 @@ import 'package:medical_blog/model/user_data.dart';
 import 'package:medical_blog/presentation/widgets/dialogs/loading_dialog.dart';
 import 'package:medical_blog/presentation/widgets/modals/filters_modal/filters_modal.dart';
 import 'package:medical_blog/utils/network/firestore_service.dart';
+import 'package:medical_blog/utils/util_functions.dart';
 
 class SavedScreenController extends GetxController {
   FirestoreService _firestoreService = Get.find();
@@ -33,35 +34,13 @@ class SavedScreenController extends GetxController {
   }
 
   Future<void> getPosts() async {
+    String url;
     Get.dialog(LoadingDialog());
     await _firestoreService.getPostsFromSavedCollection().then((value) => {
-          value.docs.forEach((element) {
-            UserData userData = UserData(
-              firstName: element.data()['userData']['firstName'],
-              lastName: element.data()['userData']['lastName'],
-            );
-            Post post = Post(
-              uid: element.id,
-              title: element.data()['title'],
-              description: element.data()['description'],
-              noOfLikes: element.data()['noOfLikes'],
-              noOfDislikes: element.data()['noOfDislikes'],
-              noOfComments: element.data()['noOfComments'],
-              tags: (element.data()['tags'] as List)
-                  .map((e) => e.toString())
-                  .toList(),
-              timestamp: element.data()['timeStamp'] as int,
-              likedBy: (element.data()['likedBy'] as List)
-                  .map((e) => e.toString())
-                  .toList(),
-              dislikedBy: (element.data()['dislikedBy'] as List)
-                  .map((e) => e.toString())
-                  .toList(),
-              savedBy: (element.data()['savedBy'] as List)
-                  .map((e) => e.toString())
-                  .toList(),
-              userData: userData,
-            );
+          value.docs.forEach((element) async {
+            Post post = Post.fromJson(element);
+            url = await getPhoto(id: post.userData.id);
+            post.image = url;
             posts.add(post);
           }),
           Get.back(),
@@ -142,27 +121,27 @@ class SavedScreenController extends GetxController {
               posts.clear(),
               value.docs.forEach((element) {
                 UserData userData = UserData(
-                  firstName: element.data()['userData']['firstName'],
-                  lastName: element.data()['userData']['lastName'],
+                  firstName: (element.data() as Map)['userData']['firstName'],
+                  lastName: (element.data() as Map)['userData']['lastName'],
                 );
                 Post post = Post(
                   uid: element.id,
-                  title: element.data()['title'],
-                  description: element.data()['description'],
-                  noOfLikes: element.data()['noOfLikes'],
-                  noOfDislikes: element.data()['noOfDislikes'],
-                  noOfComments: element.data()['noOfComments'],
-                  tags: (element.data()['tags'] as List)
+                  title: (element.data() as Map)['title'],
+                  description: (element.data() as Map)['description'],
+                  noOfLikes: (element.data() as Map)['noOfLikes'],
+                  noOfDislikes: (element.data() as Map)['noOfDislikes'],
+                  noOfComments: (element.data() as Map)['noOfComments'],
+                  tags: ((element.data() as Map)['tags'] as List)
                       .map((e) => e.toString())
                       .toList(),
-                  timestamp: element.data()['timeStamp'] as int,
-                  likedBy: (element.data()['likedBy'] as List)
+                  timestamp: (element.data() as Map)['timeStamp'] as int,
+                  likedBy: ((element.data() as Map)['likedBy'] as List)
                       .map((e) => e.toString())
                       .toList(),
-                  dislikedBy: (element.data()['dislikedBy'] as List)
+                  dislikedBy: ((element.data() as Map)['dislikedBy'] as List)
                       .map((e) => e.toString())
                       .toList(),
-                  savedBy: (element.data()['savedBy'] as List)
+                  savedBy: ((element.data() as Map)['savedBy'] as List)
                       .map((e) => e.toString())
                       .toList(),
                   userData: userData,

@@ -40,7 +40,7 @@ class DashboardController extends GetxController {
   Future<void> addNewsToFirestore() async {
     String newsAddedTodayFlag;
     await _firestoreService.getDayRequest().then((value) => {
-          newsAddedTodayFlag = value.data()['todayNewsFlag'],
+          newsAddedTodayFlag = (value.data() as Map)['todayNewsFlag'],
         });
     DateTime now = DateTime.now();
     String todayMillis = DateTime.now()

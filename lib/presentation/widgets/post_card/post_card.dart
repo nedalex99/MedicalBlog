@@ -62,6 +62,7 @@ class PostCard extends StatelessWidget {
                         children: [
                           CircleAvatar(
                             radius: 25,
+                            backgroundColor: kBlueButtonColor,
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(
                                 25.0,
@@ -71,7 +72,7 @@ class PostCard extends StatelessWidget {
                                       post.image,
                                       width: 50,
                                       height: 50,
-                                      fit: BoxFit.fitHeight,
+                                      fit: BoxFit.fill,
                                     )
                                   : Container(
                                       height: 50,

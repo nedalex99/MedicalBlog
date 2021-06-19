@@ -6,6 +6,7 @@ import 'package:medical_blog/presentation/screens/profile_screen/profile_screen_
 import 'package:medical_blog/presentation/widgets/bottom_nav_bar/bottom_navigation_bar.dart';
 import 'package:medical_blog/presentation/widgets/post_card/post_card.dart';
 import 'package:medical_blog/presentation/widgets/post_card/post_card_controller.dart';
+import 'package:medical_blog/utils/constants/colors.dart';
 import 'package:medical_blog/utils/session_temp.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -45,7 +46,7 @@ class ProfileScreen extends StatelessWidget {
                                     .showPicker(context),
                                 child: CircleAvatar(
                                   radius: 55,
-                                  backgroundColor: Color(0xFFFDCF09),
+                                  backgroundColor: kBlueButtonColor,
                                   child: _profileScreenController.img.value !=
                                           ""
                                       ? ClipRRect(
@@ -56,7 +57,7 @@ class ProfileScreen extends StatelessWidget {
                                             _profileScreenController.img.value,
                                             width: 100,
                                             height: 100,
-                                            fit: BoxFit.fitHeight,
+                                            fit: BoxFit.fill,
                                           ),
                                         )
                                       : Container(

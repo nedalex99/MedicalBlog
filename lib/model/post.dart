@@ -49,31 +49,31 @@ class Post {
       };
 
   factory Post.fromJson(DocumentSnapshot documentSnapshot) {
-    if (documentSnapshot.data() == null || documentSnapshot.data().isEmpty) {
+    if (documentSnapshot.data() == null || (documentSnapshot.data() as Map).isEmpty) {
       return Post();
     }
 
     UserData userData = UserData(
-      id: documentSnapshot.data()['userData']['id'],
-      firstName: documentSnapshot.data()['userData']['firstName'],
-      lastName: documentSnapshot.data()['userData']['lastName'],
-      profession: documentSnapshot.data()['userData']['profession'],
+      id: (documentSnapshot.data() as Map)['userData']['id'],
+      firstName: (documentSnapshot.data() as Map)['userData']['firstName'],
+      lastName: (documentSnapshot.data() as Map)['userData']['lastName'],
+      profession: (documentSnapshot.data() as Map)['userData']['profession'],
     );
 
     return Post(
       uid: documentSnapshot.id,
-      title: documentSnapshot.data()['title'],
-      description: documentSnapshot.data()['description'],
-      tags: (documentSnapshot.data()['tags'] as List).map((e) => e.toString()).toList(),
-      noOfLikes: documentSnapshot.data()['noOfLikes'],
-      noOfDislikes: documentSnapshot.data()['noOfDislikes'],
-      noOfComments: documentSnapshot.data()['noOfComments'],
-      timestamp: documentSnapshot.data()['timeStamp'] as int,
-      likedBy: (documentSnapshot.data()['likedBy'] as List).map((e) => e.toString()).toList(),
+      title: (documentSnapshot.data() as Map)['title'],
+      description: (documentSnapshot.data() as Map)['description'],
+      tags: ((documentSnapshot.data() as Map)['tags'] as List).map((e) => e.toString()).toList(),
+      noOfLikes: (documentSnapshot.data() as Map)['noOfLikes'],
+      noOfDislikes: (documentSnapshot.data() as Map)['noOfDislikes'],
+      noOfComments: (documentSnapshot.data() as Map)['noOfComments'],
+      timestamp: (documentSnapshot.data() as Map)['timeStamp'] as int,
+      likedBy: ((documentSnapshot.data() as Map)['likedBy'] as List).map((e) => e.toString()).toList(),
       dislikedBy:
-          (documentSnapshot.data()['dislikedBy'] as List).map((e) => e.toString()).toList(),
+          ((documentSnapshot.data() as Map)['dislikedBy'] as List).map((e) => e.toString()).toList(),
       savedBy:
-          (documentSnapshot.data()['savedBy'] as List).map((e) => e.toString()).toList(),
+          ((documentSnapshot.data() as Map)['savedBy'] as List).map((e) => e.toString()).toList(),
       userData: userData,
     );
   }

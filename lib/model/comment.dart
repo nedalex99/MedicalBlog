@@ -33,25 +33,25 @@ class Comment {
       };
 
   factory Comment.fromJson(DocumentSnapshot parsedJson) {
-    if (parsedJson.data() == null || parsedJson.data().isEmpty) {
+    if (parsedJson.data() == null || (parsedJson.data() as Map).isEmpty) {
       return Comment();
     }
 
     UserData userData = UserData(
-      firstName: parsedJson.data()['userData']['firstName'],
-      lastName: parsedJson.data()['userData']['lastName'],
-      profession: parsedJson.data()['userData']['profession'],
+      firstName: (parsedJson.data() as Map)['userData']['firstName'],
+      lastName: (parsedJson.data() as Map)['userData']['lastName'],
+      profession: (parsedJson.data() as Map)['userData']['profession'],
     );
 
     return Comment(
-      commentText: parsedJson.data()['commentText'],
-      timestamp: parsedJson.data()['timestamp'],
-      noOfLikes: parsedJson.data()['noOfLikes'],
-      noOfDislikes: parsedJson.data()['noOfDislikes'],
-      likedBy: (parsedJson.data()['likedBy'] as List)
+      commentText: (parsedJson.data() as Map)['commentText'],
+      timestamp: (parsedJson.data() as Map)['timestamp'],
+      noOfLikes: (parsedJson.data() as Map)['noOfLikes'],
+      noOfDislikes: (parsedJson.data() as Map)['noOfDislikes'],
+      likedBy: (((parsedJson.data() as Map)['likedBy'] as List))
           .map((e) => e.toString())
           .toList(),
-      dislikedBy: (parsedJson.data()['dislikedBy'] as List)
+      dislikedBy: ((parsedJson.data() as Map)['dislikedBy'] as List)
           .map((e) => e.toString())
           .toList(),
       userData: userData,

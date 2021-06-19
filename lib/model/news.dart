@@ -27,21 +27,22 @@ class News {
   });
 
   factory News.fromJson(DocumentSnapshot documentSnapshot) {
-    if (documentSnapshot.data() == null || documentSnapshot.data().isEmpty) {
+    if (documentSnapshot.data() == null ||
+        (documentSnapshot.data() as Map).isEmpty) {
       return News();
     }
 
     return News(
       id: documentSnapshot.id,
-      author: documentSnapshot.data()['author'],
-      content: documentSnapshot.data()['content'],
-      description: documentSnapshot.data()['description'],
-      sourceName: documentSnapshot.data()['name'],
-      title: documentSnapshot.data()['title'],
-      publishedAt: documentSnapshot.data()['publishedAt'],
-      url: documentSnapshot.data()['url'],
-      urlToImage: documentSnapshot.data()['urlToImage'],
-      savedBy: (documentSnapshot.data()['savedBy'] as List)
+      author: (documentSnapshot.data() as Map)['author'],
+      content: (documentSnapshot.data() as Map)['content'],
+      description: (documentSnapshot.data() as Map)['description'],
+      sourceName: (documentSnapshot.data() as Map)['name'],
+      title: (documentSnapshot.data() as Map)['title'],
+      publishedAt: (documentSnapshot.data() as Map)['publishedAt'],
+      url: (documentSnapshot.data() as Map)['url'],
+      urlToImage: (documentSnapshot.data() as Map)['urlToImage'],
+      savedBy: ((documentSnapshot.data() as Map)['savedBy'] as List)
           .map((e) => e.toString())
           .toList(),
     );

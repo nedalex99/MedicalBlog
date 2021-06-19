@@ -1,3 +1,4 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -86,4 +87,20 @@ List<String> getWordsToSearch({String text}) {
     caseSearchList.add(caseSearch);
   }
   return caseSearchList;
+}
+
+Future<String> getPhoto({String id}) async {
+  String url;
+  try {
+    await FirebaseStorage.instance
+        .ref(id)
+        .child("images/$id")
+        .getDownloadURL()
+        .then((value) => {
+      url = value,
+    });
+    return url;
+  } catch (e) {
+    return null;
+  }
 }

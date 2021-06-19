@@ -24,6 +24,7 @@ class UserData {
   });
 
   Map<String, dynamic> toJson() => {
+        'id': id,
         'email': email,
         'firstName': firstName,
         'lastName': lastName,
@@ -35,19 +36,19 @@ class UserData {
       };
 
   factory UserData.fromJson(DocumentSnapshot parsedJson) {
-    if (parsedJson.data() == null || parsedJson.data().isEmpty) {
+    if (parsedJson.data() == null || (parsedJson.data() as Map).isEmpty) {
       return UserData();
     }
 
     return UserData(
       id: parsedJson.id,
-      email: parsedJson.data()['email'],
-      firstName: parsedJson.data()['firstName'],
-      lastName: parsedJson.data()['lastName'],
-      country: parsedJson.data()['country'],
-      profession: parsedJson.data()['profession'],
-      specialty: parsedJson.data()['specialty'],
-      yearsOfExperience: parsedJson.data()['yearsOfExperience'],
+      email: (parsedJson.data() as Map)['email'],
+      firstName: (parsedJson.data() as Map)['firstName'],
+      lastName: (parsedJson.data() as Map)['lastName'],
+      country: (parsedJson.data() as Map)['country'],
+      profession: (parsedJson.data() as Map)['profession'],
+      specialty: (parsedJson.data() as Map)['specialty'],
+      yearsOfExperience: (parsedJson.data() as Map)['yearsOfExperience'],
     );
   }
 }

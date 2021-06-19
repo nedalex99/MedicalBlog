@@ -53,6 +53,7 @@ class SavedScreen extends StatelessWidget {
                             inactiveFgColor: Colors.white,
                             labels: ['Posts', 'News'],
                             onToggle: _savedScreenController.onToggle,
+                            totalSwitches: 2,
                           ),
                         ),
                         Expanded(
