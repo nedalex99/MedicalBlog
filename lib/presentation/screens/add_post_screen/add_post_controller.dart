@@ -104,7 +104,7 @@ class AddPostController extends GetxController {
         ProfanityFilter().hasProfanity(title)) {
       Get.dialog(
         ModalErrorDialog(
-          errorText: 'You post contains profanity words!',
+          errorText: 'Your post contains profanity words!',
         ),
       );
     } else {

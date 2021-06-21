@@ -84,9 +84,9 @@ class Post {
           .map((e) => e.toString())
           .toList(),
       userData: userData,
-      reportList: ((documentSnapshot.data() as Map)['reports'] as List)
-          .map((e) => e)
-          .toList(),
+      // reportList: ((documentSnapshot.data() as Map)['reports'] as List)
+      //     .map((e) => e)
+      //     .toList(),
     );
   }
 }
