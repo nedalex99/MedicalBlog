@@ -1,10 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:medical_blog/presentation/screens/tutorial/tutorial_page_view.dart';
 import 'package:medical_blog/utils/constants/routes.dart';
 import 'package:get/get.dart';
 import 'package:medical_blog/utils/constants/strings.dart';
+import 'package:medical_blog/utils/network/auth_service.dart';
+import 'package:medical_blog/utils/session_temp.dart';
 import 'package:medical_blog/utils/user_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -14,6 +15,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   PreferencesUtils _preferencesUtils = Get.find();
+  AuthService _authService = Get.find();
 
   @override
   void initState() {
@@ -30,24 +32,23 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 
-  startTime() {
-    return Timer(Duration(seconds: 2), () async {
-      String tutorialFlag =
-          await _preferencesUtils.getTutorialFlag(kTutorialFlagKey, 'false');
+  startTime() async {
+    String keepMeAuthFlag =
+        await _preferencesUtils.getKeepMeAuthFlag(kKeepMeAuthFlag, "");
+    String tutorialFlag =
+        await _preferencesUtils.getTutorialFlag(kTutorialFlagKey, 'false');
 
-      if (tutorialFlag == 'false' || tutorialFlag == null) {
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          tutorialRoute,
-          (Route<dynamic> route) => false,
-        );
+    if (tutorialFlag == 'false' || tutorialFlag == null) {
+      Get.offAllNamed(kTutorialRoute);
+    } else if (keepMeAuthFlag != null && keepMeAuthFlag == 'true') {
+      if (_authService.getUser() != null) {
+        userUID = _authService.getUser().uid;
+        Get.offAllNamed(kDashboardRoute);
       } else {
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          loginRoute,
-          (Route<dynamic> route) => false,
-        );
+        Get.offAllNamed(kLoginRoute);
       }
-    });
+    } else {
+      Get.offAllNamed(kLoginRoute);
+    }
   }
 }

@@ -1,4 +1,4 @@
-import 'package:medical_blog/logic/model/tutorial_data.dart';
+import 'package:medical_blog/model/tutorial_data.dart';
 import 'package:medical_blog/utils/constants/images.dart';
 import 'package:medical_blog/utils/constants/strings.dart';
 
@@ -18,7 +18,7 @@ List<TutorialData> tutorialList = [
   TutorialData(
     image: kThirdImageTutorial,
     title: kThirdTutorialTitle,
-    description: kFirstTutorialDescription,
+    description: kThirdTutorialDescription,
     position: 2,
   ),
 ];

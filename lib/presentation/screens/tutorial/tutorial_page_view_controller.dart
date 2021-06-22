@@ -27,11 +27,7 @@ class TutorialPageViewController extends GetxController {
       pageController.value.dispose();
       pageController.close();
       _preferencesUtils.setTutorialFlag(kTutorialFlagKey, true);
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        loginRoute,
-        (Route<dynamic> route) => false,
-      );
+      Get.offAllNamed(kLoginRoute);
     } else {
       pageController.value.nextPage(
         duration: Duration(
@@ -46,10 +42,6 @@ class TutorialPageViewController extends GetxController {
     pageController.value.dispose();
     pageController.close();
     _preferencesUtils.setTutorialFlag(kTutorialFlagKey, true);
-    Navigator.pushNamedAndRemoveUntil(
-      context,
-      loginRoute,
-      (Route<dynamic> route) => false,
-    );
+    Get.offAllNamed(kLoginRoute);
   }
 }

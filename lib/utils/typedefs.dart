@@ -1,0 +1,1 @@
+typedef CheckCallback(String value);
