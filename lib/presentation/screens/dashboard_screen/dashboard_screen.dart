@@ -128,7 +128,9 @@ class DashboardScreen extends StatelessWidget {
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
                         return Padding(
-                          padding: const EdgeInsets.all(18.0),
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 18.0,
+                          ),
                           child: NewsCard(
                             news: _dashboardController.searchedNews[index],
                             newsCardController: Get.put(

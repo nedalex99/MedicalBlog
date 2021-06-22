@@ -21,14 +21,16 @@ class SavedScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.only(
           top: 75.0,
-          left: 18.0,
-          right: 18.0,
         ),
         child: CustomScrollView(
           slivers: [
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.only(bottom: 32.0),
+                padding: const EdgeInsets.only(
+                  bottom: 32.0,
+                  left: 18.0,
+                  right: 18.0,
+                ),
                 child: Column(
                   children: [
                     Row(
@@ -80,27 +82,30 @@ class SavedScreen extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Obx(
-                        () => _savedScreenController.toggleIndex == 0 ? DropdownButton(
-                          items: <String>[
-                            'Newest first',
-                            'Oldest first',
-                            'Most likes first',
-                            'Most dislikes first',
-                          ]
-                              .map(
-                                (String e) => DropdownMenuItem(
-                                  child: Text(e),
-                                  value: e,
-                                ),
+                        () => _savedScreenController.toggleIndex == 0
+                            ? DropdownButton(
+                                items: <String>[
+                                  'Newest first',
+                                  'Oldest first',
+                                  'Most likes first',
+                                  'Most dislikes first',
+                                ]
+                                    .map(
+                                      (String e) => DropdownMenuItem(
+                                        child: Text(e),
+                                        value: e,
+                                      ),
+                                    )
+                                    .toList(),
+                                value:
+                                    _savedScreenController.dropdownValue.value,
+                                onChanged: (newValue) {
+                                  _savedScreenController.setNewDropdownValue(
+                                    value: newValue,
+                                  );
+                                },
                               )
-                              .toList(),
-                          value: _savedScreenController.dropdownValue.value,
-                          onChanged: (newValue) {
-                            _savedScreenController.setNewDropdownValue(
-                              value: newValue,
-                            );
-                          },
-                        ) : Container(),
+                            : Container(),
                       ),
                     ),
                   ],
