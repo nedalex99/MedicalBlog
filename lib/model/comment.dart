@@ -10,6 +10,7 @@ class Comment {
   List<String> likedBy;
   List<String> dislikedBy;
   UserData userData;
+  String image;
 
   Comment({
     this.commentId,
@@ -20,6 +21,7 @@ class Comment {
     this.likedBy = const [],
     this.dislikedBy = const [],
     this.userData,
+    this.image,
   });
 
   Map<String, dynamic> toJson() => {
@@ -38,6 +40,7 @@ class Comment {
     }
 
     UserData userData = UserData(
+      id: (parsedJson.data() as Map)['userData']['id'],
       firstName: (parsedJson.data() as Map)['userData']['firstName'],
       lastName: (parsedJson.data() as Map)['userData']['lastName'],
       profession: (parsedJson.data() as Map)['userData']['profession'],

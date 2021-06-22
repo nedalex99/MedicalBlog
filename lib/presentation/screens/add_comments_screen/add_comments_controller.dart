@@ -6,6 +6,7 @@ import 'package:medical_blog/model/user_data.dart';
 import 'package:medical_blog/presentation/widgets/dialogs/loading_dialog.dart';
 import 'package:medical_blog/presentation/widgets/post_card/post_card_controller.dart';
 import 'package:medical_blog/utils/network/firestore_service.dart';
+import 'package:medical_blog/utils/util_functions.dart';
 
 class AddCommentsController extends GetxController {
   String commentText;
@@ -19,10 +20,13 @@ class AddCommentsController extends GetxController {
   }
 
   Future<void> getComments({String postId}) async {
+    String url = '';
     await _firestoreService.getComments(postId: postId).then((value) => {
-          value.docs.forEach((element) {
+          value.docs.forEach((element) async {
             Comment comment = Comment.fromJson(element);
             comment.commentId = element.id;
+            url = await getPhoto(id: comment.userData.id);
+            comment.image = url;
             commentsFromFirestore.add(comment);
           }),
         });

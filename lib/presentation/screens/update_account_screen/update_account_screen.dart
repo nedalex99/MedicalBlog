@@ -23,7 +23,7 @@ class UpdateAccountScreen extends StatelessWidget {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(80),
         child: CustomAppBar(
-          title: userInfo.name,
+          title: userInfo.hint,
         ),
       ),
       body: CustomScrollView(

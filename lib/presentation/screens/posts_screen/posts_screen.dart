@@ -94,37 +94,46 @@ class PostsScreen extends StatelessWidget {
                               postsController.postsFromFirestore.length) {
                             return CupertinoActivityIndicator();
                           }
-                          return PostCard(
-                            post: postsController.postsFromFirestore[index],
-                            postCardController: Get.put(
-                              PostCardController(
-                                post: postsController.postsFromFirestore[index],
-                                postId: postsController
-                                    .postsFromFirestore[index].uid,
-                                noOfLikes: postsController
-                                    .postsFromFirestore[index].noOfLikes.obs,
-                                noOfDislikes: postsController
-                                    .postsFromFirestore[index].noOfDislikes.obs,
-                                noOfComments: postsController
-                                    .postsFromFirestore[index].noOfComments.obs,
-                                isLiked: postsController
-                                        .postsFromFirestore[index].likedBy
-                                        .contains(userUID)
-                                    ? true.obs
-                                    : false.obs,
-                                isDisliked: postsController
-                                        .postsFromFirestore[index].dislikedBy
-                                        .contains(userUID)
-                                    ? true.obs
-                                    : false.obs,
-                                isSaved: postsController
-                                        .postsFromFirestore[index].savedBy
-                                        .contains(userUID)
-                                    ? true.obs
-                                    : false.obs,
+                          return Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 18.0),
+                            child: PostCard(
+                              post: postsController.postsFromFirestore[index],
+                              postCardController: Get.put(
+                                PostCardController(
+                                  post:
+                                      postsController.postsFromFirestore[index],
+                                  postId: postsController
+                                      .postsFromFirestore[index].uid,
+                                  noOfLikes: postsController
+                                      .postsFromFirestore[index].noOfLikes.obs,
+                                  noOfDislikes: postsController
+                                      .postsFromFirestore[index]
+                                      .noOfDislikes
+                                      .obs,
+                                  noOfComments: postsController
+                                      .postsFromFirestore[index]
+                                      .noOfComments
+                                      .obs,
+                                  isLiked: postsController
+                                          .postsFromFirestore[index].likedBy
+                                          .contains(userUID)
+                                      ? true.obs
+                                      : false.obs,
+                                  isDisliked: postsController
+                                          .postsFromFirestore[index].dislikedBy
+                                          .contains(userUID)
+                                      ? true.obs
+                                      : false.obs,
+                                  isSaved: postsController
+                                          .postsFromFirestore[index].savedBy
+                                          .contains(userUID)
+                                      ? true.obs
+                                      : false.obs,
+                                ),
+                                tag:
+                                    '${postsController.postsFromFirestore[index].uid}',
                               ),
-                              tag:
-                                  '${postsController.postsFromFirestore[index].uid}',
                             ),
                           );
                         },

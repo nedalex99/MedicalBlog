@@ -80,7 +80,7 @@ class SavedScreen extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Obx(
-                        () => DropdownButton(
+                        () => _savedScreenController.toggleIndex == 0 ? DropdownButton(
                           items: <String>[
                             'Newest first',
                             'Oldest first',
@@ -100,7 +100,7 @@ class SavedScreen extends StatelessWidget {
                               value: newValue,
                             );
                           },
-                        ),
+                        ) : Container(),
                       ),
                     ),
                   ],

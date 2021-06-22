@@ -45,7 +45,7 @@ class EditAccountController extends GetxController {
               name: userData.value.country,
               hint: 'Country',
               icon: Icon(
-                Icons.circle,
+                Icons.public,
               ),
               function: updateCountry,
             ),

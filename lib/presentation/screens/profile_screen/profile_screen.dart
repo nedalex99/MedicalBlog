@@ -21,12 +21,22 @@ class ProfileScreen extends StatelessWidget {
           SliverAppBar(
             floating: true,
             forceElevated: true,
-            backgroundColor: Colors.cyan,
-            title: Text('Title'),
-            leading: IconButton(
-              icon: Icon(Icons.logout),
-              onPressed: _profileScreenController.signOutUser,
+            backgroundColor: kBackgroundColor,
+            title: Text(
+              'Profile',
+              style: TextStyle(
+                color: kTextBlack1C,
+              ),
             ),
+            actions: [
+              IconButton(
+                icon: Icon(
+                  Icons.logout,
+                  color: kTextBlack1C,
+                ),
+                onPressed: _profileScreenController.signOutUser,
+              ),
+            ],
           ),
           SliverToBoxAdapter(
             child: Center(
@@ -131,7 +141,7 @@ class ProfileScreen extends StatelessWidget {
                 (context, index) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 0.0,
+                      horizontal: 18.0,
                     ),
                     child: PostCard(
                       post: _profileScreenController.posts[index],

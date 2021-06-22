@@ -51,14 +51,25 @@ class CommentCard extends StatelessWidget {
                   children: [
                     Column(
                       children: [
-                        Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(50.0),
+                        CircleAvatar(
+                          radius: 25,
+                          backgroundColor: kBlueButtonColor,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(
+                              25.0,
                             ),
-                            color: Colors.grey,
+                            child: comment.image != null
+                                ? Image.network(
+                              comment.image,
+                              width: 50,
+                              height: 50,
+                              fit: BoxFit.fill,
+                            )
+                                : Container(
+                              height: 50,
+                              width: 50,
+                              color: Colors.grey,
+                            ),
                           ),
                         ),
                         Text(

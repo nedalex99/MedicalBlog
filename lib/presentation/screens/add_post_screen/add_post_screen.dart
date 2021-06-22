@@ -146,24 +146,6 @@ class AddPostScreen extends StatelessWidget {
               SizedBox(
                 height: Get.height * 0.02,
               ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.add,
-                    color: Colors.black,
-                  ),
-                  SizedBox(
-                    width: Get.width * 0.01,
-                  ),
-                  Text(
-                    'Photos',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18.0,
-                    ),
-                  ),
-                ],
-              ),
             ],
           ),
         ),
