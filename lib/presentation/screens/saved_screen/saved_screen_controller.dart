@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:medical_blog/model/filter.dart';
 import 'package:medical_blog/model/news.dart';
@@ -15,11 +17,26 @@ class SavedScreenController extends GetxController {
   RxList<News> newsList = List<News>().obs;
   RxInt toggleIndex = 0.obs;
   RxString dropdownValue = "Newest first".obs;
+  DocumentSnapshot documentSnapshot;
+  Rx<ScrollController> scrollController = ScrollController().obs;
+  RxBool isVisible = true.obs;
 
   @override
   Future<void> onInit() async {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       getPosts();
+    });
+    scrollController.value.addListener(() {
+      if (scrollController.value.position.pixels ==
+          scrollController.value.position.maxScrollExtent) {
+        getMorePosts();
+      }
+      if (scrollController.value.position.userScrollDirection ==
+          ScrollDirection.reverse) {
+        isVisible.value = false;
+      } else {
+        isVisible.value = true;
+      }
     });
     super.onInit();
   }
@@ -38,6 +55,7 @@ class SavedScreenController extends GetxController {
     Get.dialog(LoadingDialog());
     await _firestoreService.getPostsFromSavedCollection().then((value) => {
           value.docs.forEach((element) async {
+            documentSnapshot = element;
             Post post = Post.fromJson(element);
             url = await getPhoto(id: post.userData.id);
             post.image = url;
@@ -45,7 +63,19 @@ class SavedScreenController extends GetxController {
           }),
           Get.back(),
         });
-    posts.sort((a, b) => b.timestamp.seconds.compareTo(a.timestamp.seconds));
+  }
+
+  Future<void> getMorePosts() async {
+    print("In get more posts");
+    await _firestoreService
+        .getMorePostsFromSavedCollection(documentSnapshot)
+        .then((value) => {
+              value.docs.forEach((element) {
+                this.documentSnapshot = element;
+                Post post = Post.fromJson(documentSnapshot);
+                posts.add(post);
+              }),
+            });
   }
 
   Future<void> getNews() async {

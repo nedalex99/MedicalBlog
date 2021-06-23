@@ -4,6 +4,7 @@ import 'package:medical_blog/presentation/screens/dashboard_screen/dashboard_con
 import 'package:medical_blog/presentation/screens/see_more_screen/see_more_controller.dart';
 import 'package:medical_blog/presentation/screens/see_more_screen/see_more_screen.dart';
 import 'package:medical_blog/presentation/widgets/bottom_nav_bar/bottom_navigation_bar.dart';
+import 'package:medical_blog/presentation/widgets/input_fields/input_text_field_read_only/input_text_field_read_only.dart';
 import 'package:medical_blog/presentation/widgets/input_fields/input_text_field_search.dart';
 import 'package:medical_blog/presentation/widgets/news_card/news_card.dart';
 import 'package:medical_blog/presentation/widgets/news_card/news_card_controller.dart';
@@ -17,34 +18,46 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // appBar: PreferredSize(
+      //   preferredSize: Size.fromHeight(
+      //     80,
+      //   ),
+      //   child: SliverAppBar(
+      //     title: Expanded(
+      //         child:
+      //     ),
+      //   ),
+      // ),
       body: CustomScrollView(
         controller: _dashboardController.scrollController.value,
         slivers: [
+          SliverAppBar(
+            floating: true,
+            forceElevated: true,
+            toolbarHeight: 80.0,
+            title: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 18.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color(0xFFe6e6e6),
+                      spreadRadius: 2,
+                      blurRadius: 10,
+                      offset: Offset(0, 0),
+                    ),
+                  ],
+                ),
+                child: InputTextFieldSearch(
+                  inputTextChecked: _dashboardController.titleCallback,
+                  getNewsByTitle: _dashboardController.getNewsByTitle,
+                ),
+              ),
+            ),
+          ),
           SliverToBoxAdapter(
             child: Column(
               children: [
-                SizedBox(
-                  height: 50.0,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color(0xFFe6e6e6),
-                          spreadRadius: 2,
-                          blurRadius: 10,
-                          offset: Offset(0, 0),
-                        ),
-                      ],
-                    ),
-                    child: InputTextFieldSearch(
-                      inputTextChecked: _dashboardController.titleCallback,
-                      getNewsByTitle: _dashboardController.getNewsByTitle,
-                    ),
-                  ),
-                ),
                 Obx(
                   () => _dashboardController.searchedNews.length == 0
                       ? Padding(
@@ -300,9 +313,17 @@ class DashboardScreen extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavBar(
-        selectedIndex: 0,
-        pressCallback: _dashboardController.getToTop,
+      bottomNavigationBar: Obx(
+        () => AnimatedContainer(
+          duration: Duration(
+            milliseconds: 200,
+          ),
+          height: _dashboardController.isVisible.value ? 90 : 0.0,
+          child: BottomNavBar(
+            selectedIndex: 0,
+            pressCallback: _dashboardController.getToTop,
+          ),
+        ),
       ),
     );
   }

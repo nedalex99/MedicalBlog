@@ -139,38 +139,33 @@ class ProfileScreen extends StatelessWidget {
             () => SliverList(
               delegate: SliverChildBuilderDelegate(
                 (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 18.0,
-                    ),
-                    child: PostCard(
-                      post: _profileScreenController.posts[index],
-                      postCardController: Get.put(
-                        PostCardController(
-                          post: _profileScreenController.posts[index],
-                          postId: _profileScreenController.posts[index].uid,
-                          noOfLikes: _profileScreenController
-                              .posts[index].noOfLikes.obs,
-                          noOfDislikes: _profileScreenController
-                              .posts[index].noOfDislikes.obs,
-                          noOfComments: _profileScreenController
-                              .posts[index].noOfComments.obs,
-                          isLiked: _profileScreenController.posts[index].likedBy
-                                  .contains(userUID)
-                              ? true.obs
-                              : false.obs,
-                          isDisliked: _profileScreenController
-                                  .posts[index].dislikedBy
-                                  .contains(userUID)
-                              ? true.obs
-                              : false.obs,
-                          isSaved: _profileScreenController.posts[index].savedBy
-                                  .contains(userUID)
-                              ? true.obs
-                              : false.obs,
-                        ),
-                        tag: _profileScreenController.posts[index].uid,
+                  return PostCard(
+                    post: _profileScreenController.posts[index],
+                    postCardController: Get.put(
+                      PostCardController(
+                        post: _profileScreenController.posts[index],
+                        postId: _profileScreenController.posts[index].uid,
+                        noOfLikes: _profileScreenController
+                            .posts[index].noOfLikes.obs,
+                        noOfDislikes: _profileScreenController
+                            .posts[index].noOfDislikes.obs,
+                        noOfComments: _profileScreenController
+                            .posts[index].noOfComments.obs,
+                        isLiked: _profileScreenController.posts[index].likedBy
+                                .contains(userUID)
+                            ? true.obs
+                            : false.obs,
+                        isDisliked: _profileScreenController
+                                .posts[index].dislikedBy
+                                .contains(userUID)
+                            ? true.obs
+                            : false.obs,
+                        isSaved: _profileScreenController.posts[index].savedBy
+                                .contains(userUID)
+                            ? true.obs
+                            : false.obs,
                       ),
+                      tag: _profileScreenController.posts[index].uid,
                     ),
                   );
                 },

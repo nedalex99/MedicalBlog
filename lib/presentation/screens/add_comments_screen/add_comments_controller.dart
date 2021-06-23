@@ -12,17 +12,39 @@ class AddCommentsController extends GetxController {
   String commentText;
   RxList<Comment> commentsFromFirestore = List<Comment>().obs;
   RxString dropDownValue = "Oldest first".obs;
-  ScrollController scrollController = ScrollController();
+  Rx<ScrollController> scrollController = ScrollController().obs;
   FirestoreService _firestoreService = Get.find();
+  DocumentSnapshot documentSnapshot;
+
+  final String postId;
+
+  AddCommentsController({
+    this.postId,
+  });
 
   void commentTextCallback(String value) {
     commentText = value;
+  }
+
+  @override
+  void onInit() {
+    getComments(
+      postId: postId,
+    );
+    scrollController.value.addListener(() {
+      if (scrollController.value.position.pixels ==
+          scrollController.value.position.maxScrollExtent) {
+        getMoreComments();
+      }
+    });
+    super.onInit();
   }
 
   Future<void> getComments({String postId}) async {
     String url = '';
     await _firestoreService.getComments(postId: postId).then((value) => {
           value.docs.forEach((element) async {
+            documentSnapshot = element;
             Comment comment = Comment.fromJson(element);
             comment.commentId = element.id;
             url = await getPhoto(id: comment.userData.id);
@@ -30,6 +52,29 @@ class AddCommentsController extends GetxController {
             commentsFromFirestore.add(comment);
           }),
         });
+    commentsFromFirestore
+        .sort((a, b) => b.timestamp.seconds.compareTo(a.timestamp.seconds));
+  }
+
+  Future<void> getMoreComments({
+    String postId,
+  }) async {
+    String url = '';
+    await _firestoreService
+        .getMoreComments(
+          postId: postId,
+          documentSnapshot: documentSnapshot,
+        )
+        .then((value) => {
+              value.docs.forEach((element) async {
+                documentSnapshot = element;
+                Comment comment = Comment.fromJson(element);
+                comment.commentId = element.id;
+                url = await getPhoto(id: comment.userData.id);
+                comment.image = url;
+                commentsFromFirestore.add(comment);
+              }),
+            });
     commentsFromFirestore
         .sort((a, b) => b.timestamp.seconds.compareTo(a.timestamp.seconds));
   }
@@ -61,8 +106,8 @@ class AddCommentsController extends GetxController {
     commentsFromFirestore.add(comment);
     PostCardController _postsController = Get.find(tag: postId);
     _postsController.noOfComments.value++;
-    scrollController.jumpTo(
-      scrollController.position.maxScrollExtent,
+    scrollController.value.jumpTo(
+      scrollController.value.position.maxScrollExtent,
     );
     FocusScope.of(Get.context).unfocus();
   }

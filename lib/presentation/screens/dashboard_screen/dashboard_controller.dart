@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:medical_blog/model/news.dart';
 import 'package:medical_blog/utils/network/firestore_service.dart';
@@ -15,9 +16,9 @@ class DashboardController extends GetxController {
   Rx<ScrollController> scrollController = ScrollController().obs;
   DocumentSnapshot documentSnapshot;
   RxString title = "".obs;
+  RxBool isVisible = true.obs;
 
   GetNewsRequest _getNewsRequest = Get.find();
-  PreferencesUtils _prefs = Get.find();
 
   void titleCallback(String value) {
     title.value = value;
@@ -30,6 +31,12 @@ class DashboardController extends GetxController {
       if (scrollController.value.position.pixels ==
           scrollController.value.position.maxScrollExtent) {
         getMoreData();
+      }
+      if (scrollController.value.position.userScrollDirection ==
+          ScrollDirection.reverse) {
+        isVisible.value = false;
+      } else {
+        isVisible.value = true;
       }
     });
     super.onInit();

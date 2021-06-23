@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:medical_blog/model/post.dart';
+import 'package:medical_blog/presentation/screens/add_comments_screen/add_comments_controller.dart';
 import 'package:medical_blog/presentation/screens/add_comments_screen/add_comments_screen.dart';
 import 'package:medical_blog/presentation/widgets/dialogs/loading_dialog.dart';
 import 'package:medical_blog/presentation/widgets/modals/post_card_options_modal/post_card_options_modal.dart';
@@ -162,6 +163,11 @@ class PostCardController extends GetxController {
       () => AddCommentsScreen(
         post: post,
         postCardController: postCardController,
+        addCommentsController: Get.put(
+          AddCommentsController(
+            postId: post.uid,
+          ),
+        ),
       ),
     );
   }

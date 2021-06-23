@@ -26,8 +26,8 @@ class PostCard extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(
         bottom: Get.height * 0.02,
-        left: 2,
-        right: 2,
+        left: 18,
+        right: 18,
       ),
       child: Wrap(
         children: [

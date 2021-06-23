@@ -13,8 +13,7 @@ import 'package:get/get.dart';
 import 'package:medical_blog/utils/session_temp.dart';
 
 class AddCommentsScreen extends StatelessWidget {
-  final AddCommentsController _addCommentsController =
-      Get.put(AddCommentsController());
+  final AddCommentsController addCommentsController;
 
   final Post post;
   final PostCardController postCardController;
@@ -24,12 +23,11 @@ class AddCommentsScreen extends StatelessWidget {
     this.post,
     this.postCardController,
     this.noOfResponses,
+    this.addCommentsController,
   });
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback(
-        (_) => _addCommentsController.getComments(postId: post.uid));
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(80),
@@ -52,7 +50,7 @@ class AddCommentsScreen extends StatelessWidget {
                   hint: 'Leave a comment...',
                   controller: Get.put(InputTextFieldController(),
                       tag: 'Leave a comment...'),
-                  inputTextChecked: _addCommentsController.commentTextCallback,
+                  inputTextChecked: addCommentsController.commentTextCallback,
                 ),
               ),
               Padding(
@@ -60,9 +58,10 @@ class AddCommentsScreen extends StatelessWidget {
                   right: 8.0,
                 ),
                 child: GestureDetector(
-                  onTap: () => _addCommentsController.addCommentToPost(
-                    postId: post.uid,
-                  ),
+                  onTap: () =>
+                      addCommentsController.addCommentToPost(
+                        postId: post.uid,
+                      ),
                   child: Icon(
                     Icons.send,
                   ),
@@ -76,6 +75,7 @@ class AddCommentsScreen extends StatelessWidget {
             top: 3.0,
           ),
           child: CustomScrollView(
+            controller: addCommentsController.scrollController.value,
             slivers: [
               SliverToBoxAdapter(
                 child: Column(
@@ -83,8 +83,6 @@ class AddCommentsScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(
                         top: 2.0,
-                        left: 18.0,
-                        right: 18.0,
                       ),
                       child: PostCard(
                         post: post,
@@ -123,36 +121,40 @@ class AddCommentsScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Obx(
-                                  () => Text(
-                                      '${_addCommentsController.commentsFromFirestore.length} Responses'),
+                                      () =>
+                                      Text(
+                                          '${addCommentsController
+                                              .commentsFromFirestore
+                                              .length} Responses'),
                                 ),
                                 Row(
                                   children: [
                                     Obx(
-                                      () => DropdownButton(
-                                        items: <String>[
-                                          'Oldest first',
-                                          'Newest first',
-                                          'Most likes first',
-                                          'Most dislikes first',
-                                        ]
-                                            .map(
-                                              (String value) =>
+                                          () =>
+                                          DropdownButton(
+                                            items: <String>[
+                                              'Oldest first',
+                                              'Newest first',
+                                              'Most likes first',
+                                              'Most dislikes first',
+                                            ]
+                                                .map(
+                                                  (String value) =>
                                                   DropdownMenuItem(
-                                                value: value,
-                                                child: Text(value),
-                                              ),
+                                                    value: value,
+                                                    child: Text(value),
+                                                  ),
                                             )
-                                            .toList(),
-                                        value: _addCommentsController
-                                            .dropDownValue.value,
-                                        onChanged: (newValue) {
-                                          _addCommentsController
-                                              .setNewDropDownValue(
-                                            value: newValue,
-                                          );
-                                        },
-                                      ),
+                                                .toList(),
+                                            value: addCommentsController
+                                                .dropDownValue.value,
+                                            onChanged: (newValue) {
+                                              addCommentsController
+                                                  .setNewDropDownValue(
+                                                value: newValue,
+                                              );
+                                            },
+                                          ),
                                     ),
                                   ],
                                 ),
@@ -169,49 +171,51 @@ class AddCommentsScreen extends StatelessWidget {
                 ),
               ),
               Obx(
-                () => SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(
-                          left: 18.0,
-                          right: 18.0,
-                        ),
-                        child: CommentCard(
-                          comment: _addCommentsController
-                              .commentsFromFirestore[index],
-                          postId: post.uid,
-                          commentCardController: Get.put(
-                            CommentCardController(
-                              commentId: _addCommentsController
-                                  .commentsFromFirestore[index].commentId,
-                              noOfLikes: _addCommentsController
-                                  .commentsFromFirestore[index].noOfLikes.obs,
-                              noOfDislikes: _addCommentsController
-                                  .commentsFromFirestore[index]
-                                  .noOfDislikes
-                                  .obs,
-                              isLiked: _addCommentsController
+                    () =>
+                    SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                            (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(
+                              left: 18.0,
+                              right: 18.0,
+                            ),
+                            child: CommentCard(
+                              comment: addCommentsController
+                                  .commentsFromFirestore[index],
+                              postId: post.uid,
+                              commentCardController: Get.put(
+                                CommentCardController(
+                                  commentId: addCommentsController
+                                      .commentsFromFirestore[index].commentId,
+                                  noOfLikes: addCommentsController
+                                      .commentsFromFirestore[index].noOfLikes
+                                      .obs,
+                                  noOfDislikes: addCommentsController
+                                      .commentsFromFirestore[index]
+                                      .noOfDislikes
+                                      .obs,
+                                  isLiked: addCommentsController
                                       .commentsFromFirestore[index].likedBy
                                       .contains(userUID)
-                                  ? true.obs
-                                  : false.obs,
-                              isDisliked: _addCommentsController
+                                      ? true.obs
+                                      : false.obs,
+                                  isDisliked: addCommentsController
                                       .commentsFromFirestore[index].dislikedBy
                                       .contains(userUID)
-                                  ? true.obs
-                                  : false.obs,
+                                      ? true.obs
+                                      : false.obs,
+                                ),
+                                tag: addCommentsController
+                                    .commentsFromFirestore[index].commentText,
+                              ),
                             ),
-                            tag: _addCommentsController
-                                .commentsFromFirestore[index].commentText,
-                          ),
-                        ),
-                      );
-                    },
-                    childCount:
-                        _addCommentsController.commentsFromFirestore.length,
-                  ),
-                ),
+                          );
+                        },
+                        childCount:
+                        addCommentsController.commentsFromFirestore.length,
+                      ),
+                    ),
               ),
             ],
           ),

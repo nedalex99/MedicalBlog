@@ -23,6 +23,7 @@ class SavedScreen extends StatelessWidget {
           top: 75.0,
         ),
         child: CustomScrollView(
+          controller: _savedScreenController.scrollController.value,
           slivers: [
             SliverToBoxAdapter(
               child: Padding(
@@ -65,15 +66,17 @@ class SavedScreen extends StatelessWidget {
                               icon: Icon(
                                 Icons.filter_list_outlined,
                               ),
-                              onPressed: () => Get.to(() => FiltersScreen(
-                                    filtersScreenController: Get.put(
-                                      FiltersScreenController(
-                                        applyFiltersCallback:
-                                            _savedScreenController
-                                                .getPostsWithFilters,
-                                      ),
+                              onPressed: () => Get.to(
+                                () => FiltersScreen(
+                                  filtersScreenController: Get.put(
+                                    FiltersScreenController(
+                                      applyFiltersCallback:
+                                          _savedScreenController
+                                              .getPostsWithFilters,
                                     ),
-                                  )),
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -175,8 +178,16 @@ class SavedScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavBar(
-        selectedIndex: 2,
+      bottomNavigationBar: Obx(
+        () => AnimatedContainer(
+          duration: Duration(
+            milliseconds: 200,
+          ),
+          height: _savedScreenController.isVisible.value ? 90 : 0.0,
+          child: BottomNavBar(
+            selectedIndex: 2,
+          ),
+        ),
       ),
     );
   }

@@ -16,139 +16,113 @@ class PostsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.only(
-          top: 50.0,
-          //left: 18.0,
-          //right: 18.0,
-        ),
-        child: Center(
-          child: PullToRevealTopItemList.builder(
-            revealableBuilder: (BuildContext context, RevealableToggler opener,
-                RevealableToggler closer, BoxConstraints constraints) {
-              return Row(
-                children: [
-                  Flexible(
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                        left: 18.0,
-                        right: 18.0,
-                      ),
-                      child: InputTextFieldReadOnly(
-                        onTap: () => Get.toNamed(kAddPostRoute),
-                        hint: 'Tell us something new...',
-                      ),
-                    ),
+      body: CustomScrollView(
+        shrinkWrap: true,
+        controller: postsController.scrollController.value,
+        slivers: [
+          SliverAppBar(
+            forceElevated: true,
+            floating: true,
+            title: InputTextFieldReadOnly(
+              onTap: () => Get.toNamed(kAddPostRoute),
+              hint: 'Tell us something new...',
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 18.0,
+                    right: 18.0,
+                    top: 18.0,
                   ),
-                ],
-              );
-            },
-            startRevealed: true,
-            revealableHeight: 100.0,
-            builder:
-                ((BuildContext context, ScrollController scrollController) {
-              return SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        left: 18.0,
-                        right: 18.0,
-                        top: 18.0,
-                      ),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Container(
-                          child: DropdownButton(
-                            items: <String>[
-                              'Newest first',
-                              'Oldest first',
-                              'Most likes first',
-                              'Most dislikes first',
-                            ]
-                                .map(
-                                  (String e) => DropdownMenuItem(
-                                    child: Text(e),
-                                    value: e,
-                                  ),
-                                )
-                                .toList(),
-                            value: 'Newest first',
-                            onChanged: (newValue) {
-                              // _savedScreenController.setNewDropdownValue(
-                              //   value: newValue,
-                              // );
-                            },
-                          ),
-                        ),
-                      ),
-                    ),
-                    Obx(
-                      () => ListView.builder(
-                        shrinkWrap: true,
-                        controller: postsController.scrollController.value,
-                        itemCount:
-                            postsController.postsFromFirestore.length + 1,
-                        itemBuilder: (context, index) {
-                          if (index ==
-                              postsController.postsFromFirestore.length) {
-                            return CupertinoActivityIndicator();
-                          }
-                          return Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 18.0),
-                            child: PostCard(
-                              post: postsController.postsFromFirestore[index],
-                              postCardController: Get.put(
-                                PostCardController(
-                                  post:
-                                      postsController.postsFromFirestore[index],
-                                  postId: postsController
-                                      .postsFromFirestore[index].uid,
-                                  noOfLikes: postsController
-                                      .postsFromFirestore[index].noOfLikes.obs,
-                                  noOfDislikes: postsController
-                                      .postsFromFirestore[index]
-                                      .noOfDislikes
-                                      .obs,
-                                  noOfComments: postsController
-                                      .postsFromFirestore[index]
-                                      .noOfComments
-                                      .obs,
-                                  isLiked: postsController
-                                          .postsFromFirestore[index].likedBy
-                                          .contains(userUID)
-                                      ? true.obs
-                                      : false.obs,
-                                  isDisliked: postsController
-                                          .postsFromFirestore[index].dislikedBy
-                                          .contains(userUID)
-                                      ? true.obs
-                                      : false.obs,
-                                  isSaved: postsController
-                                          .postsFromFirestore[index].savedBy
-                                          .contains(userUID)
-                                      ? true.obs
-                                      : false.obs,
-                                ),
-                                tag:
-                                    '${postsController.postsFromFirestore[index].uid}',
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      child: DropdownButton(
+                        items: <String>[
+                          'Newest first',
+                          'Oldest first',
+                          'Most likes first',
+                          'Most dislikes first',
+                        ]
+                            .map(
+                              (String e) => DropdownMenuItem(
+                                child: Text(e),
+                                value: e,
                               ),
-                            ),
-                          );
+                            )
+                            .toList(),
+                        value: 'Newest first',
+                        onChanged: (newValue) {
+                          // _savedScreenController.setNewDropdownValue(
+                          //   value: newValue,
+                          // );
                         },
                       ),
                     ),
-                  ],
+                  ),
                 ),
-              );
-            }),
+              ],
+            ),
+          ),
+          Obx(
+            () => SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  if (index == postsController.postsFromFirestore.length) {
+                    return CupertinoActivityIndicator();
+                  }
+                  return PostCard(
+                    post: postsController.postsFromFirestore[index],
+                    postCardController: Get.put(
+                      PostCardController(
+                        post: postsController.postsFromFirestore[index],
+                        postId: postsController.postsFromFirestore[index].uid,
+                        noOfLikes: postsController
+                            .postsFromFirestore[index].noOfLikes.obs,
+                        noOfDislikes: postsController
+                            .postsFromFirestore[index].noOfDislikes.obs,
+                        noOfComments: postsController
+                            .postsFromFirestore[index].noOfComments.obs,
+                        isLiked: postsController
+                                .postsFromFirestore[index].likedBy
+                                .contains(userUID)
+                            ? true.obs
+                            : false.obs,
+                        isDisliked: postsController
+                                .postsFromFirestore[index].dislikedBy
+                                .contains(userUID)
+                            ? true.obs
+                            : false.obs,
+                        isSaved: postsController
+                                .postsFromFirestore[index].savedBy
+                                .contains(userUID)
+                            ? true.obs
+                            : false.obs,
+                      ),
+                      tag: '${postsController.postsFromFirestore[index].uid}',
+                    ),
+                  );
+                },
+                childCount: postsController.postsFromFirestore.length + 1,
+              ),
+            ),
+          ),
+        ],
+      ),
+      bottomNavigationBar: Obx(
+        () => AnimatedContainer(
+          duration: Duration(
+            milliseconds: 200,
+          ),
+          height: postsController.isVisible.value ? 90 : 0.0,
+          child: BottomNavBar(
+            selectedIndex: 1,
+            pressCallback: postsController.getToTop,
           ),
         ),
-      ),
-      bottomNavigationBar: BottomNavBar(
-        selectedIndex: 1,
-        pressCallback: postsController.getToTop,
       ),
     );
   }

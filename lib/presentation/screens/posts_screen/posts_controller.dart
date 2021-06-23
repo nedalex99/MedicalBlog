@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:medical_blog/model/post.dart';
 import 'package:medical_blog/utils/network/firestore_service.dart';
@@ -10,6 +11,7 @@ class PostsController extends GetxController {
   Rx<ScrollController> scrollController = ScrollController().obs;
   DocumentSnapshot documentSnapshot;
   RxList<Post> postsFromFirestore = List<Post>().obs;
+  RxBool isVisible = true.obs;
 
   @override
   Future<void> onInit() async {
@@ -18,6 +20,12 @@ class PostsController extends GetxController {
       if (scrollController.value.position.pixels ==
           scrollController.value.position.maxScrollExtent) {
         getMorePosts();
+      }
+      if (scrollController.value.position.userScrollDirection ==
+          ScrollDirection.reverse) {
+        isVisible.value = false;
+      } else {
+        isVisible.value = true;
       }
     });
     super.onInit();
@@ -34,7 +42,6 @@ class PostsController extends GetxController {
             postsFromFirestore.add(post);
           }),
         });
-    print(postsFromFirestore.length);
   }
 
   Future<void> getMorePosts() async {

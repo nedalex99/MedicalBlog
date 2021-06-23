@@ -284,11 +284,27 @@ class FirestoreService {
     });
   }
 
-  Future<QuerySnapshot> getComments({String postId}) {
+  Future<QuerySnapshot> getComments({
+    String postId,
+  }) {
     return _firestoreInstance
         .collection('posts')
         .doc(postId)
         .collection('comments')
+        .limit(15)
+        .get();
+  }
+
+  Future<QuerySnapshot> getMoreComments({
+    String postId,
+    DocumentSnapshot documentSnapshot,
+  }) {
+    return _firestoreInstance
+        .collection('posts')
+        .doc(postId)
+        .collection('comments')
+        .limit(15)
+        .startAfterDocument(documentSnapshot)
         .get();
   }
 
@@ -366,6 +382,20 @@ class FirestoreService {
         .collection('saved')
         .doc(userUID)
         .collection('posts')
+        .limit(15)
+        .orderBy("timeStamp", descending: true)
+        .get();
+  }
+
+  Future<QuerySnapshot> getMorePostsFromSavedCollection(
+      DocumentSnapshot documentSnapshot) {
+    return _firestoreInstance
+        .collection('saved')
+        .doc(userUID)
+        .collection('posts')
+        .limit(15)
+        .orderBy("timeStamp", descending: true)
+        .startAfterDocument(documentSnapshot)
         .get();
   }
 
