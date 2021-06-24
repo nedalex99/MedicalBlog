@@ -183,7 +183,7 @@ class SavedScreen extends StatelessWidget {
           duration: Duration(
             milliseconds: 200,
           ),
-          height: _savedScreenController.isVisible.value ? 90 : 0.0,
+          height: _savedScreenController.isVisible.value ? 80 : 0.0,
           child: BottomNavBar(
             selectedIndex: 2,
           ),

@@ -145,8 +145,8 @@ class ProfileScreen extends StatelessWidget {
                       PostCardController(
                         post: _profileScreenController.posts[index],
                         postId: _profileScreenController.posts[index].uid,
-                        noOfLikes: _profileScreenController
-                            .posts[index].noOfLikes.obs,
+                        noOfLikes:
+                            _profileScreenController.posts[index].noOfLikes.obs,
                         noOfDislikes: _profileScreenController
                             .posts[index].noOfDislikes.obs,
                         noOfComments: _profileScreenController
@@ -175,8 +175,11 @@ class ProfileScreen extends StatelessWidget {
           )
         ],
       ),
-      bottomNavigationBar: BottomNavBar(
-        selectedIndex: 3,
+      bottomNavigationBar: Container(
+        height: 80,
+        child: BottomNavBar(
+          selectedIndex: 3,
+        ),
       ),
     );
   }

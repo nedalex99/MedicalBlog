@@ -111,13 +111,14 @@ class PostCardController extends GetxController {
     );
   }
 
-  void showModal({bool isInSavedScreen}) {
+  void showModal({bool isInSavedScreen, bool alreadyReported}) {
     showModalBottomSheet(
       context: Get.context,
       builder: (context) {
         return PostCardOptionsModal(
           post: post,
           postId: postId,
+          alreadyReported: alreadyReported,
           controller: Get.put(
             PostCardOptionsModalController(
               isSaved: isSaved,

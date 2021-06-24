@@ -76,6 +76,7 @@ class PostsScreen extends StatelessWidget {
                   }
                   return PostCard(
                     post: postsController.postsFromFirestore[index],
+                    alreadyReported: postsController.postsFromFirestore[index].alreadyReported,
                     postCardController: Get.put(
                       PostCardController(
                         post: postsController.postsFromFirestore[index],
@@ -117,7 +118,7 @@ class PostsScreen extends StatelessWidget {
           duration: Duration(
             milliseconds: 200,
           ),
-          height: postsController.isVisible.value ? 90 : 0.0,
+          height: postsController.isVisible.value ? 80 : 0.0,
           child: BottomNavBar(
             selectedIndex: 1,
             pressCallback: postsController.getToTop,

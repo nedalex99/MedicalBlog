@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart';
 import 'package:medical_blog/model/comment.dart';
 import 'package:medical_blog/model/filter.dart';
 import 'package:medical_blog/model/news.dart';
@@ -284,6 +285,16 @@ class FirestoreService {
     });
   }
 
+  Future<QuerySnapshot> getReports({
+    String postId,
+  }) {
+    return _firestoreInstance
+        .collection('posts')
+        .doc(postId)
+        .collection('reports')
+        .get();
+  }
+
   Future<QuerySnapshot> getComments({
     String postId,
   }) {
@@ -541,13 +552,11 @@ class FirestoreService {
   }
 
   Future<void> reportPost({String postId, Report report}) async {
-    return _firestoreInstance.collection('posts').doc(postId).update({
-      "reports": FieldValue.arrayUnion(
-        [
-          report.toJson(),
-        ],
-      ),
-    });
+    return _firestoreInstance
+        .collection('posts')
+        .doc(postId)
+        .collection('reports')
+        .add(report.toJson());
   }
 
   Future<DocumentSnapshot> checkIfAlreadyReport({String postId}) async {

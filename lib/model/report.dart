@@ -14,14 +14,14 @@ class Report {
         'reportReason': reportReason,
       };
 
-  factory Report.fromJson(Map<String, Object> documentSnapshot) {
-    if (documentSnapshot == null || documentSnapshot.isEmpty) {
+  factory Report.fromJson(DocumentSnapshot documentSnapshot) {
+    if (documentSnapshot.data() == null || (documentSnapshot.data() as Map).isEmpty) {
       return Report();
     }
 
     return Report(
-      userId: documentSnapshot['userId'],
-      reportReason: documentSnapshot['reportReason'],
+      userId: (documentSnapshot.data() as Map)['userId'],
+      reportReason: (documentSnapshot.data() as Map)['reportReason'],
     );
   }
 }

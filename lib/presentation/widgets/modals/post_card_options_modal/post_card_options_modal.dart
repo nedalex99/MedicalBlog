@@ -9,8 +9,14 @@ class PostCardOptionsModal extends StatelessWidget {
 
   final Post post;
   final String postId;
+  final bool alreadyReported;
 
-  PostCardOptionsModal({this.post, this.postId, this.controller});
+  PostCardOptionsModal({
+    this.post,
+    this.postId,
+    this.controller,
+    this.alreadyReported,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -42,13 +48,17 @@ class PostCardOptionsModal extends StatelessWidget {
               Icons.report,
             ),
             title: Text(
-              'Report this post',
+              !alreadyReported
+                  ? 'Report this post'
+                  : 'You already reported this post!',
             ),
-            onTap: () => Get.to(
-              () => ReportPostScreen(
-                postId: postId,
-              ),
-            ),
+            onTap: !alreadyReported
+                ? () => Get.to(
+                      () => ReportPostScreen(
+                        postId: postId,
+                      ),
+                    )
+                : () {},
           ),
         ],
       ),

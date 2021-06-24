@@ -17,6 +17,7 @@ class Post {
   UserData userData;
   String image;
   List<Report> reportList;
+  bool alreadyReported;
 
   Post({
     this.uid,
@@ -33,6 +34,7 @@ class Post {
     this.userData,
     this.image,
     this.reportList = const [],
+    this.alreadyReported = false,
   });
 
   Map<String, dynamic> toJson() => {

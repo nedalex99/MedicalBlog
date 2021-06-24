@@ -13,12 +13,14 @@ class PostCard extends StatelessWidget {
   final PostCardController postCardController;
   final bool isInAddComments;
   final bool isInSavedScreen;
+  final bool alreadyReported;
 
   PostCard({
     @required this.post,
     this.postCardController,
     this.isInAddComments = false,
     this.isInSavedScreen = false,
+    this.alreadyReported,
   });
 
   @override
@@ -123,6 +125,7 @@ class PostCard extends StatelessWidget {
                           child: IconButton(
                             onPressed: () => postCardController.showModal(
                               isInSavedScreen: isInSavedScreen,
+                              alreadyReported: alreadyReported,
                             ),
                             icon: Icon(
                               Icons.more_vert_rounded,
