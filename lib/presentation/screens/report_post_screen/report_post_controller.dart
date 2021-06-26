@@ -23,9 +23,6 @@ class ReportPostController extends GetxController {
 
   Future<void> reportPost({String postId, String reportReason}) async {
     Get.dialog(LoadingDialog());
-    await _firestoreService.checkIfAlreadyReport(postId: postId).then((value) => {
-
-    });
     await _firestoreService
         .reportPost(
             postId: postId,
@@ -33,15 +30,19 @@ class ReportPostController extends GetxController {
               userId: userUID,
               reportReason: reportReason,
             ))
-        .then((value) => {
-              Get.back(),
-              Get.back(),
-              Get.back(),
-              Get.dialog(
-                ModalErrorDialog(
-                  errorText: 'Thank you for your report!',
-                ),
-              ),
+        .then((value) async => {
+              await _firestoreService
+                  .updatePointsForPost(postId: postId, points: -5.0)
+                  .then((value) => {
+                        Get.back(),
+                        Get.back(),
+                        Get.back(),
+                        Get.dialog(
+                          ModalErrorDialog(
+                            errorText: 'Thank you for your report!',
+                          ),
+                        ),
+                      }),
             });
   }
 }

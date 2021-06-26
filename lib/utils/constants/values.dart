@@ -22,3 +22,7 @@ List<TutorialData> tutorialList = [
     position: 2,
   ),
 ];
+
+const kLikePoints = 2.0;
+const kDislikePoints = 0.5;
+const kReportPoints = 5.0;

@@ -18,6 +18,8 @@ class Post {
   String image;
   List<Report> reportList;
   bool alreadyReported;
+  bool flagToDelete;
+  num points;
 
   Post({
     this.uid,
@@ -35,6 +37,8 @@ class Post {
     this.image,
     this.reportList = const [],
     this.alreadyReported = false,
+    this.flagToDelete = false,
+    this.points = 15.0,
   });
 
   Map<String, dynamic> toJson() => {
@@ -49,7 +53,8 @@ class Post {
         'dislikedBy': dislikedBy,
         'savedBy': savedBy,
         'userData': userData.toJson(),
-        'reports': reportList,
+        'flagToDelete': flagToDelete,
+        'points': points,
       };
 
   factory Post.fromJson(DocumentSnapshot documentSnapshot) {
@@ -86,6 +91,8 @@ class Post {
           .map((e) => e.toString())
           .toList(),
       userData: userData,
+      flagToDelete: (documentSnapshot.data() as Map)['flagToDelete'],
+      points: (documentSnapshot.data() as Map)['points'] as double,
       // reportList: ((documentSnapshot.data() as Map)['reports'] as List)
       //     .map((e) => e)
       //     .toList(),

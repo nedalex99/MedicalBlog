@@ -41,7 +41,7 @@ class ProfileScreen extends StatelessWidget {
           SliverToBoxAdapter(
             child: Center(
               child: Padding(
-                padding: EdgeInsets.only(top: Get.height * 0.2),
+                padding: EdgeInsets.only(top: Get.height * 0.02),
                 child: Column(
                   children: [
                     Container(),

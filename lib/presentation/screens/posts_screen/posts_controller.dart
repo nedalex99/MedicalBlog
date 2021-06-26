@@ -57,27 +57,39 @@ class PostsController extends GetxController {
                     });
             post.reportList = reportList;
 
-            ///TODO
-            ///if reportsList length == 3
-            ///   all reports equal
-            ///   then delete post
-            ///if FirebaseAuth.currentUser.uid == userUID && post deleted   => show modal
-
-            var map = Map();
-            reportList.forEach((element) {
-              if (!map.containsKey(element.reportReason)) {
-                map[element.reportReason] = 1;
-              } else {
-                map[element.reportReason] += 1;
-              }
-            });
-
-            if (map.values.contains(3) && post.userData.id == userUID) {
+            if (post.flagToDelete) {
+              await _firestoreService.deletePost(postId: post.uid);
               Get.dialog(
                   ModalErrorDialog(errorText: 'Your post has been removed!'));
             } else {
-              postsFromFirestore.add(post);
+              var map = Map();
+              reportList.forEach((element) {
+                if (!map.containsKey(element.reportReason)) {
+                  map[element.reportReason] = 1;
+                } else {
+                  map[element.reportReason] += 1;
+                }
+              });
+
+              if (map.values.contains(3) || post.points <= 0) {
+                if (post.userData.id == userUID) {
+                  await _firestoreService.deletePost(postId: post.uid);
+                  Get.dialog(ModalErrorDialog(
+                      errorText: 'Your post has been removed!'));
+                } else {
+                  await _firestoreService.setPostReported(postId: post.uid);
+                }
+              } else {
+                postsFromFirestore.add(post);
+              }
             }
+
+            // if (map.values.contains(3) && post.userData.id == userUID) {
+            //   Get.dialog(
+            //       ModalErrorDialog(errorText: 'Your post has been removed!'));
+            // } else {
+            //   postsFromFirestore.add(post);
+            // }
           }),
         });
   }

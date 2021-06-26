@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 import 'package:medical_blog/model/comment.dart';
 import 'package:medical_blog/model/filter.dart';
@@ -561,5 +560,24 @@ class FirestoreService {
 
   Future<DocumentSnapshot> checkIfAlreadyReport({String postId}) async {
     return _firestoreInstance.collection('posts').doc(postId).get();
+  }
+
+  Future<void> setPostReported({String postId}) async {
+    return _firestoreInstance.collection('posts').doc(postId).update({
+      'flagToDelete': true,
+    });
+  }
+
+  Future<void> deletePost({String postId}) async {
+    return _firestoreInstance.collection('posts').doc(postId).delete();
+  }
+
+  Future<void> updatePointsForPost({
+    String postId,
+    double points,
+  }) {
+    return _firestoreInstance.collection('posts').doc(postId).update({
+      'points': FieldValue.increment(points),
+    });
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:medical_blog/model/post.dart';
 import 'package:medical_blog/presentation/screens/add_comments_screen/add_comments_controller.dart';
 import 'package:medical_blog/presentation/screens/add_comments_screen/add_comments_screen.dart';
@@ -38,12 +37,15 @@ class PostCardController extends GetxController {
       removeDislike();
       addLikeOrDislikeByUser(collectionName: 'likedBy');
       removeLikeOrDislikeByUser(collectionName: 'dislikedBy');
+      updatePointsForPost(addLike: true, removeDislike: true);
     } else if (isLiked.value) {
       removeLike();
       removeLikeOrDislikeByUser(collectionName: 'likedBy');
+      updatePointsForPost(removeLike: true);
     } else {
       addLike();
       addLikeOrDislikeByUser(collectionName: 'likedBy');
+      updatePointsForPost(addLike: true);
     }
     updateNoOfLikesAndDislikesFirebase();
   }
@@ -54,12 +56,15 @@ class PostCardController extends GetxController {
       addDislike();
       removeLikeOrDislikeByUser(collectionName: 'likedBy');
       addLikeOrDislikeByUser(collectionName: 'dislikedBy');
+      updatePointsForPost(addDislike: true, removeLike: true);
     } else if (isDisliked.value) {
       removeDislike();
       removeLikeOrDislikeByUser(collectionName: 'dislikedBy');
+      updatePointsForPost(removeDislike: true);
     } else {
       addDislike();
       addLikeOrDislikeByUser(collectionName: 'dislikedBy');
+      updatePointsForPost(addDislike: true);
     }
     updateNoOfLikesAndDislikesFirebase();
   }
@@ -177,18 +182,24 @@ class PostCardController extends GetxController {
     await _firestoreService.incrementNoOfEntriesForPost(postId: postId);
   }
 
-  void reportThisPost() {
-    //   Get.back();
-    //   showModalBottomSheet(
-    //       context: Get.context,
-    //       builder: (context) {
-    //         return Column(
-    //           children: [
-    //             ListTile(
-    //               title: Text('abc'),
-    //             ),
-    //           ],
-    //         );
-    //       });
+  Future<void> updatePointsForPost({
+    bool addLike = false,
+    bool addDislike = false,
+    bool removeLike = false,
+    bool removeDislike = false,
+  }) async {
+    if (addLike && removeDislike) {
+      await _firestoreService.updatePointsForPost(postId: postId, points: 2.5);
+    } else if (addDislike && removeLike) {
+      await _firestoreService.updatePointsForPost(postId: postId, points: -2.5);
+    } else if (removeLike) {
+      await _firestoreService.updatePointsForPost(postId: postId, points: -2.0);
+    } else if (addLike) {
+      await _firestoreService.updatePointsForPost(postId: postId, points: 2.0);
+    } else if (removeDislike) {
+      await _firestoreService.updatePointsForPost(postId: postId, points: 0.5);
+    } else if (addDislike) {
+      await _firestoreService.updatePointsForPost(postId: postId, points: -0.5);
+    }
   }
 }
