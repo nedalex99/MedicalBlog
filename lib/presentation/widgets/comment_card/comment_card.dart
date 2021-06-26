@@ -9,11 +9,13 @@ class CommentCard extends StatelessWidget {
   final Comment comment;
   final String postId;
   final CommentCardController commentCardController;
+  final bool alreadyReported;
 
   CommentCard({
     @required this.comment,
     @required this.postId,
     @required this.commentCardController,
+    this.alreadyReported,
   });
 
   @override
@@ -60,16 +62,16 @@ class CommentCard extends StatelessWidget {
                             ),
                             child: comment.image != null
                                 ? Image.network(
-                              comment.image,
-                              width: 50,
-                              height: 50,
-                              fit: BoxFit.fill,
-                            )
+                                    comment.image,
+                                    width: 50,
+                                    height: 50,
+                                    fit: BoxFit.fill,
+                                  )
                                 : Container(
-                              height: 50,
-                              width: 50,
-                              color: Colors.grey,
-                            ),
+                                    height: 50,
+                                    width: 50,
+                                    color: Colors.grey,
+                                  ),
                           ),
                         ),
                         Text(
@@ -111,8 +113,14 @@ class CommentCard extends StatelessWidget {
                     Expanded(
                       child: Align(
                         alignment: Alignment.bottomRight,
-                        child: Icon(
-                          Icons.more_vert_rounded,
+                        child: IconButton(
+                          onPressed: () => commentCardController.showModal(
+                            alreadyReported: alreadyReported,
+                            postId: postId,
+                          ),
+                          icon: Icon(
+                            Icons.more_vert_rounded,
+                          ),
                         ),
                       ),
                     ),

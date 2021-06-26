@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:medical_blog/model/report.dart';
 import 'package:medical_blog/model/user_data.dart';
 
 class Comment {
@@ -11,6 +12,10 @@ class Comment {
   List<String> dislikedBy;
   UserData userData;
   String image;
+  List<Report> reportList;
+  bool alreadyReported;
+  bool flagToDelete;
+  num points;
 
   Comment({
     this.commentId,
@@ -22,6 +27,10 @@ class Comment {
     this.dislikedBy = const [],
     this.userData,
     this.image,
+    this.reportList = const [],
+    this.alreadyReported = false,
+    this.flagToDelete = false,
+    this.points = 15.0,
   });
 
   Map<String, dynamic> toJson() => {
@@ -32,6 +41,8 @@ class Comment {
         'likedBy': likedBy,
         'dislikedBy': dislikedBy,
         'userData': userData.toJson(),
+        'flagToDelete': flagToDelete,
+        'points': points,
       };
 
   factory Comment.fromJson(DocumentSnapshot parsedJson) {
@@ -58,6 +69,8 @@ class Comment {
           .map((e) => e.toString())
           .toList(),
       userData: userData,
+      flagToDelete: (parsedJson.data() as Map)['flagToDelete'],
+      points: (parsedJson.data() as Map)['points'] as double,
     );
   }
 }

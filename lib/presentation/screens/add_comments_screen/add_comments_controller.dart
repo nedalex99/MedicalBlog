@@ -2,10 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:medical_blog/model/comment.dart';
+import 'package:medical_blog/model/report.dart';
 import 'package:medical_blog/model/user_data.dart';
 import 'package:medical_blog/presentation/widgets/dialogs/loading_dialog.dart';
+import 'package:medical_blog/presentation/widgets/dialogs/modal_info_error_dialog.dart';
 import 'package:medical_blog/presentation/widgets/post_card/post_card_controller.dart';
 import 'package:medical_blog/utils/network/firestore_service.dart';
+import 'package:medical_blog/utils/session_temp.dart';
 import 'package:medical_blog/utils/util_functions.dart';
 
 class AddCommentsController extends GetxController {
@@ -49,7 +52,58 @@ class AddCommentsController extends GetxController {
             comment.commentId = element.id;
             url = await getPhoto(id: comment.userData.id);
             comment.image = url;
-            commentsFromFirestore.add(comment);
+            List<Report> reportList = [];
+            await _firestoreService
+                .getCommentsReports(
+                  postId: postId,
+                  commentId: element.id,
+                )
+                .then((value) => {
+                      value.docs.forEach((element) {
+                        Report report = Report.fromJson(element);
+                        if (report.userId == userUID) {
+                          comment.alreadyReported = true;
+                        } else {
+                          comment.alreadyReported = false;
+                        }
+                        reportList.add(report);
+                      }),
+                    });
+            comment.reportList = reportList;
+
+            if (comment.flagToDelete) {
+              await _firestoreService.deleteComment(
+                  postId: postId, commentId: comment.commentId);
+              Get.dialog(
+                  ModalErrorDialog(errorText: 'Your post has been removed!'));
+            } else {
+              var map = Map();
+              reportList.forEach((element) {
+                if (!map.containsKey(element.reportReason)) {
+                  map[element.reportReason] = 1;
+                } else {
+                  map[element.reportReason] += 1;
+                }
+              });
+
+              if (map.values.contains(3) || comment.points <= 0) {
+                if (comment.userData.id == userUID) {
+                  await _firestoreService.deleteComment(
+                    postId: postId,
+                    commentId: comment.commentId,
+                  );
+                  Get.dialog(ModalErrorDialog(
+                      errorText: 'Your comment has been removed!'));
+                } else {
+                  await _firestoreService.setCommentReported(
+                    postId: postId,
+                    commentId: comment.commentId,
+                  );
+                }
+              } else {
+                commentsFromFirestore.add(comment);
+              }
+            }
           }),
         });
     commentsFromFirestore

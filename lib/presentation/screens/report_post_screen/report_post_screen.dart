@@ -6,9 +6,13 @@ class ReportPostScreen extends StatelessWidget {
   final ReportPostController _controller = Get.put(ReportPostController());
 
   final String postId;
+  final String commentId;
+  final bool isComment;
 
   ReportPostScreen({
     this.postId,
+    this.commentId,
+    this.isComment = false,
   });
 
   @override
@@ -57,10 +61,15 @@ class ReportPostScreen extends StatelessWidget {
                   trailing: Icon(
                     Icons.navigate_next,
                   ),
-                  onTap: () => _controller.reportPost(
-                    postId: postId,
-                    reportReason: _controller.reportList[index],
-                  ),
+                  onTap: () => !isComment
+                      ? _controller.reportPost(
+                          postId: postId,
+                          reportReason: _controller.reportList[index],
+                        )
+                      : _controller.reportComment(
+                          postId: postId,
+                          commentId: commentId,
+                          reportReason: _controller.reportList[index]),
                 );
               },
               childCount: _controller.reportList.length,

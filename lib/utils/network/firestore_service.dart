@@ -219,10 +219,10 @@ class FirestoreService {
     Comment comment,
   }) async {
     String commentId;
-    _firestoreInstance.collection('posts').doc(postId).update({
+    await _firestoreInstance.collection('posts').doc(postId).update({
       'noOfComments': FieldValue.increment(1),
     });
-    _firestoreInstance
+    await _firestoreInstance
         .collection('posts')
         .doc(postId)
         .collection('comments')
@@ -290,6 +290,19 @@ class FirestoreService {
     return _firestoreInstance
         .collection('posts')
         .doc(postId)
+        .collection('reports')
+        .get();
+  }
+
+  Future<QuerySnapshot> getCommentsReports({
+    String postId,
+    String commentId,
+  }) {
+    return _firestoreInstance
+        .collection('posts')
+        .doc(postId)
+        .collection('comments')
+        .doc(commentId)
         .collection('reports')
         .get();
   }
@@ -558,18 +571,62 @@ class FirestoreService {
         .add(report.toJson());
   }
 
+  Future<void> reportComment({
+    String postId,
+    String commentId,
+    Report report,
+  }) async {
+    return _firestoreInstance
+        .collection('posts')
+        .doc(postId)
+        .collection('comments')
+        .doc(commentId)
+        .collection('reports')
+        .add(report.toJson());
+  }
+
   Future<DocumentSnapshot> checkIfAlreadyReport({String postId}) async {
     return _firestoreInstance.collection('posts').doc(postId).get();
   }
 
-  Future<void> setPostReported({String postId}) async {
+  Future<void> setPostReported({
+    String postId,
+  }) async {
     return _firestoreInstance.collection('posts').doc(postId).update({
       'flagToDelete': true,
     });
   }
 
-  Future<void> deletePost({String postId}) async {
+  Future<void> setCommentReported({
+    String postId,
+    String commentId,
+  }) async {
+    return _firestoreInstance
+        .collection('posts')
+        .doc(postId)
+        .collection('comments')
+        .doc(commentId)
+        .update({
+      'flagToDelete': true,
+    });
+  }
+
+  Future<void> deletePost({
+    String postId,
+  }) async {
     return _firestoreInstance.collection('posts').doc(postId).delete();
+  }
+
+  Future<void> deleteComment({
+    String postId,
+    String commentId,
+  }) async {
+    return _firestoreInstance
+        .collection('posts')
+        .doc(postId)
+        .collection('comments')
+        .doc(commentId)
+        .delete();
   }
 
   Future<void> updatePointsForPost({
@@ -577,6 +634,21 @@ class FirestoreService {
     double points,
   }) {
     return _firestoreInstance.collection('posts').doc(postId).update({
+      'points': FieldValue.increment(points),
+    });
+  }
+
+  Future<void> updatePointsForComment({
+    String postId,
+    String commentId,
+    double points,
+  }) {
+    return _firestoreInstance
+        .collection('posts')
+        .doc(postId)
+        .collection('comments')
+        .doc(commentId)
+        .update({
       'points': FieldValue.increment(points),
     });
   }

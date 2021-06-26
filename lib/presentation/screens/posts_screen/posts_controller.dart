@@ -83,13 +83,6 @@ class PostsController extends GetxController {
                 postsFromFirestore.add(post);
               }
             }
-
-            // if (map.values.contains(3) && post.userData.id == userUID) {
-            //   Get.dialog(
-            //       ModalErrorDialog(errorText: 'Your post has been removed!'));
-            // } else {
-            //   postsFromFirestore.add(post);
-            // }
           }),
         });
   }
