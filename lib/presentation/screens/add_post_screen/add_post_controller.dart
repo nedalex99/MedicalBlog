@@ -76,7 +76,10 @@ class AddPostController extends GetxController {
     await _firestoreService.getUserData().then((value) async => {
           userData.value = UserData.fromJson(value),
           await getPhoto(id: userUID).then((value) => {
-                url.value = value,
+                if (value != null)
+                  {
+                    url.value = value,
+                  }
               }),
         });
   }
@@ -130,7 +133,11 @@ class AddPostController extends GetxController {
                 Get.back(),
               });
       PostsController _postsController = Get.find();
-      post.image = url.value;
+      if (url.value == "") {
+        post.image = null;
+      } else {
+        post.image = url.value;
+      }
       _postsController.postsFromFirestore.insert(
         0,
         post,

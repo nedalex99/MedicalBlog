@@ -135,9 +135,11 @@ class AddCommentsController extends GetxController {
 
   Future<void> addCommentToPost({String postId}) async {
     UserData userData;
+    String url;
     Get.dialog(LoadingDialog());
     await _firestoreService.getUserFirstAndLastName().then((value) => {
           userData = UserData(
+            id: value['id'] as String,
             firstName: value['firstName'] as String,
             lastName: value['lastName'] as String,
             profession: value['profession'] as String,
@@ -153,10 +155,12 @@ class AddCommentsController extends GetxController {
           postId: postId,
           comment: comment,
         )
-        .then((value) => {
+        .then((value) async => {
               comment.commentId = value,
+              url = await getPhoto(id: comment.userData.id),
               Get.back(),
             });
+    comment.image = url;
     commentsFromFirestore.add(comment);
     PostCardController _postsController = Get.find(tag: postId);
     _postsController.noOfComments.value++;

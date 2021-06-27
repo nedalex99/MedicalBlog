@@ -29,10 +29,15 @@ class FirestoreService {
     String dateOfBirth,
   }) {
     UserData user = UserData(
+      id: uid,
       email: email,
       firstName: firstName,
       lastName: lastName,
       country: country,
+      dateOfBirth: dateOfBirth,
+      profession: '',
+      specialty: '',
+      yearsOfExperience: 0,
     );
 
     Map<String, dynamic> userJson = user.toJson();
@@ -54,7 +59,7 @@ class FirestoreService {
     String uid,
     String profession,
     String specialty,
-    String yearsOfExperience,
+    int yearsOfExperience,
   }) async {
     return _firestoreInstance.collection('users').doc(uid).update({
       'profession': profession,

@@ -79,7 +79,7 @@ class ProfileScreenController extends GetxController {
             {
               await _preferencesUtils.setKeepMeAuthFlag(kKeepMeAuthFlag, false),
             },
-          userUID = '',
+          userUID = null,
           Get.back(),
           Get.offAllNamed(kLoginRoute),
         });
@@ -124,6 +124,7 @@ class ProfileScreenController extends GetxController {
       imageQuality: 50,
     );
     image.value = img;
+    Get.back();
   }
 
   Future<void> imageFromGallery() async {
@@ -138,6 +139,7 @@ class ProfileScreenController extends GetxController {
             image.value.path,
           ),
         );
+    Get.back();
   }
 
   void redirectToEditAccount() {

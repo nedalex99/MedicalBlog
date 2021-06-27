@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:medical_blog/presentation/widgets/dialogs/loading_dialog.dart';
+import 'package:medical_blog/presentation/widgets/dialogs/modal_info_error_dialog.dart';
 import 'package:medical_blog/utils/constants/colors.dart';
 import 'package:medical_blog/utils/constants/routes.dart';
 import 'package:medical_blog/utils/constants/strings.dart';
@@ -50,7 +51,7 @@ class LoginController extends GetxController {
           .signInWithEmailAndPassword(email: email, password: password)
           .then(
             (value) async => {
-              if (value.user != null)
+              if (value.user.emailVerified)
                 {
                   userUID = value.user.uid,
                   if (checkboxValue.value)
@@ -60,6 +61,15 @@ class LoginController extends GetxController {
                     },
                   Get.back(),
                   Get.offAllNamed(kDashboardRoute),
+                }
+              else
+                {
+                  Get.back(),
+                  Get.dialog(
+                    ModalErrorDialog(
+                      errorText: 'Please verify your email first!',
+                    ),
+                  ),
                 },
             },
           );

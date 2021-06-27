@@ -31,7 +31,7 @@ class UserData {
         'country': country,
         'profession': profession,
         'specialty': specialty,
-        'yearsOfExperiece': yearsOfExperience,
+        'yearsOfExperience': yearsOfExperience,
         'dateOfBirth': dateOfBirth,
       };
 

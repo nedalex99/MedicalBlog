@@ -6,7 +6,7 @@ import 'package:medical_blog/utils/network/firestore_service.dart';
 class RegisterProfessionController extends GetxController {
   RxString profession = ''.obs;
   RxString specialty = ''.obs;
-  RxString yearOfGraduation = ''.obs;
+  RxInt yearOfGraduation = 0.obs;
 
   final FirestoreService _firestoreService = Get.find();
 
@@ -19,7 +19,7 @@ class RegisterProfessionController extends GetxController {
   }
 
   void updateYearOfGraduationCallback(String value) {
-    yearOfGraduation.value = value;
+    yearOfGraduation.value = int.tryParse(value);
   }
 
   Future<void> updateUserProfile({

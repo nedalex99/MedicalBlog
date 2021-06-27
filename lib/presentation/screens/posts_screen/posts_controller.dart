@@ -16,6 +16,7 @@ class PostsController extends GetxController {
   DocumentSnapshot documentSnapshot;
   RxList<Post> postsFromFirestore = List<Post>().obs;
   RxBool isVisible = true.obs;
+  RxBool isLoading = false.obs;
 
   @override
   Future<void> onInit() async {
@@ -37,6 +38,7 @@ class PostsController extends GetxController {
 
   Future<void> getPosts() async {
     String url;
+    isLoading.value = true;
     await _firestoreService.getPosts().then((value) => {
           value.docs.forEach((element) async {
             documentSnapshot = element;
@@ -84,16 +86,62 @@ class PostsController extends GetxController {
               }
             }
           }),
+          isLoading.value = false,
         });
   }
 
   Future<void> getMorePosts() async {
+    String url;
+    isLoading.value = true;
     await _firestoreService.getMorePosts(documentSnapshot).then((value) => {
-          value.docs.forEach((element) {
+          value.docs.forEach((element) async {
             this.documentSnapshot = element;
             Post post = Post.fromJson(documentSnapshot);
+            url = await getPhoto(id: post.userData.id);
+            post.image = url;
+            List<Report> reportList = [];
+            await _firestoreService
+                .getReports(postId: element.id)
+                .then((value) => {
+                      value.docs.forEach((element) {
+                        Report report = Report.fromJson(element);
+                        if (report.userId == userUID) {
+                          post.alreadyReported = true;
+                        }
+                        reportList.add(report);
+                      }),
+                    });
+            post.reportList = reportList;
+
+            if (post.flagToDelete) {
+              await _firestoreService.deletePost(postId: post.uid);
+              Get.dialog(
+                  ModalErrorDialog(errorText: 'Your post has been removed!'));
+            } else {
+              var map = Map();
+              reportList.forEach((element) {
+                if (!map.containsKey(element.reportReason)) {
+                  map[element.reportReason] = 1;
+                } else {
+                  map[element.reportReason] += 1;
+                }
+              });
+
+              if (map.values.contains(3) || post.points <= 0) {
+                if (post.userData.id == userUID) {
+                  await _firestoreService.deletePost(postId: post.uid);
+                  Get.dialog(ModalErrorDialog(
+                      errorText: 'Your post has been removed!'));
+                } else {
+                  await _firestoreService.setPostReported(postId: post.uid);
+                }
+              } else {
+                postsFromFirestore.add(post);
+              }
+            }
             postsFromFirestore.add(post);
           }),
+          isLoading = false.obs,
         });
   }
 
