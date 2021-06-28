@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
@@ -17,6 +16,7 @@ class PostsController extends GetxController {
   RxList<Post> postsFromFirestore = List<Post>().obs;
   RxBool isVisible = true.obs;
   RxBool isLoading = false.obs;
+  RxString dropdownValue = "Newest first".obs;
 
   @override
   Future<void> onInit() async {
@@ -24,7 +24,9 @@ class PostsController extends GetxController {
     scrollController.value.addListener(() {
       if (scrollController.value.position.pixels ==
           scrollController.value.position.maxScrollExtent) {
-        getMorePosts();
+        dropdownValue.value == "Newest first"
+            ? getMorePosts()
+            : getMoreRecommendationPosts();
       }
       if (scrollController.value.position.userScrollDirection ==
           ScrollDirection.reverse) {
@@ -39,6 +41,7 @@ class PostsController extends GetxController {
   Future<void> getPosts() async {
     String url;
     isLoading.value = true;
+    documentSnapshot = null;
     await _firestoreService.getPosts().then((value) => {
           value.docs.forEach((element) async {
             documentSnapshot = element;
@@ -90,7 +93,9 @@ class PostsController extends GetxController {
         });
   }
 
-  Future<void> getMorePosts() async {
+  Future<void> getMorePosts({
+    String typeOfPost,
+  }) async {
     String url;
     isLoading.value = true;
     await _firestoreService.getMorePosts(documentSnapshot).then((value) => {
@@ -151,5 +156,134 @@ class PostsController extends GetxController {
       duration: Duration(milliseconds: 500),
       curve: Curves.easeOut,
     );
+  }
+
+  Future<void> setNewDropdownValue({String value}) async {
+    if (dropdownValue.value != value) {
+      switch (value) {
+        case 'Recommendation':
+          getRecommendationsPost();
+          break;
+        case 'Newest first':
+          getLatestPosts();
+          break;
+      }
+    }
+    dropdownValue.value = value;
+  }
+
+  Future<void> getRecommendationsPost() async {
+    String url;
+    postsFromFirestore.value.clear();
+    documentSnapshot = null;
+    await _firestoreService.getRecommendationPosts().then((value) => {
+          value.docs.forEach((element) async {
+            documentSnapshot = element;
+            Post post = Post.fromJson(documentSnapshot);
+            url = await getPhoto(id: post.userData.id);
+            post.image = url;
+            List<Report> reportList = [];
+            await _firestoreService
+                .getReports(postId: element.id)
+                .then((value) => {
+                      value.docs.forEach((element) {
+                        Report report = Report.fromJson(element);
+                        if (report.userId == userUID) {
+                          post.alreadyReported = true;
+                        }
+                        reportList.add(report);
+                      }),
+                    });
+            post.reportList = reportList;
+
+            if (post.flagToDelete) {
+              await _firestoreService.deletePost(postId: post.uid);
+              Get.dialog(
+                  ModalErrorDialog(errorText: 'Your post has been removed!'));
+            } else {
+              var map = Map();
+              reportList.forEach((element) {
+                if (!map.containsKey(element.reportReason)) {
+                  map[element.reportReason] = 1;
+                } else {
+                  map[element.reportReason] += 1;
+                }
+              });
+
+              if (map.values.contains(3) || post.points <= 0) {
+                if (post.userData.id == userUID) {
+                  await _firestoreService.deletePost(postId: post.uid);
+                  Get.dialog(ModalErrorDialog(
+                      errorText: 'Your post has been removed!'));
+                } else {
+                  await _firestoreService.setPostReported(postId: post.uid);
+                }
+              } else {
+                postsFromFirestore.add(post);
+              }
+            }
+          }),
+          isLoading.value = false,
+        });
+  }
+
+  Future<void> getMoreRecommendationPosts() async {
+    String url;
+    await _firestoreService
+        .getMoreRecommendationPosts(documentSnapshot)
+        .then((value) => {
+              value.docs.forEach((element) async {
+                documentSnapshot = element;
+                Post post = Post.fromJson(documentSnapshot);
+                url = await getPhoto(id: post.userData.id);
+                post.image = url;
+                List<Report> reportList = [];
+                await _firestoreService
+                    .getReports(postId: element.id)
+                    .then((value) => {
+                          value.docs.forEach((element) {
+                            Report report = Report.fromJson(element);
+                            if (report.userId == userUID) {
+                              post.alreadyReported = true;
+                            }
+                            reportList.add(report);
+                          }),
+                        });
+                post.reportList = reportList;
+
+                if (post.flagToDelete) {
+                  await _firestoreService.deletePost(postId: post.uid);
+                  Get.dialog(ModalErrorDialog(
+                      errorText: 'Your post has been removed!'));
+                } else {
+                  var map = Map();
+                  reportList.forEach((element) {
+                    if (!map.containsKey(element.reportReason)) {
+                      map[element.reportReason] = 1;
+                    } else {
+                      map[element.reportReason] += 1;
+                    }
+                  });
+
+                  if (map.values.contains(3) || post.points <= 0) {
+                    if (post.userData.id == userUID) {
+                      await _firestoreService.deletePost(postId: post.uid);
+                      Get.dialog(ModalErrorDialog(
+                          errorText: 'Your post has been removed!'));
+                    } else {
+                      await _firestoreService.setPostReported(postId: post.uid);
+                    }
+                  } else {
+                    postsFromFirestore.add(post);
+                  }
+                }
+              }),
+              isLoading.value = false,
+            });
+  }
+
+  Future<void> getLatestPosts() async {
+    postsFromFirestore.clear();
+    getPosts();
   }
 }

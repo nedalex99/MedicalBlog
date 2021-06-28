@@ -15,6 +15,7 @@ class Post {
   List<String> dislikedBy;
   List<String> savedBy;
   UserData userData;
+  int noOfEntries;
   String image;
   List<Report> reportList;
   bool alreadyReported;
@@ -34,6 +35,7 @@ class Post {
     this.dislikedBy = const [],
     this.savedBy = const [],
     this.userData,
+    this.noOfEntries = 0,
     this.image,
     this.reportList = const [],
     this.alreadyReported = false,
@@ -53,6 +55,7 @@ class Post {
         'dislikedBy': dislikedBy,
         'savedBy': savedBy,
         'userData': userData.toJson(),
+        'noOfEntries': noOfEntries,
         'flagToDelete': flagToDelete,
         'points': points,
       };
@@ -91,6 +94,7 @@ class Post {
           .map((e) => e.toString())
           .toList(),
       userData: userData,
+      noOfEntries: (documentSnapshot.data() as Map)['noOfEntries'],
       flagToDelete: (documentSnapshot.data() as Map)['flagToDelete'],
       points: (documentSnapshot.data() as Map)['points'] as double,
       // reportList: ((documentSnapshot.data() as Map)['reports'] as List)

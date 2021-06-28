@@ -40,26 +40,26 @@ class PostsScreen extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Container(
-                      child: DropdownButton(
-                        items: <String>[
-                          'Newest first',
-                          'Oldest first',
-                          'Most likes first',
-                          'Most dislikes first',
-                        ]
-                            .map(
-                              (String e) => DropdownMenuItem(
-                                child: Text(e),
-                                value: e,
-                              ),
-                            )
-                            .toList(),
-                        value: 'Newest first',
-                        onChanged: (newValue) {
-                          // _savedScreenController.setNewDropdownValue(
-                          //   value: newValue,
-                          // );
-                        },
+                      child: Obx(
+                        () => DropdownButton(
+                          items: <String>[
+                            'Newest first',
+                            'Recommendation',
+                          ]
+                              .map(
+                                (String e) => DropdownMenuItem(
+                                  child: Text(e),
+                                  value: e,
+                                ),
+                              )
+                              .toList(),
+                          value: postsController.dropdownValue.value,
+                          onChanged: (newValue) {
+                            postsController.setNewDropdownValue(
+                              value: newValue,
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ),
@@ -76,7 +76,8 @@ class PostsScreen extends StatelessWidget {
                   }
                   return PostCard(
                     post: postsController.postsFromFirestore[index],
-                    alreadyReported: postsController.postsFromFirestore[index].alreadyReported,
+                    alreadyReported: postsController
+                        .postsFromFirestore[index].alreadyReported,
                     postCardController: Get.put(
                       PostCardController(
                         post: postsController.postsFromFirestore[index],
