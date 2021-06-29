@@ -1,8 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:medical_blog/model/news.dart';
 import 'package:medical_blog/presentation/widgets/dialogs/loading_dialog.dart';
 import 'package:medical_blog/utils/network/firestore_service.dart';
 import 'package:medical_blog/utils/session_temp.dart';
+import 'package:share/share.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NewsCardController extends GetxController {
   FirestoreService _firestoreService = Get.find();
@@ -38,5 +41,33 @@ class NewsCardController extends GetxController {
                         }),
               });
     }
+  }
+
+  Future<void> launchBrowser({
+    String url,
+  }) async {
+    if (await canLaunch(url)) {
+      await launch(
+        url,
+        forceSafariVC: true,
+        forceWebView: true,
+        headers: <String, String>{'my_header_key': 'my_header_value'},
+      );
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  Future<void> onShare({
+    BuildContext context,
+    String url,
+  }) async {
+    final RenderBox box = context.findRenderObject();
+
+    await Share.share(
+      url,
+      subject: 'Look what I found!',
+      sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size,
+    );
   }
 }

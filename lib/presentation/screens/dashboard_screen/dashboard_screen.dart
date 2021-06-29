@@ -18,16 +18,6 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: PreferredSize(
-      //   preferredSize: Size.fromHeight(
-      //     80,
-      //   ),
-      //   child: SliverAppBar(
-      //     title: Expanded(
-      //         child:
-      //     ),
-      //   ),
-      // ),
       body: CustomScrollView(
         controller: _dashboardController.scrollController.value,
         slivers: [
