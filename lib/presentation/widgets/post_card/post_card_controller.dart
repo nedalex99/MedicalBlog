@@ -170,11 +170,14 @@ class PostCardController extends GetxController {
               ModalErrorDialog(errorText: 'Your post has been removed!'));
         } else {
           await _firestoreService.setPostReported(postId: post.uid);
-          post.alreadyReported = true;
+          post.flagToDelete = true;
           postsController.postsFromFirestore
               .removeWhere((element) => element.uid == post.uid);
         }
       } else {}
+    }
+    if (report.userId == userUID) {
+      post.alreadyReported = true;
     }
   }
 

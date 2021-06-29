@@ -47,8 +47,9 @@ class PostsController extends GetxController {
           value.docs.forEach((element) async {
             documentSnapshot = element;
             Post post = Post.fromJson(documentSnapshot);
-            postsFromFirestore.add(post);
-
+            if (!post.flagToDelete) {
+              postsFromFirestore.add(post);
+            }
             List<Report> reportList = [];
             await _firestoreService
                 .getReports(postId: element.id)
@@ -145,8 +146,7 @@ class PostsController extends GetxController {
                 } else {
                   await _firestoreService.setPostReported(postId: post.uid);
                 }
-              } else {
-              }
+              } else {}
             }
           }),
           isLoading = false.obs,
@@ -223,8 +223,7 @@ class PostsController extends GetxController {
                 } else {
                   await _firestoreService.setPostReported(postId: post.uid);
                 }
-              } else {
-              }
+              } else {}
             }
           }),
           isLoading.value = false,
@@ -278,8 +277,7 @@ class PostsController extends GetxController {
                     } else {
                       await _firestoreService.setPostReported(postId: post.uid);
                     }
-                  } else {
-                  }
+                  } else {}
                 }
               }),
               isLoading.value = false,

@@ -98,7 +98,7 @@ class Post {
         userData: userData,
         noOfEntries: (documentSnapshot.data() as Map)['noOfEntries'],
         flagToDelete: (documentSnapshot.data() as Map)['flagToDelete'],
-        points: (documentSnapshot.data() as Map)['points'] as double,
+        points: (documentSnapshot.data() as Map)['points'] as num,
         image: (documentSnapshot.data() as Map)['image']
         // reportList: ((documentSnapshot.data() as Map)['reports'] as List)
         //     .map((e) => e)
