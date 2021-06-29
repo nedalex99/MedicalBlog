@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:medical_blog/model/comment.dart';
+import 'package:medical_blog/model/report.dart';
 import 'package:medical_blog/presentation/widgets/dialogs/loading_dialog.dart';
 import 'package:medical_blog/presentation/widgets/modals/comment_card_options_modal.dart';
 import 'package:medical_blog/utils/network/firestore_service.dart';
+import 'package:medical_blog/utils/session_temp.dart';
 
 class CommentCardController extends GetxController {
   final Comment comment;
@@ -134,9 +136,17 @@ class CommentCardController extends GetxController {
           commentId: commentId,
           postId: postId,
           alreadyReported: alreadyReported,
+          reportCommentCallback: reportComment,
         );
       },
     );
+  }
+
+  void reportComment(Report report) {
+    comment.reportList.add(report);
+    if (report.userId == userUID) {
+      comment.alreadyReported = true;
+    }
   }
 
   Future<void> updatePointsForComment({

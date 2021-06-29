@@ -308,7 +308,7 @@ class DashboardScreen extends StatelessWidget {
           duration: Duration(
             milliseconds: 200,
           ),
-          height: _dashboardController.isVisible.value ? 80 : 0.0,
+          height: _dashboardController.isVisible.value ? 90 : 0.0,
           child: BottomNavBar(
             selectedIndex: 0,
             pressCallback: _dashboardController.getToTop,

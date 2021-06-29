@@ -125,7 +125,7 @@ class PostCard extends StatelessWidget {
                           child: IconButton(
                             onPressed: () => postCardController.showModal(
                               isInSavedScreen: isInSavedScreen,
-                              alreadyReported: alreadyReported,
+                              alreadyReported: post.alreadyReported,
                             ),
                             icon: Icon(
                               Icons.more_vert_rounded,

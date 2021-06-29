@@ -12,7 +12,7 @@ class Comment {
   List<String> dislikedBy;
   UserData userData;
   String image;
-  List<Report> reportList;
+  List<Report> reportList = [];
   bool alreadyReported;
   bool flagToDelete;
   num points;
@@ -27,7 +27,7 @@ class Comment {
     this.dislikedBy = const [],
     this.userData,
     this.image,
-    this.reportList = const [],
+    this.reportList,
     this.alreadyReported = false,
     this.flagToDelete = false,
     this.points = 15.0,
@@ -41,6 +41,7 @@ class Comment {
         'likedBy': likedBy,
         'dislikedBy': dislikedBy,
         'userData': userData.toJson(),
+        'reportList': reportList,
         'flagToDelete': flagToDelete,
         'points': points,
       };

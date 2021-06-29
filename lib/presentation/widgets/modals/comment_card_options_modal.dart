@@ -8,12 +8,14 @@ class CommentCardOptionsModal extends StatelessWidget {
   final String commentId;
   final String postId;
   final bool alreadyReported;
+  final Function reportCommentCallback;
 
   CommentCardOptionsModal({
     this.comment,
     this.commentId,
     this.postId,
     this.alreadyReported,
+    this.reportCommentCallback,
   });
 
   @override
@@ -38,6 +40,7 @@ class CommentCardOptionsModal extends StatelessWidget {
                         postId: postId,
                         isComment: true,
                         commentId: commentId,
+                        reportCommentCallback: reportCommentCallback,
                       ),
                     )
                 : () {},

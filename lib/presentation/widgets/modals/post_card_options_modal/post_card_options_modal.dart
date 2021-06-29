@@ -10,12 +10,14 @@ class PostCardOptionsModal extends StatelessWidget {
   final Post post;
   final String postId;
   final bool alreadyReported;
+  final Function reportPostCallback;
 
   PostCardOptionsModal({
     this.post,
     this.postId,
     this.controller,
     this.alreadyReported,
+    this.reportPostCallback,
   });
 
   @override
@@ -56,6 +58,7 @@ class PostCardOptionsModal extends StatelessWidget {
                 ? () => Get.to(
                       () => ReportPostScreen(
                         postId: postId,
+                        reportPostCallback: reportPostCallback,
                       ),
                     )
                 : () {},

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:medical_blog/model/post.dart';
+import 'package:medical_blog/model/report.dart';
 import 'package:medical_blog/presentation/screens/add_comments_screen/add_comments_controller.dart';
 import 'package:medical_blog/presentation/screens/add_comments_screen/add_comments_screen.dart';
 import 'package:medical_blog/presentation/widgets/dialogs/loading_dialog.dart';
 import 'package:medical_blog/presentation/widgets/modals/post_card_options_modal/post_card_options_modal.dart';
 import 'package:medical_blog/presentation/widgets/modals/post_card_options_modal/post_card_options_modal_controller.dart';
 import 'package:medical_blog/utils/network/firestore_service.dart';
+import 'package:medical_blog/utils/session_temp.dart';
 
 class PostCardController extends GetxController {
   final String postId;
@@ -116,7 +118,10 @@ class PostCardController extends GetxController {
     );
   }
 
-  void showModal({bool isInSavedScreen, bool alreadyReported}) {
+  void showModal({
+    bool isInSavedScreen,
+    bool alreadyReported,
+  }) {
     showModalBottomSheet(
       context: Get.context,
       builder: (context) {
@@ -124,6 +129,7 @@ class PostCardController extends GetxController {
           post: post,
           postId: postId,
           alreadyReported: alreadyReported,
+          reportPostCallback: reportPost,
           controller: Get.put(
             PostCardOptionsModalController(
               isSaved: isSaved,
@@ -134,6 +140,13 @@ class PostCardController extends GetxController {
         );
       },
     );
+  }
+
+  void reportPost(Report report) {
+    post.reportList.add(report);
+    if (report.userId == userUID) {
+      post.alreadyReported = true;
+    }
   }
 
   void saveThisPost() {

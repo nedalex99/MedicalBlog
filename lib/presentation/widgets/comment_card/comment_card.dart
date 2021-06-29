@@ -80,7 +80,7 @@ class CommentCard extends StatelessWidget {
                             fontSize: 12.0,
                             color: kHintColor,
                           ),
-                        )
+                        ),
                       ],
                     ),
                     Padding(
@@ -115,7 +115,7 @@ class CommentCard extends StatelessWidget {
                         alignment: Alignment.bottomRight,
                         child: IconButton(
                           onPressed: () => commentCardController.showModal(
-                            alreadyReported: alreadyReported,
+                            alreadyReported: comment.alreadyReported,
                             postId: postId,
                           ),
                           icon: Icon(

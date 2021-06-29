@@ -8,11 +8,15 @@ class ReportPostScreen extends StatelessWidget {
   final String postId;
   final String commentId;
   final bool isComment;
+  final Function reportPostCallback;
+  final Function reportCommentCallback;
 
   ReportPostScreen({
     this.postId,
     this.commentId,
     this.isComment = false,
+    this.reportPostCallback,
+    this.reportCommentCallback,
   });
 
   @override
@@ -65,11 +69,14 @@ class ReportPostScreen extends StatelessWidget {
                       ? _controller.reportPost(
                           postId: postId,
                           reportReason: _controller.reportList[index],
+                          reportPostCallback: reportPostCallback,
                         )
                       : _controller.reportComment(
                           postId: postId,
                           commentId: commentId,
-                          reportReason: _controller.reportList[index]),
+                          reportReason: _controller.reportList[index],
+                          reportCommentCallback: reportCommentCallback,
+                        ),
                 );
               },
               childCount: _controller.reportList.length,

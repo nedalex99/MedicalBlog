@@ -48,8 +48,10 @@ class AddCommentsScreen extends StatelessWidget {
                 child: InputTextField(
                   typeOfText: TextInputType.text,
                   hint: 'Leave a comment...',
-                  controller: Get.put(InputTextFieldController(),
-                      tag: 'Leave a comment...'),
+                  controller: Get.put(
+                    InputTextFieldController(),
+                    tag: 'Leave a comment...',
+                  ),
                   inputTextChecked: addCommentsController.commentTextCallback,
                 ),
               ),

@@ -6,6 +6,7 @@ import 'package:medical_blog/model/report.dart';
 import 'package:medical_blog/model/user_data.dart';
 import 'package:medical_blog/presentation/widgets/dialogs/loading_dialog.dart';
 import 'package:medical_blog/presentation/widgets/dialogs/modal_info_error_dialog.dart';
+import 'package:medical_blog/presentation/widgets/input_fields/input_text_field/input_text_field_controller.dart';
 import 'package:medical_blog/presentation/widgets/post_card/post_card_controller.dart';
 import 'package:medical_blog/utils/network/firestore_service.dart';
 import 'package:medical_blog/utils/session_temp.dart';
@@ -136,6 +137,7 @@ class AddCommentsController extends GetxController {
   Future<void> addCommentToPost({String postId}) async {
     UserData userData;
     String url;
+    InputTextFieldController inputTextFieldController;
     Get.dialog(LoadingDialog());
     await _firestoreService.getUserFirstAndLastName().then((value) => {
           userData = UserData(
@@ -149,6 +151,7 @@ class AddCommentsController extends GetxController {
       commentText: commentText,
       timestamp: Timestamp.now(),
       userData: userData,
+      reportList: [],
     );
     await _firestoreService
         .addCommentToPost(
@@ -158,6 +161,8 @@ class AddCommentsController extends GetxController {
         .then((value) async => {
               comment.commentId = value,
               url = await getPhoto(id: comment.userData.id),
+              inputTextFieldController = Get.find(tag: 'Leave a comment...'),
+              inputTextFieldController.textController.value.clear(),
               Get.back(),
             });
     comment.image = url;
