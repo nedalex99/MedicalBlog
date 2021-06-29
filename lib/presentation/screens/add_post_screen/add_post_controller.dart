@@ -122,6 +122,7 @@ class AddPostController extends GetxController {
         tags: tagList,
         timestamp: Timestamp.now().millisecondsSinceEpoch,
         userData: userData,
+        reportList: [],
       );
       await _firestoreService
           .addPost(

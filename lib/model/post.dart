@@ -17,7 +17,7 @@ class Post {
   UserData userData;
   int noOfEntries;
   String image;
-  List<Report> reportList;
+  List<Report> reportList = [];
   bool alreadyReported;
   bool flagToDelete;
   num points;
@@ -37,7 +37,7 @@ class Post {
     this.userData,
     this.noOfEntries = 0,
     this.image,
-    this.reportList = const [],
+    this.reportList,
     this.alreadyReported = false,
     this.flagToDelete = false,
     this.points = 15.0,
@@ -55,6 +55,7 @@ class Post {
         'dislikedBy': dislikedBy,
         'savedBy': savedBy,
         'userData': userData.toJson(),
+        'reportList': reportList,
         'noOfEntries': noOfEntries,
         'flagToDelete': flagToDelete,
         'points': points,

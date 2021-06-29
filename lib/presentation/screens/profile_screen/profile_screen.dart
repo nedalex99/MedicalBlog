@@ -176,7 +176,7 @@ class ProfileScreen extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: Container(
-        height: 80,
+        height: 55,
         child: BottomNavBar(
           selectedIndex: 3,
         ),

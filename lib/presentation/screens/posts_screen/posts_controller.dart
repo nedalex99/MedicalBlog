@@ -2,9 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart';
 import 'package:medical_blog/model/post.dart';
 import 'package:medical_blog/model/report.dart';
 import 'package:medical_blog/presentation/widgets/dialogs/modal_info_error_dialog.dart';
+import 'package:medical_blog/utils/constants/values.dart';
 import 'package:medical_blog/utils/network/firestore_service.dart';
 import 'package:medical_blog/utils/session_temp.dart';
 import 'package:medical_blog/utils/util_functions.dart';
@@ -46,8 +48,14 @@ class PostsController extends GetxController {
           value.docs.forEach((element) async {
             documentSnapshot = element;
             Post post = Post.fromJson(documentSnapshot);
-            url = await getPhoto(id: post.userData.id);
+            postsFromFirestore.add(post);
+            //if (imagesList.contains(post.userData.id)) {
+            await getPhoto(id: post.userData.id).then((value) => {
+                  url = value,
+                });
             post.image = url;
+
+            //}
             List<Report> reportList = [];
             await _firestoreService
                 .getReports(postId: element.id)
@@ -84,9 +92,7 @@ class PostsController extends GetxController {
                 } else {
                   await _firestoreService.setPostReported(postId: post.uid);
                 }
-              } else {
-                postsFromFirestore.add(post);
-              }
+              } else {}
             }
           }),
           isLoading.value = false,
@@ -102,6 +108,7 @@ class PostsController extends GetxController {
           value.docs.forEach((element) async {
             this.documentSnapshot = element;
             Post post = Post.fromJson(documentSnapshot);
+            postsFromFirestore.add(post);
             url = await getPhoto(id: post.userData.id);
             post.image = url;
             List<Report> reportList = [];
@@ -140,11 +147,8 @@ class PostsController extends GetxController {
                 } else {
                   await _firestoreService.setPostReported(postId: post.uid);
                 }
-              } else {
-                postsFromFirestore.add(post);
-              }
+              } else {}
             }
-            postsFromFirestore.add(post);
           }),
           isLoading = false.obs,
         });

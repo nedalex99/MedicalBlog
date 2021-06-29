@@ -504,8 +504,8 @@ class FirestoreService {
   Future<QuerySnapshot> getPosts() {
     return _firestoreInstance
         .collection('posts')
-        .limit(15)
         .orderBy("timeStamp", descending: true)
+        .limit(15)
         .get();
   }
 

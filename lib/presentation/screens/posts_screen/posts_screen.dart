@@ -119,7 +119,7 @@ class PostsScreen extends StatelessWidget {
           duration: Duration(
             milliseconds: 200,
           ),
-          height: postsController.isVisible.value ? 80 : 0.0,
+          height: postsController.isVisible.value ? 55 : 0.0,
           child: BottomNavBar(
             selectedIndex: 1,
             pressCallback: postsController.getToTop,

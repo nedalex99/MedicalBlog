@@ -92,15 +92,13 @@ List<String> getWordsToSearch({String text}) {
 Future<String> getPhoto({String id}) async {
   String url;
   try {
-    await FirebaseStorage.instance
+    final ref = FirebaseStorage.instance
         .ref(id)
-        .child("images/$id")
-        .getDownloadURL()
-        .then((value) => {
-      url = value,
-    });
+        .child("images/$id");
+    url = await ref.getDownloadURL();
     return url;
-  } catch (e) {
+  } on FirebaseException catch (e) {
+    print(e.code);
     return null;
   }
 }

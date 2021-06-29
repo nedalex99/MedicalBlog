@@ -23,6 +23,13 @@ List<TutorialData> tutorialList = [
   ),
 ];
 
+List<String> imagesList = [
+  "3WNu3G1croW5tSi4YqjrV3ciVPA2",
+  "FRu4sWFLIUNsHgbZXzhd7c6ns1U2",
+  "UWwb4SrOU1R8btjOSeFtQyXB7Ao1",
+  "pTXsa1QFkZOK8BUWSG4ZxPIutgP2",
+];
+
 const kLikePoints = 2.0;
 const kDislikePoints = 0.5;
 const kReportPoints = 5.0;
