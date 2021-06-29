@@ -69,7 +69,7 @@ class PostCard extends StatelessWidget {
                               borderRadius: BorderRadius.circular(
                                 25.0,
                               ),
-                              child: post.image != null
+                              child: post.image != ""
                                   ? Image.network(
                                       post.image,
                                       width: 50,

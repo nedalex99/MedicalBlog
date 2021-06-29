@@ -41,7 +41,6 @@ class PostsController extends GetxController {
   }
 
   Future<void> getPosts() async {
-    String url;
     isLoading.value = true;
     documentSnapshot = null;
     await _firestoreService.getPosts().then((value) => {
@@ -49,13 +48,7 @@ class PostsController extends GetxController {
             documentSnapshot = element;
             Post post = Post.fromJson(documentSnapshot);
             postsFromFirestore.add(post);
-            //if (imagesList.contains(post.userData.id)) {
-            await getPhoto(id: post.userData.id).then((value) => {
-                  url = value,
-                });
-            post.image = url;
 
-            //}
             List<Report> reportList = [];
             await _firestoreService
                 .getReports(postId: element.id)
@@ -87,6 +80,8 @@ class PostsController extends GetxController {
               if (map.values.contains(3) || post.points <= 0) {
                 if (post.userData.id == userUID) {
                   await _firestoreService.deletePost(postId: post.uid);
+                  postsFromFirestore
+                      .removeWhere((element) => element.uid == post.uid);
                   Get.dialog(ModalErrorDialog(
                       errorText: 'Your post has been removed!'));
                 } else {
@@ -109,8 +104,7 @@ class PostsController extends GetxController {
             this.documentSnapshot = element;
             Post post = Post.fromJson(documentSnapshot);
             postsFromFirestore.add(post);
-            url = await getPhoto(id: post.userData.id);
-            post.image = url;
+
             List<Report> reportList = [];
             await _firestoreService
                 .getReports(postId: element.id)
@@ -142,12 +136,15 @@ class PostsController extends GetxController {
               if (map.values.contains(3) || post.points <= 0) {
                 if (post.userData.id == userUID) {
                   await _firestoreService.deletePost(postId: post.uid);
+                  postsFromFirestore
+                      .removeWhere((element) => element.uid == post.uid);
                   Get.dialog(ModalErrorDialog(
                       errorText: 'Your post has been removed!'));
                 } else {
                   await _firestoreService.setPostReported(postId: post.uid);
                 }
-              } else {}
+              } else {
+              }
             }
           }),
           isLoading = false.obs,
@@ -184,8 +181,8 @@ class PostsController extends GetxController {
           value.docs.forEach((element) async {
             documentSnapshot = element;
             Post post = Post.fromJson(documentSnapshot);
-            url = await getPhoto(id: post.userData.id);
-            post.image = url;
+            postsFromFirestore.add(post);
+
             List<Report> reportList = [];
             await _firestoreService
                 .getReports(postId: element.id)
@@ -217,13 +214,14 @@ class PostsController extends GetxController {
               if (map.values.contains(3) || post.points <= 0) {
                 if (post.userData.id == userUID) {
                   await _firestoreService.deletePost(postId: post.uid);
+                  postsFromFirestore
+                      .removeWhere((element) => element.uid == post.uid);
                   Get.dialog(ModalErrorDialog(
                       errorText: 'Your post has been removed!'));
                 } else {
                   await _firestoreService.setPostReported(postId: post.uid);
                 }
               } else {
-                postsFromFirestore.add(post);
               }
             }
           }),
@@ -239,8 +237,7 @@ class PostsController extends GetxController {
               value.docs.forEach((element) async {
                 documentSnapshot = element;
                 Post post = Post.fromJson(documentSnapshot);
-                url = await getPhoto(id: post.userData.id);
-                post.image = url;
+                postsFromFirestore.add(post);
                 List<Report> reportList = [];
                 await _firestoreService
                     .getReports(postId: element.id)
@@ -272,13 +269,14 @@ class PostsController extends GetxController {
                   if (map.values.contains(3) || post.points <= 0) {
                     if (post.userData.id == userUID) {
                       await _firestoreService.deletePost(postId: post.uid);
+                      postsFromFirestore
+                          .removeWhere((element) => element.uid == post.uid);
                       Get.dialog(ModalErrorDialog(
                           errorText: 'Your post has been removed!'));
                     } else {
                       await _firestoreService.setPostReported(postId: post.uid);
                     }
                   } else {
-                    postsFromFirestore.add(post);
                   }
                 }
               }),

@@ -59,6 +59,7 @@ class Post {
         'noOfEntries': noOfEntries,
         'flagToDelete': flagToDelete,
         'points': points,
+        'image': "",
       };
 
   factory Post.fromJson(DocumentSnapshot documentSnapshot) {
@@ -75,32 +76,33 @@ class Post {
     );
 
     return Post(
-      uid: documentSnapshot.id,
-      title: (documentSnapshot.data() as Map)['title'],
-      description: (documentSnapshot.data() as Map)['description'],
-      tags: ((documentSnapshot.data() as Map)['tags'] as List)
-          .map((e) => e.toString())
-          .toList(),
-      noOfLikes: (documentSnapshot.data() as Map)['noOfLikes'],
-      noOfDislikes: (documentSnapshot.data() as Map)['noOfDislikes'],
-      noOfComments: (documentSnapshot.data() as Map)['noOfComments'],
-      timestamp: (documentSnapshot.data() as Map)['timeStamp'] as int,
-      likedBy: ((documentSnapshot.data() as Map)['likedBy'] as List)
-          .map((e) => e.toString())
-          .toList(),
-      dislikedBy: ((documentSnapshot.data() as Map)['dislikedBy'] as List)
-          .map((e) => e.toString())
-          .toList(),
-      savedBy: ((documentSnapshot.data() as Map)['savedBy'] as List)
-          .map((e) => e.toString())
-          .toList(),
-      userData: userData,
-      noOfEntries: (documentSnapshot.data() as Map)['noOfEntries'],
-      flagToDelete: (documentSnapshot.data() as Map)['flagToDelete'],
-      points: (documentSnapshot.data() as Map)['points'] as double,
-      // reportList: ((documentSnapshot.data() as Map)['reports'] as List)
-      //     .map((e) => e)
-      //     .toList(),
-    );
+        uid: documentSnapshot.id,
+        title: (documentSnapshot.data() as Map)['title'],
+        description: (documentSnapshot.data() as Map)['description'],
+        tags: ((documentSnapshot.data() as Map)['tags'] as List)
+            .map((e) => e.toString())
+            .toList(),
+        noOfLikes: (documentSnapshot.data() as Map)['noOfLikes'],
+        noOfDislikes: (documentSnapshot.data() as Map)['noOfDislikes'],
+        noOfComments: (documentSnapshot.data() as Map)['noOfComments'],
+        timestamp: (documentSnapshot.data() as Map)['timeStamp'] as int,
+        likedBy: ((documentSnapshot.data() as Map)['likedBy'] as List)
+            .map((e) => e.toString())
+            .toList(),
+        dislikedBy: ((documentSnapshot.data() as Map)['dislikedBy'] as List)
+            .map((e) => e.toString())
+            .toList(),
+        savedBy: ((documentSnapshot.data() as Map)['savedBy'] as List)
+            .map((e) => e.toString())
+            .toList(),
+        userData: userData,
+        noOfEntries: (documentSnapshot.data() as Map)['noOfEntries'],
+        flagToDelete: (documentSnapshot.data() as Map)['flagToDelete'],
+        points: (documentSnapshot.data() as Map)['points'] as double,
+        image: (documentSnapshot.data() as Map)['image']
+        // reportList: ((documentSnapshot.data() as Map)['reports'] as List)
+        //     .map((e) => e)
+        //     .toList(),
+        );
   }
 }

@@ -509,6 +509,15 @@ class FirestoreService {
         .get();
   }
 
+  Future<QuerySnapshot> getMorePosts(DocumentSnapshot documentSnapshot) {
+    return _firestoreInstance
+        .collection('posts')
+        .limit(15)
+        .orderBy("timeStamp", descending: true)
+        .startAfterDocument(documentSnapshot)
+        .get();
+  }
+
   Future<QuerySnapshot> getRecommendationPosts() {
     return _firestoreInstance
         .collection('posts')
@@ -519,15 +528,6 @@ class FirestoreService {
 
   Future<QuerySnapshot> getMoreRecommendationPosts(
       DocumentSnapshot documentSnapshot) {
-    return _firestoreInstance
-        .collection('posts')
-        .limit(15)
-        .orderBy("noOfEntries", descending: true)
-        .startAfterDocument(documentSnapshot)
-        .get();
-  }
-
-  Future<QuerySnapshot> getMorePosts(DocumentSnapshot documentSnapshot) {
     return _firestoreInstance
         .collection('posts')
         .limit(15)
