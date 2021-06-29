@@ -4,7 +4,9 @@ import 'package:medical_blog/model/post.dart';
 import 'package:medical_blog/model/report.dart';
 import 'package:medical_blog/presentation/screens/add_comments_screen/add_comments_controller.dart';
 import 'package:medical_blog/presentation/screens/add_comments_screen/add_comments_screen.dart';
+import 'package:medical_blog/presentation/screens/posts_screen/posts_controller.dart';
 import 'package:medical_blog/presentation/widgets/dialogs/loading_dialog.dart';
+import 'package:medical_blog/presentation/widgets/dialogs/modal_info_error_dialog.dart';
 import 'package:medical_blog/presentation/widgets/modals/post_card_options_modal/post_card_options_modal.dart';
 import 'package:medical_blog/presentation/widgets/modals/post_card_options_modal/post_card_options_modal_controller.dart';
 import 'package:medical_blog/utils/network/firestore_service.dart';
@@ -142,10 +144,37 @@ class PostCardController extends GetxController {
     );
   }
 
-  void reportPost(Report report) {
+  Future<void> reportPost(Report report) async {
     post.reportList.add(report);
-    if (report.userId == userUID) {
-      post.alreadyReported = true;
+    post.points -= 5;
+    if (post.flagToDelete) {
+      await _firestoreService.deletePost(postId: post.uid);
+      Get.dialog(ModalErrorDialog(errorText: 'Your post has been removed!'));
+    } else {
+      var map = Map();
+      PostsController postsController = Get.find();
+      post.reportList.forEach((element) {
+        if (!map.containsKey(element.reportReason)) {
+          map[element.reportReason] = 1;
+        } else {
+          map[element.reportReason] += 1;
+        }
+      });
+
+      if (map.values.contains(3) || post.points <= 0) {
+        if (post.userData.id == userUID) {
+          await _firestoreService.deletePost(postId: post.uid);
+          postsController.postsFromFirestore
+              .removeWhere((element) => element.uid == post.uid);
+          Get.dialog(
+              ModalErrorDialog(errorText: 'Your post has been removed!'));
+        } else {
+          await _firestoreService.setPostReported(postId: post.uid);
+          post.alreadyReported = true;
+          postsController.postsFromFirestore
+              .removeWhere((element) => element.uid == post.uid);
+        }
+      } else {}
     }
   }
 

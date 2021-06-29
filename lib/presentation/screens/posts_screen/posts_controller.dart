@@ -86,6 +86,8 @@ class PostsController extends GetxController {
                       errorText: 'Your post has been removed!'));
                 } else {
                   await _firestoreService.setPostReported(postId: post.uid);
+                  postsFromFirestore
+                      .removeWhere((element) => element.uid == post.uid);
                 }
               } else {}
             }
