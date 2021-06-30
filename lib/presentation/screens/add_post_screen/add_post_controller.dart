@@ -33,35 +33,149 @@ class AddPostController extends GetxController {
 
   List<Widget> _cupertinoTagWidgetList = [
     Text(
-      'Neorology',
-      style: TextStyle(
-        fontSize: 26.0,
-      ),
-    ),
-    Text(
-      'College',
-      style: TextStyle(
-        fontSize: 26.0,
-      ),
-    ),
-    Text(
-      'Pediatry',
-      style: TextStyle(
-        fontSize: 26.0,
-      ),
-    ),
-    Text(
       'Cardiology',
       style: TextStyle(
         fontSize: 26.0,
       ),
     ),
+    Text(
+      'Neurology',
+      style: TextStyle(
+        fontSize: 26.0,
+      ),
+    ),
+    Text(
+      'Pediatrics',
+      style: TextStyle(
+        fontSize: 26.0,
+      ),
+    ),
+    Text(
+      'Allergy and Immunology',
+      style: TextStyle(
+        fontSize: 26.0,
+      ),
+    ),
+    Text(
+      'Anesthesiology',
+      style: TextStyle(
+        fontSize: 26.0,
+      ),
+    ),
+    Text(
+      'Dermatology',
+      style: TextStyle(
+        fontSize: 26.0,
+      ),
+    ),
+    Text(
+      'Diagnostic radiology',
+      style: TextStyle(
+        fontSize: 26.0,
+      ),
+    ),
+    Text(
+      'Emergency medicine',
+      style: TextStyle(
+        fontSize: 26.0,
+      ),
+    ),
+    Text(
+      'Internal medicine',
+      style: TextStyle(
+        fontSize: 26.0,
+      ),
+    ),
+    Text(
+      'Medical genetics',
+      style: TextStyle(
+        fontSize: 26.0,
+      ),
+    ),
+    Text(
+      'Neurology',
+      style: TextStyle(
+        fontSize: 26.0,
+      ),
+    ),
+    Text(
+      'Nuclear medicine',
+      style: TextStyle(
+        fontSize: 26.0,
+      ),
+    ),
+    Text(
+      'Obstetrics and gynecology',
+      style: TextStyle(
+        fontSize: 26.0,
+      ),
+    ),
+    Text(
+      'Ophthalmology',
+      style: TextStyle(
+        fontSize: 26.0,
+      ),
+    ),
+    Text(
+      'Pathology',
+      style: TextStyle(
+        fontSize: 26.0,
+      ),
+    ),
+    Text(
+      'Preventive medicine',
+      style: TextStyle(
+        fontSize: 26.0,
+      ),
+    ),
+    Text(
+      'Psychiatry',
+      style: TextStyle(
+        fontSize: 26.0,
+      ),
+    ),
+    Text(
+      'Radiation oncology',
+      style: TextStyle(
+        fontSize: 26.0,
+      ),
+    ),
+    Text(
+      'Surgery',
+      style: TextStyle(
+        fontSize: 26.0,
+      ),
+    ),
+    Text(
+      'Urology',
+      style: TextStyle(
+        fontSize: 26.0,
+      ),
+    ),
   ];
+
   List<String> cupertinoTagList = [
-    'Neorology',
-    'College',
-    'Pediatry',
     'Cardiology',
+    'Neurology',
+    'Pediatrics',
+    'Allergy and Immunology',
+    'Anesthesiology',
+    'Dermatology',
+    'Diagnostic radiology',
+    'Emergency medicine',
+    'Family medicine',
+    'Internal medicine',
+    'Medical genetics',
+    'Neurology',
+    'Nuclear medicine',
+    'Obstetrics and gynecology',
+    'Ophthalmology',
+    'Pathology',
+    'Preventive medicine',
+    'Psychiatry',
+    'Radiation oncology',
+    'Surgery',
+    'Urology',
   ];
 
   FirestoreService _firestoreService = Get.find();

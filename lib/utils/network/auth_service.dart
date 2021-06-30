@@ -22,7 +22,8 @@ class AuthService {
     );
   }
 
-  Future<UserCredential> signInWithEmailAndPassword({String email,
+  Future<UserCredential> signInWithEmailAndPassword({
+    String email,
     String password,
   }) {
     return _firebaseAuth.signInWithEmailAndPassword(
@@ -31,7 +32,13 @@ class AuthService {
     );
   }
 
-  Future<void> logoutUser() async{
+  Future<void> updateEmail({
+    String email,
+  }) {
+    return _firebaseAuth.currentUser.updateEmail(email);
+  }
+
+  Future<void> logoutUser() async {
     return _firebaseAuth.signOut();
   }
 

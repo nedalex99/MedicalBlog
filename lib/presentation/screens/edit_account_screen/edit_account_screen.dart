@@ -31,7 +31,7 @@ class EditAccountScreen extends StatelessWidget {
                   (context, index) {
                     return Obx(
                       () => AccInfoCard(
-                        userData: _editAccountController.userInfoList[index],
+                        userData: _editAccountController.userInfoList[index].obs,
                       ),
                     );
                   },

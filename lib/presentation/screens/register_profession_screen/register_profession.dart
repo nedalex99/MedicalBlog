@@ -5,6 +5,7 @@ import 'package:medical_blog/presentation/widgets/buttons/custom_button.dart';
 import 'package:medical_blog/presentation/widgets/input_fields/input_text_field_picker/input_text_field_picker.dart';
 import 'package:medical_blog/presentation/widgets/input_fields/input_text_field_picker/input_text_field_picker_controller.dart';
 import 'package:medical_blog/utils/constants/colors.dart';
+import 'package:medical_blog/utils/constants/values.dart';
 
 class RegisterProfession extends StatelessWidget {
   final RegisterProfessionController _controller =
@@ -68,11 +69,7 @@ class RegisterProfession extends StatelessWidget {
                     controller: Get.put(
                       InputTextFieldPickerController(
                         inputTextChecked: _controller.updateSpecialtyCallback,
-                        cupertinoTagList: [
-                          'Cardiology',
-                          'Neurology',
-                          'Pediatry',
-                        ],
+                        cupertinoTagList: specialisationsList,
                       ),
                       tag: 'Specialty',
                     ),

@@ -23,6 +23,31 @@ List<TutorialData> tutorialList = [
   ),
 ];
 
+List<String> specialisationsList = [
+  'Cardiology',
+  'Neurology',
+  'Pediatrics',
+  'Allergy and Immunology',
+  'Anesthesiology',
+  'Dermatology',
+  'Diagnostic radiology',
+  'Emergency medicine',
+  'Family medicine',
+  'Internal medicine',
+  'Medical genetics',
+  'Neurology',
+  'Nuclear medicine',
+  'Obstetrics and gynecology',
+  'Ophthalmology',
+  'Pathology',
+  'Pediatrics',
+  'Preventive medicine',
+  'Psychiatry',
+  'Radiation oncology',
+  'Surgery',
+  'Urology',
+];
+
 List<String> imagesList = [
   "3WNu3G1croW5tSi4YqjrV3ciVPA2",
   "FRu4sWFLIUNsHgbZXzhd7c6ns1U2",

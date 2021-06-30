@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:medical_blog/utils/constants/colors.dart';
 
 class AccInfoCard extends StatelessWidget {
-  final UserInfo userData;
+  final Rx<UserInfo> userData;
 
   AccInfoCard({
     this.userData,
@@ -32,15 +32,17 @@ class AccInfoCard extends StatelessWidget {
             ),
             child: Row(
               children: [
-                userData.icon,
+                userData.value.icon,
                 SizedBox(
                   width: 10.0,
                 ),
-                Text(
-                  userData.name,
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w400,
+                Obx(
+                  () => Text(
+                    userData.value.name,
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ),
                 Expanded(
@@ -49,10 +51,10 @@ class AccInfoCard extends StatelessWidget {
                     child: GestureDetector(
                       onTap: () => Get.to(
                         UpdateAccountScreen(
-                          userInfo: userData,
+                          userInfo: userData.value,
                           controller: Get.put(
                             UpdateAccountController(
-                              name: userData.name,
+                              name: userData.value.name,
                             ),
                           ),
                         ),

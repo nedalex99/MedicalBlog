@@ -3,10 +3,12 @@ import 'package:get/get.dart';
 import 'package:medical_blog/model/user_data.dart';
 import 'package:medical_blog/model/user_info.dart';
 import 'package:medical_blog/presentation/widgets/dialogs/loading_dialog.dart';
+import 'package:medical_blog/utils/network/auth_service.dart';
 import 'package:medical_blog/utils/network/firestore_service.dart';
 
 class EditAccountController extends GetxController {
   FirestoreService _firestoreService = Get.find();
+  AuthService _authService = Get.find();
 
   Rx<UserData> userData = UserData(firstName: '').obs;
   RxList<UserInfo> userInfoList = List<UserInfo>().obs;
@@ -96,10 +98,12 @@ class EditAccountController extends GetxController {
 
   Future<void> updateEmail(String email) async {
     Get.dialog(LoadingDialog());
-    await _firestoreService.updateEmail(email: email).then((value) => {
-          userData.value.email = email,
-          Get.back(),
-          Get.back(),
+    await _authService.updateEmail(email: email).then((value) async => {
+          await _firestoreService.updateEmail(email: email).then((value) => {
+                userData.value.email = email,
+                Get.back(),
+                Get.back(),
+              }),
         });
   }
 
