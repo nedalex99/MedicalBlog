@@ -129,13 +129,31 @@ class DashboardController extends GetxController {
   }
 
   Future<void> getNewsByTitle(String title) async {
-    searchedNews.clear();
-    await _firestoreService.getNewsByTitle(title: title).then((value) => {
-          value.docs.forEach((element) {
-            News news = News.fromJson(element);
-            searchedNews.add(news);
-          }),
-        });
+    if (title.length > 2) {
+      await _firestoreService.getNewsByTitle(title: title).then(
+            (value) => {
+              searchedNews.clear(),
+              value.docs.forEach(
+                (element) {
+                  News news = News.fromJson(element);
+                  bool containsNews = false;
+                  searchedNews.forEach(
+                    (element) {
+                      if (element.title == news.title) {
+                        containsNews = true;
+                      }
+                    },
+                  );
+                  if (!containsNews) {
+                    searchedNews.add(news);
+                  }
+                },
+              ),
+            },
+          );
+    } else {
+      searchedNews.clear();
+    }
   }
 
   void getToTop() {

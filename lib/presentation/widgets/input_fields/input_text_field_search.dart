@@ -19,9 +19,9 @@ class InputTextFieldSearch extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       controller: _controller.textController.value,
-      onChanged: (value) {
+      onChanged: (value) async {
         inputTextChecked(value);
-        getNewsByTitle(value);
+        await getNewsByTitle(value);
       },
       decoration: InputDecoration(
         filled: true,

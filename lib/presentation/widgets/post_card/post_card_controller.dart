@@ -123,6 +123,7 @@ class PostCardController extends GetxController {
   void showModal({
     bool isInSavedScreen,
     bool alreadyReported,
+    Function removeFromSaved,
   }) {
     showModalBottomSheet(
       context: Get.context,
@@ -132,6 +133,8 @@ class PostCardController extends GetxController {
           postId: postId,
           alreadyReported: alreadyReported,
           reportPostCallback: reportPost,
+          removePostFromSaved: removeFromSaved,
+          isInSavedScreen: isInSavedScreen,
           controller: Get.put(
             PostCardOptionsModalController(
               isSaved: isSaved,

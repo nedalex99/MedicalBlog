@@ -14,6 +14,7 @@ class PostCard extends StatelessWidget {
   final bool isInAddComments;
   final bool isInSavedScreen;
   final bool alreadyReported;
+  final Function removeFromSaved;
 
   PostCard({
     @required this.post,
@@ -21,6 +22,7 @@ class PostCard extends StatelessWidget {
     this.isInAddComments = false,
     this.isInSavedScreen = false,
     this.alreadyReported,
+    this.removeFromSaved,
   });
 
   @override
@@ -126,6 +128,7 @@ class PostCard extends StatelessWidget {
                             onPressed: () => postCardController.showModal(
                               isInSavedScreen: isInSavedScreen,
                               alreadyReported: post.alreadyReported,
+                              removeFromSaved: removeFromSaved,
                             ),
                             icon: Icon(
                               Icons.more_vert_rounded,

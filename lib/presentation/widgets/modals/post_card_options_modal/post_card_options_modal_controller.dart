@@ -9,19 +9,23 @@ class PostCardOptionsModalController extends GetxController {
 
   PostCardOptionsModalController({
     this.isSaved,
-    this.isInSavedScreen = false,
+    this.isInSavedScreen,
   });
 
   RxBool isSaved = false.obs;
   bool isInSavedScreen;
 
-  Future<void> saveThisPost({Post post, String postId}) async {
+  Future<void> saveThisPost({
+    Post post,
+    String postId,
+    Function removePostFromSaved,
+    bool isInSavedScreen,
+  }) async {
     Get.dialog(LoadingDialog());
     if (isSaved.value) {
       removeSaved(postId: postId);
-      if (isInSavedScreen) {
-        SavedScreenController savedScreenController = Get.find();
-        savedScreenController.removeWithPostId(postId);
+      if (isInSavedScreen != null && isInSavedScreen) {
+        removePostFromSaved(postId);
       }
     } else {
       addSaved(post: post, postId: postId);

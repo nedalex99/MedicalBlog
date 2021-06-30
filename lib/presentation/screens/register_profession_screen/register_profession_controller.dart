@@ -38,4 +38,12 @@ class RegisterProfessionController extends GetxController {
               Get.offAll(() => LoginScreen()),
             });
   }
+
+  List<String> generateList() {
+    List<String> list = [];
+    for (int i = 1; i <= 100; i++) {
+      list.add(i.toString());
+    }
+    return list;
+  }
 }

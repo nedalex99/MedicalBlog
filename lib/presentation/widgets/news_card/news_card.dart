@@ -7,10 +7,14 @@ import 'package:get/get.dart';
 class NewsCard extends StatelessWidget {
   final NewsCardController newsCardController;
   final News news;
+  final bool isInSavedScreen;
+  final Function deleteNewsCallback;
 
   NewsCard({
     this.news,
     this.newsCardController,
+    this.isInSavedScreen,
+    this.deleteNewsCallback,
   });
 
   @override
@@ -147,8 +151,12 @@ class NewsCard extends StatelessWidget {
                                         : Icons.bookmark_border_outlined,
                                   ),
                                 ),
-                                onPressed: () => newsCardController
-                                    .onSaveIconClick(news: news),
+                                onPressed: () =>
+                                    newsCardController.onSaveIconClick(
+                                  news: news,
+                                  deleteNewsCallback: deleteNewsCallback,
+                                  isInSavedScreen: isInSavedScreen,
+                                ),
                               ),
                               IconButton(
                                 icon: Icon(Icons.share),

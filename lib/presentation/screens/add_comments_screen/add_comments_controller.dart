@@ -15,7 +15,7 @@ import 'package:medical_blog/utils/util_functions.dart';
 class AddCommentsController extends GetxController {
   String commentText;
   RxList<Comment> commentsFromFirestore = List<Comment>().obs;
-  RxString dropDownValue = "Oldest first".obs;
+  RxString dropDownValue = "Newest first".obs;
   Rx<ScrollController> scrollController = ScrollController().obs;
   FirestoreService _firestoreService = Get.find();
   DocumentSnapshot documentSnapshot;

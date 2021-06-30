@@ -11,6 +11,8 @@ class PostCardOptionsModal extends StatelessWidget {
   final String postId;
   final bool alreadyReported;
   final Function reportPostCallback;
+  final Function removePostFromSaved;
+  final bool isInSavedScreen;
 
   PostCardOptionsModal({
     this.post,
@@ -18,6 +20,8 @@ class PostCardOptionsModal extends StatelessWidget {
     this.controller,
     this.alreadyReported,
     this.reportPostCallback,
+    this.removePostFromSaved,
+    this.isInSavedScreen,
   });
 
   @override
@@ -34,7 +38,12 @@ class PostCardOptionsModal extends StatelessWidget {
             title: Text(
               controller.isSaved.value ? 'Unsave this post' : 'Save this post',
             ),
-            onTap: () => controller.saveThisPost(post: post, postId: postId),
+            onTap: () => controller.saveThisPost(
+              post: post,
+              postId: postId,
+              removePostFromSaved: removePostFromSaved,
+              isInSavedScreen: isInSavedScreen,
+            ),
           ),
           ListTile(
             leading: Icon(

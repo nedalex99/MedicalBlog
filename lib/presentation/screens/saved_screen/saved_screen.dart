@@ -105,6 +105,9 @@ class SavedScreen extends StatelessWidget {
                         ),
                         child: NewsCard(
                           news: _savedScreenController.newsList[index],
+                          isInSavedScreen: true,
+                          deleteNewsCallback:
+                              _savedScreenController.removeNewsById,
                           newsCardController: Get.put(
                             NewsCardController(
                               isSaved:
@@ -122,6 +125,8 @@ class SavedScreen extends StatelessWidget {
                       return PostCard(
                         post: _savedScreenController.posts[index],
                         isInSavedScreen: true,
+                        removeFromSaved:
+                            _savedScreenController.removeWithPostId,
                         postCardController: Get.put(
                             PostCardController(
                               post: _savedScreenController.posts[index],

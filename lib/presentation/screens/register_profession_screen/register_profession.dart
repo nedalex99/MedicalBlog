@@ -56,6 +56,15 @@ class RegisterProfession extends StatelessWidget {
                           'Student',
                           'Surgeon',
                           'Family doctor',
+                          'Obstetrics and gynecology',
+                          'Ophthalmology',
+                          'Pathology',
+                          'Pediatrics',
+                          'Preventive medicine',
+                          'Psychiatry',
+                          'Radiation oncology',
+                          'Surgery',
+                          'Urology'
                         ],
                       ),
                       tag: 'Profession',
@@ -87,12 +96,7 @@ class RegisterProfession extends StatelessWidget {
                               InputTextFieldPickerController(
                                 inputTextChecked:
                                     _controller.updateYearOfGraduationCallback,
-                                cupertinoTagList: [
-                                  '1',
-                                  '2',
-                                  '3',
-                                  '4',
-                                ],
+                                cupertinoTagList: _controller.generateList(),
                               ),
                               tag: _controller.profession.value == 'Student'
                                   ? 'Year of graduation'

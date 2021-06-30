@@ -37,15 +37,6 @@ List<String> specialisationsList = [
   'Medical genetics',
   'Neurology',
   'Nuclear medicine',
-  'Obstetrics and gynecology',
-  'Ophthalmology',
-  'Pathology',
-  'Pediatrics',
-  'Preventive medicine',
-  'Psychiatry',
-  'Radiation oncology',
-  'Surgery',
-  'Urology',
 ];
 
 List<String> imagesList = [

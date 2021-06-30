@@ -15,7 +15,11 @@ class NewsCardController extends GetxController {
     this.isSaved,
   });
 
-  Future<void> onSaveIconClick({News news, Function deleteNewsCallback}) async {
+  Future<void> onSaveIconClick({
+    News news,
+    Function deleteNewsCallback,
+    bool isInSavedScreen,
+  }) async {
     Get.dialog(LoadingDialog());
     if (!isSaved.value) {
       await _firestoreService
@@ -36,6 +40,10 @@ class NewsCardController extends GetxController {
                 await _firestoreService
                     .removeNewsFromSavedCollection(newsId: news.id)
                     .then((value) => {
+                          if (isInSavedScreen)
+                            {
+                              deleteNewsCallback(news.id),
+                            },
                           isSaved.value = false,
                           Get.back(),
                         }),
@@ -46,16 +54,10 @@ class NewsCardController extends GetxController {
   Future<void> launchBrowser({
     String url,
   }) async {
-    if (await canLaunch(url)) {
-      await launch(
-        url,
-        forceSafariVC: true,
-        forceWebView: true,
-        headers: <String, String>{'my_header_key': 'my_header_value'},
-      );
-    } else {
-      throw 'Could not launch $url';
-    }
+    await launch(
+      url,
+      forceWebView: true,
+    );
   }
 
   Future<void> onShare({
