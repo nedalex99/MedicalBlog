@@ -237,6 +237,7 @@ class AddPostController extends GetxController {
         timestamp: Timestamp.now().millisecondsSinceEpoch,
         userData: userData,
         reportList: [],
+        image: url.value,
       );
       await _firestoreService
           .addPost(
@@ -248,11 +249,11 @@ class AddPostController extends GetxController {
                 Get.back(),
               });
       PostsController _postsController = Get.find();
-      if (url.value == "") {
-        post.image = null;
-      } else {
-        post.image = url.value;
-      }
+      // if (url.value == "") {
+      //   post.image = null;
+      // } else {
+      //   post.image = url.value;
+      // }
       _postsController.postsFromFirestore.insert(
         0,
         post,

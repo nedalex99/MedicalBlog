@@ -38,15 +38,6 @@ class PostCardOptionsModal extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(
-              Icons.close,
-            ),
-            title: Text(
-              'Hide this post',
-            ),
-            onTap: () {},
-          ),
-          ListTile(
-            leading: Icon(
               Icons.report,
             ),
             title: Text(
