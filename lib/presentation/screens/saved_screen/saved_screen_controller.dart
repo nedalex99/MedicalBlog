@@ -57,8 +57,6 @@ class SavedScreenController extends GetxController {
           value.docs.forEach((element) async {
             documentSnapshot = element;
             Post post = Post.fromJson(element);
-            url = await getPhoto(id: post.userData.id);
-            post.image = url;
             posts.add(post);
           }),
           Get.back(),

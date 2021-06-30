@@ -90,6 +90,7 @@ class EditAccountController extends GetxController {
     await _firestoreService
         .updateProfession(profession: profession)
         .then((value) => {
+              userData.value.profession = profession,
               userInfoList[1].name = profession,
               Get.back(),
               Get.back(),

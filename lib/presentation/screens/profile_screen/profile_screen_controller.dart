@@ -46,8 +46,6 @@ class ProfileScreenController extends GetxController {
           value.docs.forEach((element) async {
             documentSnapshot = element;
             Post post = Post.fromJson(documentSnapshot);
-            url = await getPhoto(id: post.userData.id);
-            post.image = url;
             posts.add(post);
           }),
         });

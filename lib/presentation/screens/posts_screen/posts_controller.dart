@@ -100,13 +100,14 @@ class PostsController extends GetxController {
   Future<void> getMorePosts({
     String typeOfPost,
   }) async {
-    String url;
     isLoading.value = true;
     await _firestoreService.getMorePosts(documentSnapshot).then((value) => {
           value.docs.forEach((element) async {
             this.documentSnapshot = element;
             Post post = Post.fromJson(documentSnapshot);
-            postsFromFirestore.add(post);
+            if (!post.flagToDelete) {
+              postsFromFirestore.add(post);
+            }
 
             List<Report> reportList = [];
             await _firestoreService
@@ -183,7 +184,9 @@ class PostsController extends GetxController {
           value.docs.forEach((element) async {
             documentSnapshot = element;
             Post post = Post.fromJson(documentSnapshot);
-            postsFromFirestore.add(post);
+            if (!post.flagToDelete) {
+              postsFromFirestore.add(post);
+            }
 
             List<Report> reportList = [];
             await _firestoreService
@@ -238,7 +241,9 @@ class PostsController extends GetxController {
               value.docs.forEach((element) async {
                 documentSnapshot = element;
                 Post post = Post.fromJson(documentSnapshot);
-                postsFromFirestore.add(post);
+                if (!post.flagToDelete) {
+                  postsFromFirestore.add(post);
+                }
                 List<Report> reportList = [];
                 await _firestoreService
                     .getReports(postId: element.id)

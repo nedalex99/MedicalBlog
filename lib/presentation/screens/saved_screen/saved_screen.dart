@@ -59,27 +59,6 @@ class SavedScreen extends StatelessWidget {
                             totalSwitches: 2,
                           ),
                         ),
-                        Expanded(
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: IconButton(
-                              icon: Icon(
-                                Icons.filter_list_outlined,
-                              ),
-                              onPressed: () => Get.to(
-                                () => FiltersScreen(
-                                  filtersScreenController: Get.put(
-                                    FiltersScreenController(
-                                      applyFiltersCallback:
-                                          _savedScreenController
-                                              .getPostsWithFilters,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
                       ],
                     ),
                     Align(

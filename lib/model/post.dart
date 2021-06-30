@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:medical_blog/model/report.dart';
 import 'package:medical_blog/model/user_data.dart';
@@ -16,7 +18,7 @@ class Post {
   List<String> savedBy;
   UserData userData;
   int noOfEntries;
-  String image;
+  String image = "";
   List<Report> reportList = [];
   bool alreadyReported;
   bool flagToDelete;
@@ -55,11 +57,11 @@ class Post {
         'dislikedBy': dislikedBy,
         'savedBy': savedBy,
         'userData': userData.toJson(),
-        'reportList': reportList,
+        'reportList': jsonEncode(reportList),
         'noOfEntries': noOfEntries,
         'flagToDelete': flagToDelete,
         'points': points,
-        'image': "",
+        'image': image,
       };
 
   factory Post.fromJson(DocumentSnapshot documentSnapshot) {
